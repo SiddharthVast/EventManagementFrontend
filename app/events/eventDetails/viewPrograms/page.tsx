@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import annualFunctionImg from '../../../public/AnnualFunctionImage.jpg';
 
 interface Event {
     id: number;
@@ -11,13 +12,12 @@ interface Event {
 }
 
 const events: Event[] = [
-    { id: 1, image: '/path/to/image1.jpg', title: 'Song by Lalit', type: 'Play', startTime: '11:00 AM', endTime: '11:20 AM' },
+    { id: 1, image: '', title: 'Song by Lalit', type: 'Play', startTime: '11:00 AM', endTime: '11:20 AM' },
     { id: 2, image: '/path/to/image1.jpg', title: 'Song by Lalit', type: 'Play', startTime: '11:00 AM', endTime: '11:20 AM' },
     { id: 3, image: '/path/to/image2.jpg', title: 'Speed by Director', type: 'Play', startTime: '09:30 AM', endTime: '10:30 AM' },
     { id: 4, image: '/path/to/image3.jpg', title: 'Group Dance', type: 'Play', startTime: '10:30 AM', endTime: '10:50 AM' },
     { id: 5, image: '/path/to/image4.jpg', title: 'lkjlk', type: 'Group Dance', startTime: '345', endTime: '234' },
     { id: 6, image: '/path/to/image5.jpg', title: 'lkjlhk', type: 'Songs', startTime: '345', endTime: '234' },
-    { id: 7, image: '/path/to/image6.jpg', title: 'lkjlhk', type: 'Dance', startTime: '345', endTime: '234' },
 ];
 
 const ViewPrograms = () => {
