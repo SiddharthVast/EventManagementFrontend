@@ -1,7 +1,10 @@
+// "use client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "./NavBar";
+import useLoginStore from "@/store/loginStore";
+import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,11 +18,27 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  // const fetchUser = useLoginStore((state) => state.fetchUser);
+
+  // useEffect(() => {
+  //   fetchUser(); // Fetch the user data on layout mount
+  // }, [fetchUser]);
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <NavBar />
-        <main >{children}</main>
+        {/* <NavBar />
+        <main >{children}</main> */}
+
+        {/* <UserProvider>
+          <NavBar />
+          <main>{children}</main>
+        </UserProvider> */}
+        <>
+          <NavBar />
+          <main>{children}</main>
+        </>
       </body>
     </html>
   );
