@@ -415,13 +415,18 @@ import * as yup from "yup";
 import React, { useState } from 'react';
 
 interface FormValues {
-    username: string;
+    email: string;
     password: string;
 }
 
 const schema = yup.object().shape({
-    username: yup.string().min(2).max(255).required(),
+    email: yup.string().email("Invalid email").required("Email is required"),
     password: yup.string().min(8).max(255).required(),
+    // firstName: yup.string().required("Name is required"),
+    // lastName: yup.string().required("Name is required"),
+    // mobileNumber: yup.string().required("MobileNumber is required"),
+    // courseName: yup.string(),
+    role: yup.string(),
 });
 
 const Login = () => {
@@ -449,7 +454,7 @@ const Login = () => {
             if (user?.role === 'admin') {
                 router.push('/admin');
             } else if (user?.role === 'volunteer') {
-                router.push('/volunteer');
+                router.push('/admin');
             } else {
                 router.push('/student');
             }
@@ -471,13 +476,13 @@ const Login = () => {
                 {error && <div className="mb-4 text-red-500">{error}</div>}
                 <form onSubmit={handleSubmit(onSubmitHandler)}>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium mb-2">Username</label>
+                        <label className="block text-sm font-medium mb-2">Email</label>
                         <input
                             type="text"
-                            {...register('username')}
+                            {...register('email')}
                             className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
-                        {errors.username && <p className="text-red-500 text-xs mt-1">{errors.username.message}</p>}
+                        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                     </div>
                     <div className="mb-6">
                         <label className="block text-sm font-medium mb-2">Password</label>

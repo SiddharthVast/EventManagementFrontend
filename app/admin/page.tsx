@@ -10,7 +10,7 @@ const Admin = () => {
                 <h1 className="text-xl font-bold mb-6">WELCOME TO EVENT MANAGEMENT SYSTEM</h1>
                 <ul>
                     <li className="mb-2">
-                        <Link href="/add-event" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
+                        <Link href="/admin/add-event" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
                             Add New Event
                         </Link>
                     </li>
