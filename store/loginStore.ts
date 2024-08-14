@@ -274,11 +274,15 @@
 import { create } from "zustand";
 
 interface Input {
-    username: string;
+    email: string;
     password: string;
 }
 
 interface User {
+    firstName: string;
+    lastName: string;
+    mobileNumber: string;
+    courseName?: string;
     role: string;
     // Add other user properties if needed
 }
@@ -337,7 +341,7 @@ const useLoginStore = create<LoginState>((set, get) => ({
             const response = await fetch('http://localhost:3000/auth/profile', {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `${token}`,
                 },
             });
 

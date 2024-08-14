@@ -136,8 +136,8 @@ const NavBar = () => {
                         <Link href="/" style={linkStyle}>Home</Link>
                         <Link href="/about" style={linkStyle}>About Project</Link>
                         <Link href="/events" style={linkStyle}>Events</Link>
-                        <Link href="/volunteer" style={linkStyle}>Volunteer</Link>
-                        <Link href="/logout" style={linkStyle}>Logout</Link>
+                        {/* <Link href="/volunteer" style={linkStyle}>Volunteer</Link>
+                        <Link href="/logout" style={linkStyle}>Logout</Link> */}
                     </>
                 );
             case 'student':
