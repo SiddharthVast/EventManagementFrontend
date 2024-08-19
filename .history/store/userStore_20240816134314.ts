@@ -1,7 +1,5 @@
 import { create } from "zustand";
 import axios from "axios";
-import { College } from './collegeStore';
-
 
 export interface UserStoreState {
   users: User[];
@@ -22,7 +20,7 @@ interface User {
   details: string;
   courseName: string;
   role: string;
-  college: College;
+  collegeId: string;
 }
 export interface UserData {
   id?: number;
@@ -34,7 +32,7 @@ export interface UserData {
   details: string;
   courseName: string;
   role: string;
-  collegeId: number;
+  collegeId: string;
 }
 const http = axios.create({ baseURL: "http://localhost:3000" });
 const useUserStore = create<UserStoreState>((set) => ({
@@ -49,25 +47,19 @@ const useUserStore = create<UserStoreState>((set) => ({
     details: "",
     courseName: "",
     role: "",
-    college: {
-      id: 0,
-      collegeName: "",
-      number: "",
-      emailId: "",
-      address: "",
-    },
+    collegeId: "",
   },
 
   getAllUsers: async () => {
-    const res = await http.get("/users");
+    const res = await http.get("/user");
     set(() => ({ users: res.data }));
   },
   getUserById: async (id: string) => {
-    const res = await http.get(`/users/${id}`);
+    const res = await http.get(`/user/${id}`);
     set((state: UserStoreState) => ({ user: res.data }));
   },
   deleteUser: async (id: number) => {
-    const res = await http.delete(`/users/${id}`, {
+    const res = await http.delete(`/user/${id}`, {
       headers: { authorization: sessionStorage.token },
     });
     if (res.status === 200) {
@@ -78,7 +70,7 @@ const useUserStore = create<UserStoreState>((set) => ({
   },
 
   addUser: async (data: UserData) => {
-    const res = await http.post("/users", data, {
+    const res = await http.post("/user", data, {
       headers: { authorization: sessionStorage.token },
     });
     set((state: UserStoreState) => ({
@@ -88,7 +80,7 @@ const useUserStore = create<UserStoreState>((set) => ({
 
   updateUser: async function (data: UserData) {
     try {
-      const res = await http.patch(`/users/${data.id}`, data, {
+      const res = await http.patch(`/user/${data.id}`, data, {
         headers: { authorization: sessionStorage.token },
       });
       set((state) => ({ users: [...state.users, res.data] }));

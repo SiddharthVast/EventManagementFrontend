@@ -1,7 +1,5 @@
 import { create } from "zustand";
 import axios from "axios";
-import { College } from './collegeStore';
-
 
 export interface UserStoreState {
   users: User[];
@@ -22,7 +20,7 @@ interface User {
   details: string;
   courseName: string;
   role: string;
-  college: College;
+  collegeId: string;
 }
 export interface UserData {
   id?: number;
@@ -34,7 +32,7 @@ export interface UserData {
   details: string;
   courseName: string;
   role: string;
-  collegeId: number;
+  collegeId: string;
 }
 const http = axios.create({ baseURL: "http://localhost:3000" });
 const useUserStore = create<UserStoreState>((set) => ({
@@ -49,13 +47,7 @@ const useUserStore = create<UserStoreState>((set) => ({
     details: "",
     courseName: "",
     role: "",
-    college: {
-      id: 0,
-      collegeName: "",
-      number: "",
-      emailId: "",
-      address: "",
-    },
+    collegeId: "",
   },
 
   getAllUsers: async () => {
