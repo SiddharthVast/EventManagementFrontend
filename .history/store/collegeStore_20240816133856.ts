@@ -10,7 +10,7 @@ export interface CollegeStoreState {
   updateCollege: (data: CollegeData) => void;
   addCollege: (data: CollegeData) => void;
 }
-export interface College {
+interface College {
   id: number;
   collegeName: string;
   number: string;
