@@ -1,0 +1,41 @@
+/* styles/globals.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* For header bg-color and text color */
+.main-header {
+    @apply bg-red-800 text-white; 
+}
+/* This is for college event management heading */
+.header-title {
+    @apply py-4 text-center text-2xl font-bold;
+
+  }
+  /* For navbar we change tailwind.config.js and applying here */
+.navbar-with-menu-list {
+    @apply flex justify-center gap-8 py-4 bg-custom-brown;
+  }
+  /*  */
+.theme-color {
+  @apply text-red-500;
+}
+
+.flex-center-gap {
+    @apply flex justify-center gap-8 py-4 bg-custom-brown;
+  }
+  
+.table-header {
+  @apply bg-red-500 text-white border-b-2 border-gray-300 px-6 py-3 text-left text-sm font-medium;
+}
+
+.table-cell {
+  @apply border-b border-gray-200 px-6 py-4 text-sm;
+}
+
+.table-row-hover:hover {
+  @apply bg-gray-100;
+  @apply transition-colors duration-200;
+}

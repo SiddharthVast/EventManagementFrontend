@@ -9,7 +9,14 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "custom-brown": "#A52A2A", // Custom color name
+      },
+      spacing: {
+        8: "2em", // Custom spacing for gap
+      },
+    },
   },
   plugins: [],
-}
+};
