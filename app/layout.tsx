@@ -18,23 +18,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  // const fetchUser = useLoginStore((state) => state.fetchUser);
-
-  // useEffect(() => {
-  //   fetchUser(); // Fetch the user data on layout mount
-  // }, [fetchUser]);
-
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <NavBar />
-        <main >{children}</main> */}
-
-        {/* <UserProvider>
-          <NavBar />
-          <main>{children}</main>
-        </UserProvider> */}
         <>
           <NavBar />
           <main>{children}</main>
