@@ -42,7 +42,9 @@ const Login = () => {
             let res = await login(data);
             console.log(res);
             await fetchUser(); // Ensure user data is fetched after login
+            console.log(res);
             const user = useLoginStore.getState().user;
+            console.log(user);
             if (user?.role === 'admin') {
                 router.push('/admin');
             } else if (user?.role === 'superadmin') {
