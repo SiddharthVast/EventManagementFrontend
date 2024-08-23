@@ -1,9 +1,10 @@
 import axios from "axios";
 import { create } from "zustand";
 
+
 export interface FestivalStoreState {
-  festivals: Festival[];
-  festival: Festival;
+  festivals: Festival[],
+  festival: Festival,
   getAllFestivals: () => void;
   getFestivalById: (id: string) => void;
   deleteFestival: (id: number) => void;
@@ -11,23 +12,24 @@ export interface FestivalStoreState {
   addFestival: (data: FestivalData) => void;
 }
 
+
 export interface Festival {
   id: number;
   festivalTitle: string;
   startDate: string;
   endDate: string;
+  imageUrl?: string | FileList;
   description: string;
-  photo: string;
-  collegeId?: number;
 }
+
 
 export interface FestivalData {
   id?: number;
   festivalTitle: string;
   startDate: string;
   endDate: string;
+  imageUrl?: string | FileList;
   description: string;
-  photo: string;
   collegeId?: number;
 }
 
@@ -40,10 +42,10 @@ const useFestivalStore = create<FestivalStoreState>((set) => ({
     festivalTitle: "",
     startDate: "",
     endDate: "",
+    imageUrl: "",
     description: "",
-    photo: "",
-    collegeId: 0,
   },
+
 
   getAllFestivals: async () => {
     const res = await http.get("/festivals");
@@ -86,8 +88,9 @@ const useFestivalStore = create<FestivalStoreState>((set) => ({
     set((state: FestivalStoreState) => ({
       festivals: [...state.festivals, res.data],
     }));
-    // return res.data; // Return the response data
+    return res.data; // Return the response data
   },
+
 }));
 
 export default useFestivalStore;
