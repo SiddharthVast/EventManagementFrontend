@@ -7,68 +7,45 @@ const Admin = () => {
     <div className="flex">
       {/* Sidebar */}
       <div className="w-3/4 bg-white p-4">
-        <h1 className="text-xl font-bold mb-6">
-          WELCOME TO EVENT MANAGEMENT SYSTEM
-        </h1>
+        <h1 className="text-xl font-bold mb-6">WELCOME TO EVENT MANAGEMENT SYSTEM</h1>
         <ul>
           <li className="mb-2">
-            <Link
-              href="/admin/add-event"
-              className="block w-full bg-red-700 text-white text-lg py-5 px-4"
-            >
+            <Link href="/admin/add-festival" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
               Add New Festival
             </Link>
           </li>
           <li className="mb-2">
-            <Link
-              href="/events"
-              className="block w-full bg-red-700 text-white text-lg py-5 px-4"
-            >
-              Add Event in festival
+            <Link href="/add-event-program" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
+              View Festival
             </Link>
           </li>
-          {/* <li className="mb-2">
-                        <Link href="/add-program-type" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
-                            Add Program Type
-                        </Link>
-                    </li> */}
           <li className="mb-2">
-            <Link
-              href="/add-theme"
-              className="block w-full bg-red-700 text-white text-lg py-5 px-4"
-            >
-              Add Coordinator
+            <Link href="/add-program-type" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
+              Add Event Program
             </Link>
           </li>
-          {/* <li className="mb-2">
-            <Link
-              href="/add-user"
-              className="block w-full bg-red-700 text-white text-lg py-5 px-4"
-            >
+          <li className="mb-2">
+            <Link href="/add-theme" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
+              Add Volunteer
+            </Link>
+          </li>
+          <li className="mb-2">
+            <Link href="/add-user" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
               Add Student
             </Link>
-          </li> */}
-          <li className="mb-2">
-            <Link
-              href="/event-report"
-              className="block w-full bg-red-700 text-white text-lg py-5 px-4"
-            >
-              Festival Report
-            </Link>
           </li>
           <li className="mb-2">
-            <Link
-              href="/program-type-report"
-              className="block w-full bg-red-700 text-white text-lg py-5 px-4"
-            >
+            <Link href="/event-report" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
               Event Report
             </Link>
           </li>
           <li className="mb-2">
-            <Link
-              href="/program-report"
-              className="block w-full bg-red-700 text-white text-lg py-5 px-4"
-            >
+            <Link href="/program-type-report" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
+              Program  Report
+            </Link>
+          </li>
+          <li className="mb-2">
+            <Link href="/program-report" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
               My Account
             </Link>
           </li>

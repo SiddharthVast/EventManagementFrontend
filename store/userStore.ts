@@ -12,7 +12,7 @@ export interface UserStoreState {
   updateUser: (data: UserData) => void;
   addUser: (data: UserData) => void;
 }
-interface User {
+export interface User {
   id: number;
   firstName: string;
   lastName: string;
