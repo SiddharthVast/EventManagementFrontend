@@ -2,7 +2,6 @@ import { create } from "zustand";
 import axios from "axios";
 import { College } from './collegeStore';
 
-
 export interface UserStoreState {
   users: User[];
   user: User;
@@ -36,7 +35,9 @@ export interface UserData {
   role: string;
   collegeId: number;
 }
+
 const http = axios.create({ baseURL: "http://localhost:3000" });
+
 const useUserStore = create<UserStoreState>((set) => ({
   users: [],
   user: {
@@ -66,17 +67,6 @@ const useUserStore = create<UserStoreState>((set) => ({
     const res = await http.get(`/users/${id}`);
     set((state: UserStoreState) => ({ user: res.data }));
   },
-  deleteUser: async (id: number) => {
-    const res = await http.delete(`/users/${id}`, {
-      headers: { authorization: sessionStorage.token },
-    });
-    if (res.status === 200) {
-      set((state) => ({
-        users: state.users.filter((u) => u.id !== id),
-      }));
-    }
-  },
-
   addUser: async (data: UserData) => {
     const res = await http.post("/users", data, {
       headers: { authorization: sessionStorage.token },
@@ -96,6 +86,18 @@ const useUserStore = create<UserStoreState>((set) => ({
       console.error("Error updating customer:", error);
     }
   },
+
+  deleteUser: async (id: number) => {
+    const res = await http.delete(`/users/${id}`, {
+      headers: { authorization: sessionStorage.token },
+    });
+    if (res.status === 200) {
+      set((state) => ({
+        users: state.users.filter((u) => u.id !== id),
+      }));
+    }
+  },
+
 }));
 
 export default useUserStore;
