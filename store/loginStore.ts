@@ -14,6 +14,7 @@ interface LoginState {
   logout: () => void;
   fetchUser: () => Promise<void>;
 }
+
 const http = axios.create({ baseURL: "http://localhost:3000" });
 
 const useLoginStore = create<LoginState>((set, get) => ({
@@ -22,29 +23,20 @@ const useLoginStore = create<LoginState>((set, get) => ({
 
   login: async (data: Input) => {
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await http.post("/auth/login", data);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
+      if (response.status === 200) {
+        const accessToken = response.data["access_token"];
+        sessionStorage.setItem("token", accessToken);
+
+        // Update token in state
+        set({ token: accessToken });
+
+        // Fetch user profile after login
+        await get().fetchUser();
+      } else {
+        throw new Error('Login failed');
       }
-
-      const resData = await response.json();
-      const accessToken = resData["access_token"];
-      sessionStorage.setItem("token", accessToken);
-
-      // Update token in state
-      set({ token: accessToken });
-
-      // Fetch user profile after login
-      await get().fetchUser();
-
     } catch (error) {
       if (error instanceof Error) {
         console.error("Login failed:", error.message);
@@ -62,12 +54,12 @@ const useLoginStore = create<LoginState>((set, get) => ({
     try {
       const response = await http.get("/auth/profile", {
         headers: {
-          Authorization: `${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
       if (response.status === 200) {
-        const userData = await response.data;
+        const userData = response.data;
         set({ user: userData });
       } else {
         set({ token: "", user: null });

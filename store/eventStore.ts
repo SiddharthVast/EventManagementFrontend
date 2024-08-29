@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-import { Event, EventData } from "./interfaces_Data";
+import { Event } from "./interfaces_Data";
 export interface EventStoreState {
   events: Event[];
   event: Event;
@@ -10,7 +10,18 @@ export interface EventStoreState {
   addEvent: (data: EventData) => void;
   updateEvent: (data: EventData) => void;
 }
-
+export interface EventData {
+  id?: number;
+  eventType: string;
+  eventName: string;
+  members: string;
+  venue: string;
+  startDateTime: string;
+  endDateTime: string;
+  festivalId: number;
+  // pointtojudge: PointsToJudge[];
+  // usereventregs: User_event_reg[];
+}
 const http = axios.create({ baseURL: "http://localhost:3000" });
 const useEventStore = create<EventStoreState>((set) => ({
   events: [],

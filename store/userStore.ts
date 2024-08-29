@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-import { College } from './collegeStore';
+import { College } from './collegeStore'; // Unified import statement
 
 export interface UserStoreState {
   users: User[];
@@ -11,6 +11,7 @@ export interface UserStoreState {
   updateUser: (data: UserData) => void;
   addUser: (data: UserData) => void;
 }
+
 export interface User {
   id: number;
   firstName: string;
@@ -23,6 +24,7 @@ export interface User {
   role: string;
   college: College;
 }
+
 export interface UserData {
   id?: number;
   firstName: string;
@@ -60,44 +62,63 @@ const useUserStore = create<UserStoreState>((set) => ({
   },
 
   getAllUsers: async () => {
-    const res = await http.get("/users");
-    set(() => ({ users: res.data }));
-  },
-  getUserById: async (id: string) => {
-    const res = await http.get(`/users/${id}`);
-    set((state: UserStoreState) => ({ user: res.data }));
-  },
-  addUser: async (data: UserData) => {
-    const res = await http.post("/users", data, {
-      headers: { authorization: sessionStorage.token },
-    });
-    set((state: UserStoreState) => ({
-      users: [...state.users, res.data],
-    }));
+    try {
+      const res = await http.get("/users");
+      set(() => ({ users: res.data }));
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
   },
 
-  updateUser: async function (data: UserData) {
+  getUserById: async (id: string) => {
+    try {
+      const res = await http.get(`/users/${id}`);
+      set(() => ({ user: res.data }));
+    } catch (error) {
+      console.error("Error fetching user by ID:", error);
+    }
+  },
+
+  addUser: async (data: UserData) => {
+    try {
+      const res = await http.post("/users", data, {
+        headers: { authorization: `Bearer ${sessionStorage.getItem('token')}` }, // Correct token handling
+      });
+      set((state) => ({
+        users: [...state.users, res.data],
+      }));
+    } catch (error) {
+      console.error("Error adding user:", error);
+    }
+  },
+
+  updateUser: async (data: UserData) => {
     try {
       const res = await http.patch(`/users/${data.id}`, data, {
-        headers: { authorization: sessionStorage.token },
+        headers: { authorization: `Bearer ${sessionStorage.getItem('token')}` }, // Correct token handling
       });
-      set((state) => ({ users: [...state.users, res.data] }));
+      set((state) => ({
+        users: state.users.map((user) => (user.id === data.id ? res.data : user)),
+      }));
     } catch (error) {
-      console.error("Error updating customer:", error);
+      console.error("Error updating user:", error);
     }
   },
 
   deleteUser: async (id: number) => {
-    const res = await http.delete(`/users/${id}`, {
-      headers: { authorization: sessionStorage.token },
-    });
-    if (res.status === 200) {
-      set((state) => ({
-        users: state.users.filter((u) => u.id !== id),
-      }));
+    try {
+      const res = await http.delete(`/users/${id}`, {
+        headers: { authorization: `Bearer ${sessionStorage.getItem('token')}` }, // Correct token handling
+      });
+      if (res.status === 200) {
+        set((state) => ({
+          users: state.users.filter((user) => user.id !== id),
+        }));
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
     }
   },
-
 }));
 
 export default useUserStore;
