@@ -1,21 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import useLoginStore from "@/store/loginStore";
 import { useRouter } from "next/navigation";
 import "./styles/common.css";
 
 const NavBar = () => {
-  const user = useLoginStore((state) => state.user);
   const logout = useLoginStore((state) => state.logout);
+  const user = useLoginStore((state) => state.user);
+  const login = useLoginStore((state) => state.login);
   const router = useRouter();
 
   const handleLogout = () => {
     logout();
     router.push("/login"); // Redirect to login page after logout
   };
-
+  console.log("User data : ", user);
   const renderLinks = () => {
     switch (user?.role) {
       case "superadmin":
@@ -27,15 +28,16 @@ const NavBar = () => {
             <Link href="/about" style={linkStyle}>
               About Project
             </Link>
-            <Link href="/events" style={linkStyle}>
+            {/* <Link href="/events" style={linkStyle}>
               Events
-            </Link>
+            </Link> */}
             <Link href="/superadmin" style={linkStyle}>
-              SuperAdmin
+              Colleges{" "}
             </Link>
             <a onClick={handleLogout} style={linkStyle}>
               Logout
             </a>
+            <h6> {user.firstName}</h6>
           </>
         );
       case "admin":
@@ -47,7 +49,7 @@ const NavBar = () => {
             <Link href="/about" style={linkStyle}>
               About Project
             </Link>
-            <Link href="/events" style={linkStyle}>
+            <Link href="/admin/events/view-event" style={linkStyle}>
               Events
             </Link>
             <Link href="/admin" style={linkStyle}>
@@ -56,9 +58,10 @@ const NavBar = () => {
             <a onClick={handleLogout} style={linkStyle}>
               Logout
             </a>
+            <h6>Hello {user.firstName}</h6>
           </>
         );
-      case "volunteer":
+      case "coordinator":
         return (
           <>
             <Link href="/" style={linkStyle}>
@@ -74,6 +77,7 @@ const NavBar = () => {
             <a onClick={handleLogout} style={linkStyle}>
               Logout
             </a>
+            <h6>Hello {user.firstName}</h6>
           </>
         );
       case "student":
@@ -94,6 +98,7 @@ const NavBar = () => {
             <a onClick={handleLogout} style={linkStyle}>
               Logout
             </a>
+            <h6>Hello {user.firstName}</h6>
           </>
         );
       default:
@@ -117,6 +122,7 @@ const NavBar = () => {
             <Link href="/contact" style={linkStyle}>
               Contact Us
             </Link>
+            <h6>Hello {user?.firstName}</h6>
           </>
         );
     }
