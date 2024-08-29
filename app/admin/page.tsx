@@ -21,7 +21,7 @@ const Admin = () => {
           </li>
           <li className="mb-2">
             <Link
-              href="/events"
+              href="/admin/events"
               className="block w-full bg-red-700 text-white text-lg py-5 px-4"
             >
               Add Event in festival
