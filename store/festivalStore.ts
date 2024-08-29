@@ -1,34 +1,35 @@
 import axios from "axios";
 import { create } from "zustand";
+import { College } from "./collegeStore";
 
 export interface FestivalStoreState {
-  festivals: Festival[];
-  festival: Festival;
+  festivals: Festival[],
+  festival: Festival,
   getAllFestivals: () => void;
   getFestivalById: (id: string) => void;
   deleteFestival: (id: number) => void;
-  updateFestival: (data: FestivalData) => void;
+  updateFestival: (data: FormData) => Promise<void>;
   addFestival: (data: FestivalData) => void;
 }
-
 export interface Festival {
   id: number;
   festivalTitle: string;
   startDate: string;
   endDate: string;
+  imageUrl?: string | FileList;
   description: string;
-  photo: string;
-  collegeId?: number;
+  college: College;
+  status: boolean;
 }
-
 export interface FestivalData {
   id?: number;
   festivalTitle: string;
   startDate: string;
   endDate: string;
+  imageUrl?: string | FileList;
   description: string;
-  photo: string;
   collegeId?: number;
+  status: boolean;
 }
 
 const http = axios.create({ baseURL: "http://localhost:3000" });
@@ -40,9 +41,16 @@ const useFestivalStore = create<FestivalStoreState>((set) => ({
     festivalTitle: "",
     startDate: "",
     endDate: "",
+    imageUrl: "",
     description: "",
-    photo: "",
-    collegeId: 0,
+    status: true,
+    college: {
+      id: 0,
+      collegeName: "",
+      number: "",
+      emailId: "",
+      address: "",
+    },
   },
 
   getAllFestivals: async () => {
@@ -55,8 +63,39 @@ const useFestivalStore = create<FestivalStoreState>((set) => ({
     set((state: FestivalStoreState) => ({ festival: res.data }));
   },
 
+  addFestival: async (data: FestivalData) => {
+    const res = await http.post("/festivals", data, {
+      headers: { authorization: sessionStorage.token },
+    });
+    set((state: FestivalStoreState) => ({
+      festivals: [...state.festivals, res.data],
+    }));
+    return res.data;
+  },
+  updateFestival: async (formData: FormData) => {
+    try {
+      const id = formData.get('id');
+      const res = await http.patch(`/festivals/${id}`, formData, {
+        headers: {
+          authorization: sessionStorage.token,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (res.status === 200) {
+        set((state) => ({
+          festivals: state.festivals.map((f) =>
+            f.id === parseInt(id as string) ? { ...f, ...res.data } : f
+          ),
+        }));
+      }
+    } catch (error) {
+      console.error("Error updating festival:", error);
+    }
+  },
+
   deleteFestival: async (id: number) => {
-    const res = await http.delete(`/festival/${id}`, {
+    const res = await http.delete(`/festivals/${id}`, {
       headers: { authorization: sessionStorage.token },
     });
     if (res.status === 200) {
@@ -66,28 +105,6 @@ const useFestivalStore = create<FestivalStoreState>((set) => ({
     }
   },
 
-  updateFestival: async (data: FestivalData) => {
-    const res = await http.patch(`/festivals/${data.id}`, data, {
-      headers: { authorization: sessionStorage.token },
-    });
-    if (res.status === 200) {
-      set((state) => ({
-        festivals: state.festivals.map((f) =>
-          f.id === data.id ? { ...f, ...data } : f
-        ),
-      }));
-    }
-  },
-
-  addFestival: async (data: FestivalData) => {
-    const res = await http.post("/festivals", data, {
-      headers: { authorization: sessionStorage.token },
-    });
-    set((state: FestivalStoreState) => ({
-      festivals: [...state.festivals, res.data],
-    }));
-    // return res.data; // Return the response data
-  },
 }));
 
 export default useFestivalStore;
