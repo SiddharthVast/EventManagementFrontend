@@ -1,7 +1,8 @@
 import Link from "next/link";
-import AdminSummerImage from "../../public/JpgAdminSummerImage.jpg"; // Make sure to save your images in the public folder
+import AdminSummerImage from "../../public/JpgAdminSummerImage.jpg";
 import Image from "next/image";
 import MusicConnection from "../../public/AdminMusicNightImage.jpg";
+
 const Admin = () => {
   return (
     <div className="flex">
@@ -12,27 +13,26 @@ const Admin = () => {
             <Link href="/admin/add-festival" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
               Add New Festival
             </Link>
-          </li>
-          <li className="mb-2">
+             </li>
+             <li className="mb-2">
             <Link href="/admin/view-festival" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
               View Festival
             </Link>
+         
           </li>
           <li className="mb-2">
-            <Link href="/add-program-type" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
-              Add Event Program
+            <Link href="/admin/events" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
+              Add Event in Festival
             </Link>
           </li>
+         
+        
           <li className="mb-2">
             <Link href="/add-theme" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
               Add Volunteer
             </Link>
           </li>
-          <li className="mb-2">
-            <Link href="/add-user" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
-              Add Student
-            </Link>
-          </li>
+       
           <li className="mb-2">
             <Link href="/event-report" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
               Event Report
@@ -40,7 +40,7 @@ const Admin = () => {
           </li>
           <li className="mb-2">
             <Link href="/program-type-report" className="block w-full bg-red-700 text-white text-lg py-5 px-4">
-              Program  Report
+              Program Report
             </Link>
           </li>
           <li className="mb-2">

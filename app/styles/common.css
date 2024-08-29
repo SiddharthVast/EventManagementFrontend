@@ -7,11 +7,11 @@
 
 /* For header bg-color and text color */
 .main-header {
-    @apply bg-red-800 text-white; 
+    @apply bg-custom-brown-head text-white; 
 }
 /* This is for college event management heading */
 .header-title {
-    @apply py-4 text-center text-2xl font-bold;
+    @apply py-7 text-center text-3xl font-bold;
 
   }
   /* For navbar we change tailwind.config.js and applying here */
@@ -23,19 +23,35 @@
   @apply text-red-500;
 }
 
+table{
+    @apply min-w-full bg-white;
+}
+
 .flex-center-gap {
-    @apply flex justify-center gap-8 py-4 bg-custom-brown;
+    @apply flex justify-center gap-8 py-2 bg-custom-brown;
   }
   
 .table-header {
-  @apply bg-red-500 text-white border-b-2 border-gray-300 px-6 py-3 text-left text-sm font-medium;
+ @apply py-2 px-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase
+    /* @apply bg-custom-brown text-white border-b-2 border-gray-300 px-6 py-3 text-left text-sm font-medium; */
 }
 
 .table-cell {
-  @apply border-b border-gray-200 px-6 py-4 text-sm;
+  @apply border-b border-gray-200 px-2 py-2 text-sm;
 }
 
 .table-row-hover:hover {
   @apply bg-gray-100;
   @apply transition-colors duration-200;
+}
+
+.btn_update{
+  @apply bg-gray-500 hover:bg-gray-700 text-white py-1 px-3 rounded focus:outline-none m-1;
+
+}
+.btn_delete{
+  @apply bg-red-500 hover:bg-red-700 text-white  py-1 px-3 rounded focus:outline-none;
+}
+.btn_add{
+  @apply bg-red-500 hover:bg-red-700 text-white  py-1 m-1 px-4 rounded  mr-2;
 }
