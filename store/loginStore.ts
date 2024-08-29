@@ -1,19 +1,11 @@
 import axios from "axios";
 import { create } from "zustand";
 import { User } from "./userStore";
+
 interface Input {
   email: string;
   password: string;
 }
-
-// interface User {
-//   firstName: string;
-//   lastName: string;
-//   mobileNumber: string;
-//   courseName?: string;
-//   role: string;
-//   // Add other user properties if needed
-// }
 
 interface LoginState {
   token: string;
@@ -22,6 +14,7 @@ interface LoginState {
   logout: () => void;
   fetchUser: () => Promise<void>;
 }
+
 const http = axios.create({ baseURL: "http://localhost:3000" });
 
 const useLoginStore = create<LoginState>((set, get) => ({
@@ -32,36 +25,41 @@ const useLoginStore = create<LoginState>((set, get) => ({
     try {
       const response = await http.post("/auth/login", data);
 
-      set((state: LoginState) => ({ token: response.data["access_token"] }));
-      const accessToken = response.data["access_token"];
+      if (response.status === 200) {
+        const accessToken = response.data["access_token"];
+        sessionStorage.setItem("token", accessToken);
 
-      sessionStorage.setItem("token", response.data["access_token"]);
-      // Update token in state
-      set({ token: accessToken });
-      await get().fetchUser();
+        // Update token in state
+        set({ token: accessToken });
+
+        // Fetch user profile after login
+        await get().fetchUser();
+      } else {
+        throw new Error('Login failed');
+      }
     } catch (error) {
       if (error instanceof Error) {
         console.error("Login failed:", error.message);
       } else {
         console.error("Login failed:", error);
       }
-      throw new Error("Login failed");
+      throw new Error('Login failed');
     }
   },
 
   fetchUser: async () => {
-    const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem('token');
     if (!token) return;
 
     try {
       const response = await http.get("/auth/profile", {
         headers: {
-          Authorization: `${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
       if (response.status === 200) {
-        const userData = await response.data;
+        const userData = response.data;
         set({ user: userData });
       } else {
         set({ token: "", user: null });

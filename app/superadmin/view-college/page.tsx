@@ -25,7 +25,7 @@ const ViewCollege = () => {
                     <h1 className="text-2xl font-semibold text-red-500 mb-6">Our Registered Colleges</h1>
                     <table className="min-w-full bg-white">
                         <thead>
-                            <tr>
+                            <tr >
                                 <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase">
                                     College Name
                                 </th>
