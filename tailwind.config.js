@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       colors: {
         "custom-brown": "#A52A2A", // Custom color name
+        "custom-brown-head": "#8B0000",
       },
       spacing: {
         8: "2em", // Custom spacing for gap

@@ -5,7 +5,8 @@ export interface FestivalStoreState {
   festivals: Festival[];
   festival: Festival;
   getAllFestivals: () => void;
-  getFestivalById: (id: string) => void;
+  getFestivalById: (id: number) => void;
+  getByCollege: (id: number) => void;
   deleteFestival: (id: number) => void;
   updateFestival: (data: FestivalData) => void;
   addFestival: (data: FestivalData) => void;
@@ -50,13 +51,23 @@ const useFestivalStore = create<FestivalStoreState>((set) => ({
     set(() => ({ festivals: res.data }));
   },
 
-  getFestivalById: async (id: string) => {
+  getFestivalById: async (id: number) => {
     const res = await http.get(`/festivals/${id}`);
     set((state: FestivalStoreState) => ({ festival: res.data }));
   },
+  getByCollege: async (id: number) => {
+    try {
+      // console.log("in store", id);
+      const res = await http.get(`/festivals/getByCollege/${id}`);
+      // console.log("result in store:", res);
+      set((state: FestivalStoreState) => ({ festival: res.data }));
+    } catch (error) {
+      console.error("Error fetching festival:", error);
+    }
+  },
 
   deleteFestival: async (id: number) => {
-    const res = await http.delete(`/festival/${id}`, {
+    const res = await http.delete(`/festivals/${id}`, {
       headers: { authorization: sessionStorage.token },
     });
     if (res.status === 200) {

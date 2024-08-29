@@ -1,19 +1,19 @@
 import axios from "axios";
 import { create } from "zustand";
-
+import { User } from "./userStore";
 interface Input {
   email: string;
   password: string;
 }
 
-interface User {
-  firstName: string;
-  lastName: string;
-  mobileNumber: string;
-  courseName?: string;
-  role: string;
-  // Add other user properties if needed
-}
+// interface User {
+//   firstName: string;
+//   lastName: string;
+//   mobileNumber: string;
+//   courseName?: string;
+//   role: string;
+//   // Add other user properties if needed
+// }
 
 interface LoginState {
   token: string;
@@ -33,7 +33,12 @@ const useLoginStore = create<LoginState>((set, get) => ({
       const response = await http.post("/auth/login", data);
 
       set((state: LoginState) => ({ token: response.data["access_token"] }));
+      const accessToken = response.data["access_token"];
+
       sessionStorage.setItem("token", response.data["access_token"]);
+      // Update token in state
+      set({ token: accessToken });
+      await get().fetchUser();
     } catch (error) {
       if (error instanceof Error) {
         console.error("Login failed:", error.message);

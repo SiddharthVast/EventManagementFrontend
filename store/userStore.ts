@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-import { College } from './collegeStore';
-
+import { College } from "./collegeStore";
 
 export interface UserStoreState {
   users: User[];
@@ -12,7 +11,7 @@ export interface UserStoreState {
   updateUser: (data: UserData) => void;
   addUser: (data: UserData) => void;
 }
-interface User {
+export interface User {
   id: number;
   firstName: string;
   lastName: string;
