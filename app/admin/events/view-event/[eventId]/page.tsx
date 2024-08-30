@@ -10,8 +10,7 @@ import AdminSummerImage from "../../../../../public/JpgAdminSummerImage.jpg";
 import SecondImage from "../../../../../public/AdminMusicNightImage.jpg";
 import useLoginStore from "@/store/loginStore";
 import useFestivalStore from "@/store/festivalStore";
-import { Festival } from "@/store/festivalStore";
-import Colleges from "@/app/colleges/page";
+
 const eventTypes = [
   "Cultural",
   "Sports",
@@ -31,6 +30,7 @@ const schema = yup.object().shape({
   startDateTime: yup.string().required("Start Date and Time are required"),
   endDateTime: yup.string().required("End Date and Time are required"),
   festivalId: yup.number().required("Festival Id is required"),
+  status: yup.string().required("Select"),
 });
 interface Props {
   params: {
@@ -74,10 +74,11 @@ const AddEvent = ({ params: { eventId } }: Props) => {
     if (eventId && event) {
       setValue("eventType", event.eventType);
       setValue("eventName", event.eventName);
-      setValue("members", event.members); // Set boolean value directly
-      setValue("venue", event.venue); // Use genreId directly
+      setValue("members", event.members);
+      setValue("venue", event.venue);
       setValue("startDateTime", event.startDateTime);
       setValue("endDateTime", event.endDateTime);
+      setValue("status", event.status ? "true" : "false");
     }
   }, [eventId, getEventById, reset, setValue, event]);
 
@@ -86,7 +87,7 @@ const AddEvent = ({ params: { eventId } }: Props) => {
   }, []);
   useEffect(() => {
     if (user) {
-      const collegeId = user?.college?.id ?? 0; // or any default number that makes sense
+      const collegeId = user?.college?.id ?? 0;
       getByCollege(collegeId);
     } else {
     }
@@ -96,32 +97,24 @@ const AddEvent = ({ params: { eventId } }: Props) => {
   const [error, setError] = useState("");
 
   const onSubmitHandler = (event: React.FormEvent) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-
-    const formData = getValues(); // Get form data
-    const festivalId = festival?.id; // Adjust this based on how you store or fetch festivalId
+    event.preventDefault();
+    const formData = getValues();
+    const festivalId = festival?.id;
     if (festivalId) {
       formData.festivalId = festivalId;
     }
     try {
       if (eventId && eventId !== "new") {
-        console.log("in if", eventId);
         updateEvent({ id: +eventId, ...formData });
-        // setChange("reset");
       } else {
         console.log("in else", eventId);
-
         addEvent(formData);
-        // setChange("reset");
       }
-
-      console.log("Event added successfully!");
       setSuccess("Event added successfully!");
       setError("");
       reset();
-      router.push("/events");
+      router.push("/admin/events/view-event");
     } catch (err) {
-      console.error("Error adding event:", err);
       setError("Failed to add event");
       setSuccess("");
     }
@@ -133,7 +126,7 @@ const AddEvent = ({ params: { eventId } }: Props) => {
         <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 flex">
           <div className="w-2/3">
             <h2 className="text-2xl font-semibold text-red-500 mb-6">
-              ADD EVENT
+              Event Form
             </h2>
             <form onSubmit={onSubmitHandler}>
               <div className="mb-4">
@@ -208,7 +201,7 @@ const AddEvent = ({ params: { eventId } }: Props) => {
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Start Date and Time
+                  Start Date
                 </label>
                 <input
                   type="datetime-local"
@@ -223,7 +216,7 @@ const AddEvent = ({ params: { eventId } }: Props) => {
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
-                  End Date and Time
+                  End Date
                 </label>
                 <input
                   type="datetime-local"
@@ -235,6 +228,34 @@ const AddEvent = ({ params: { eventId } }: Props) => {
                     {errors.endDateTime.message}
                   </p>
                 )}
+              </div>
+              <div className="mb-4">
+                <span className="block text-gray-700 text-sm font-bold mb-2">
+                  Status
+                </span>
+                <div className="mt-1">
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      {...register("status")}
+                      value="true"
+                      className="form-radio text-indigo-600"
+                      id="liked"
+                    />
+                    <span className="ml-2">Open</span>
+                  </label>
+                  <label className="inline-flex items-center ml-6">
+                    <input
+                      type="radio"
+                      {...register("status")}
+                      value="false"
+                      className="form-radio text-indigo-600"
+                      id="notLiked"
+                    />
+                    <span className="ml-2">Close</span>
+                  </label>
+                  <p>{errors.status?.message}</p>
+                </div>
               </div>
 
               <div className="flex justify-center">

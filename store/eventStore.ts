@@ -19,6 +19,7 @@ export interface EventData {
   startDateTime: string;
   endDateTime: string;
   festivalId: number;
+  status: string;
   // pointtojudge: PointsToJudge[];
   // usereventregs: User_event_reg[];
 }
@@ -34,6 +35,7 @@ const useEventStore = create<EventStoreState>((set) => ({
     startDateTime: "",
     endDateTime: "",
     festivalId: 0,
+    status: "",
   },
   // pointtojudge: PointsToJudge[],
   // usereventregs: User_event_reg[]

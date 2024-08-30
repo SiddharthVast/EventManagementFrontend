@@ -64,10 +64,12 @@ const ViewCollege = () => {
                                     <td className="py-2 px-4 border-b border-gray-200 text-sm">
                                         {users.filter(user => {
                                             // console.log("Comparing:", user.college.id, "with", String(college.id));
-                                            return user.college.id === (college.id);
+                                            return user.college?.id === (college.id);
                                         }).length > 0
                                             ? users
-                                                .filter(user => user.college.id === (college.id))
+                                                .filter(
+                                                    (user) => user.college?.id === college.id && user.role === "admin"
+                                                )
                                                 .map(user => `${user.firstName} ${user.lastName}`)
                                                 .join(", ")
                                             : "NA"}

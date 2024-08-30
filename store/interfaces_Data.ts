@@ -108,6 +108,7 @@ export interface Event {
   startDateTime: string;
   endDateTime: string;
   festivalId: number;
+  status: string;
   // pointtojudge: PointsToJudge[];
   // usereventregs: User_event_reg[];
 }

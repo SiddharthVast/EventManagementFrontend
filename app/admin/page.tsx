@@ -32,7 +32,7 @@ const Admin = () => {
               href="/admin/events/view-event/new"
               className="block w-full bg-red-700 text-white text-lg py-5 px-4"
             >
-              Add Event in Festival
+              Add Event
             </Link>
           </li>
           <li className="mb-2">
@@ -46,12 +46,13 @@ const Admin = () => {
 
           <li className="mb-2">
             <Link
-              href="/add-theme"
+              href="/admin/add-coordinator"
               className="block w-full bg-red-700 text-white text-lg py-5 px-4"
             >
-              Add Volunteer
+              Add Coordinator
             </Link>
           </li>
+
 
           <li className="mb-2">
             <Link
