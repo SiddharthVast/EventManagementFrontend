@@ -14,7 +14,6 @@ interface LoginState {
   logout: () => void;
   fetchUser: () => Promise<void>;
 }
-
 const http = axios.create({ baseURL: "http://localhost:3000" });
 
 const useLoginStore = create<LoginState>((set, get) => ({
@@ -23,43 +22,51 @@ const useLoginStore = create<LoginState>((set, get) => ({
 
   login: async (data: Input) => {
     try {
-      const response = await http.post("/auth/login", data);
+      const response = await fetch("http://localhost:3000/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-      if (response.status === 200) {
-        const accessToken = response.data["access_token"];
-        sessionStorage.setItem("token", accessToken);
-
-        // Update token in state
-        set({ token: accessToken });
-
-        // Fetch user profile after login
-        await get().fetchUser();
-      } else {
-        throw new Error('Login failed');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
       }
+
+      const resData = await response.json();
+      const accessToken = resData["access_token"];
+      sessionStorage.setItem("token", accessToken);
+
+      // Update token in state
+      set({ token: accessToken });
+
+      // Fetch user profile after login
+      await get().fetchUser();
     } catch (error) {
       if (error instanceof Error) {
         console.error("Login failed:", error.message);
       } else {
         console.error("Login failed:", error);
       }
-      throw new Error('Login failed');
+      throw new Error("Login failed");
     }
   },
 
   fetchUser: async () => {
-    const token = sessionStorage.getItem('token');
+    const token = sessionStorage.getItem("token");
     if (!token) return;
 
     try {
       const response = await http.get("/auth/profile", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `${token}`,
         },
       });
 
       if (response.status === 200) {
-        const userData = response.data;
+        const userData = await response.data;
         set({ user: userData });
       } else {
         set({ token: "", user: null });

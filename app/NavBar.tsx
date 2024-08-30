@@ -122,7 +122,7 @@ const NavBar = () => {
             <Link href="/contact" style={linkStyle}>
               Contact Us
             </Link>
-            <h6>Hello {user?.firstName}</h6>
+            {/* <h6>Hello {user?.firstName}</h6> */}
           </>
         );
     }

@@ -20,9 +20,9 @@ export interface User {
   password: string;
   mobileNumber: string;
   details: string;
-  courseName: string;
+  courseName?: string;
   role: string;
-  college: College;
+  college?: College;
 }
 
 export interface UserData {
@@ -33,9 +33,9 @@ export interface UserData {
   password: string;
   mobileNumber: string;
   details: string;
-  courseName: string;
+  courseName?: string;
   role: string;
-  collegeId: number;
+  collegeId?: number;
 }
 
 const http = axios.create({ baseURL: "http://localhost:3000" });
