@@ -77,20 +77,7 @@ const useUserStore = create<UserStoreState>((set) => ({
     const res = await http.get(`/users/${id}`);
     set(() => ({ user: res.data }));
   },
-  // deleteUser: async (id: number) => {
-  //   await http.delete(`/users/${id}`);
-  //   set((state) => ({
-  //     users: state.users.filter((user) => user.id !== id),
-  //   }));
-  // },
-  // updateUser: async (data: UserData) => {
-  //   const res = await http.put(`/users/${data.id}`, data);
-  //   set((state) => ({
-  //     users: state.users.map((user) =>
-  //       user.id === data.id ? res.data : user
-  //     ),
-  //   }));
-  // },
+
   addUser: async (data: UserData) => {
     // Exclude confirmPassword from the data sent to the backend
     // const { confirmPassword, ...userData } = data;
