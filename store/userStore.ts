@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-import { College } from './collegeStore'; // Unified import statement
+import { College } from "./collegeStore";
 
 export interface UserStoreState {
   users: User[];
@@ -12,12 +12,13 @@ export interface UserStoreState {
   addUser: (data: UserData) => void;
 }
 
-export interface User {
+ export interface User {
   id: number;
   firstName: string;
   lastName: string;
   email: string;
   password: string;
+  // confirmPassword?: string;
   mobileNumber: string;
   details: string;
   courseName?: string;
@@ -31,6 +32,7 @@ export interface UserData {
   lastName: string;
   email: string;
   password: string;
+  confirmPassword: string;
   mobileNumber: string;
   details: string;
   courseName?: string;
@@ -48,6 +50,7 @@ const useUserStore = create<UserStoreState>((set) => ({
     lastName: "",
     email: "",
     password: "",
+    confirmPassword: "",
     mobileNumber: "",
     details: "",
     courseName: "",
@@ -71,25 +74,32 @@ const useUserStore = create<UserStoreState>((set) => ({
   },
 
   getUserById: async (id: string) => {
-    try {
-      const res = await http.get(`/users/${id}`);
-      set(() => ({ user: res.data }));
-    } catch (error) {
-      console.error("Error fetching user by ID:", error);
-    }
+    const res = await http.get(`/users/${id}`);
+    set(() => ({ user: res.data }));
   },
-
+  // deleteUser: async (id: number) => {
+  //   await http.delete(`/users/${id}`);
+  //   set((state) => ({
+  //     users: state.users.filter((user) => user.id !== id),
+  //   }));
+  // },
+  // updateUser: async (data: UserData) => {
+  //   const res = await http.put(`/users/${data.id}`, data);
+  //   set((state) => ({
+  //     users: state.users.map((user) =>
+  //       user.id === data.id ? res.data : user
+  //     ),
+  //   }));
+  // },
   addUser: async (data: UserData) => {
-    try {
-      const res = await http.post("/users", data, {
-        headers: { authorization: `Bearer ${sessionStorage.getItem('token')}` }, // Correct token handling
-      });
-      set((state) => ({
-        users: [...state.users, res.data],
-      }));
-    } catch (error) {
-      console.error("Error adding user:", error);
-    }
+    // Exclude confirmPassword from the data sent to the backend
+    // const { confirmPassword, ...userData } = data;
+    const res = await http.post("/users", data, {
+      headers: { authorization: sessionStorage.token },
+    });
+    set((state: UserStoreState) => ({
+      users: [...state.users, res.data],
+    }));
   },
 
   updateUser: async (data: UserData) => {
