@@ -92,7 +92,7 @@ const ViewFestival = () => {
                   </td>
                   <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
                     <div className="flex space-x-2 justify-center">
-                      <Link href={`/admin/view-festival/${festival.id}`}>
+                      <Link href={`/admin/festivals/view-festival/${festival.id}`}>
                         <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline">
                           Update
                         </button>

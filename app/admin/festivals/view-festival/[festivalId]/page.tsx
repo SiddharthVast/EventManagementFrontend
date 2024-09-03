@@ -94,7 +94,7 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
 
       await updateFestival(data);
       reset();
-      router.push("/admin/view-festival");
+      router.push("/admin/festivals/view-festival");
     } catch (err) {
       console.error("Error updating festival:", err);
     }
