@@ -8,7 +8,7 @@ const Admin = () => {
     <div className="flex">
       <div className="w-3/4 bg-white p-4">
         <h1 className="text-xl font-bold mb-6">
-          WELCOME TO EVENT MANAGEMENT SYSTEM
+          Welcome to Event Management System
         </h1>
         <ul>
           <li className="mb-2">
@@ -29,6 +29,14 @@ const Admin = () => {
           </li>
           <li className="mb-2">
             <Link
+              href="/admin/coordinator/add-coordinator"
+              className="block w-full bg-red-700 text-white text-lg py-5 px-4"
+            >
+              Add Coordinator
+            </Link>
+          </li>
+          <li className="mb-2">
+            <Link
               href="/admin/events/view-event/new"
               className="block w-full bg-red-700 text-white text-lg py-5 px-4"
             >
@@ -43,31 +51,12 @@ const Admin = () => {
               View Events
             </Link>
           </li>
-
-          <li className="mb-2">
-            <Link
-              href="/admin/add-coordinator"
-              className="block w-full bg-red-700 text-white text-lg py-5 px-4"
-            >
-              Add Coordinator
-            </Link>
-          </li>
-
-
-          <li className="mb-2">
-            <Link
-              href="/event-report"
-              className="block w-full bg-red-700 text-white text-lg py-5 px-4"
-            >
-              Event Report
-            </Link>
-          </li>
           <li className="mb-2">
             <Link
               href="/program-type-report"
               className="block w-full bg-red-700 text-white text-lg py-5 px-4"
             >
-              Program Report
+              Event Report
             </Link>
           </li>
           <li className="mb-2">
@@ -81,7 +70,7 @@ const Admin = () => {
         </ul>
       </div>
       <div className="w-1/4 bg-white p-4">
-        <h2 className="text-lg font-bold mb-4">FEATURES</h2>
+        <h2 className="text-lg font-bold mb-4">Features</h2>
         <div className="space-y-4">
           <div>
             <Image

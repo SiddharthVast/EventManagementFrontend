@@ -92,13 +92,7 @@ export interface PointsToJudgeData {
   event: Event;
 }
 
-export interface User_event_reg {
-  id: number;
-  groupName: string;
-  totalScores: number;
-  user: User;
-  event: Event;
-}
+
 export interface Event {
   id: number;
   eventType: string;
