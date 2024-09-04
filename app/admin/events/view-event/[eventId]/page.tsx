@@ -114,6 +114,7 @@ const AddEvent = ({ params: { eventId } }: Props) => {
       setError("");
       reset();
       router.push("/admin/events/view-event");
+      router.push("/admin/events/view-event");
     } catch (err) {
       setError("Failed to add event");
       setSuccess("");
@@ -228,6 +229,34 @@ const AddEvent = ({ params: { eventId } }: Props) => {
                     {errors.endDateTime.message}
                   </p>
                 )}
+              </div>
+              <div className="mb-4">
+                <span className="block text-gray-700 text-sm font-bold mb-2">
+                  Status
+                </span>
+                <div className="mt-1">
+                  <label className="inline-flex items-center">
+                    <input
+                      type="radio"
+                      {...register("status")}
+                      value="true"
+                      className="form-radio text-indigo-600"
+                      id="liked"
+                    />
+                    <span className="ml-2">Open</span>
+                  </label>
+                  <label className="inline-flex items-center ml-6">
+                    <input
+                      type="radio"
+                      {...register("status")}
+                      value="false"
+                      className="form-radio text-indigo-600"
+                      id="notLiked"
+                    />
+                    <span className="ml-2">Close</span>
+                  </label>
+                  <p>{errors.status?.message}</p>
+                </div>
               </div>
               <div className="mb-4">
                 <span className="block text-gray-700 text-sm font-bold mb-2">

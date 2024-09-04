@@ -92,10 +92,12 @@ const useUserStore = create<UserStoreState>((set) => ({
   updateUser: async (data: UserData) => {
     try {
       const res = await http.patch(`/users/${data.id}`, data, {
-        headers: { authorization: `Bearer ${sessionStorage.getItem('token')}` }, // Correct token handling
+        headers: { authorization: `Bearer ${sessionStorage.getItem("token")}` }, // Correct token handling
       });
       set((state) => ({
-        users: state.users.map((user) => (user.id === data.id ? res.data : user)),
+        users: state.users.map((user) =>
+          user.id === data.id ? res.data : user
+        ),
       }));
     } catch (error) {
       console.error("Error updating user:", error);
@@ -105,7 +107,7 @@ const useUserStore = create<UserStoreState>((set) => ({
   deleteUser: async (id: number) => {
     try {
       const res = await http.delete(`/users/${id}`, {
-        headers: { authorization: `Bearer ${sessionStorage.getItem('token')}` }, // Correct token handling
+        headers: { authorization: `Bearer ${sessionStorage.getItem("token")}` }, // Correct token handling
       });
       if (res.status === 200) {
         set((state) => ({
