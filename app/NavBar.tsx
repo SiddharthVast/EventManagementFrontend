@@ -37,7 +37,9 @@ const NavBar = () => {
             <a onClick={handleLogout} style={linkStyle}>
               Logout
             </a>
-            <h6> {user.firstName}</h6>
+            <h6 className="absolute right-0 mt-1 mr-2">
+              Wellcome {user.firstName}
+            </h6>
           </>
         );
       case "admin":
@@ -58,7 +60,9 @@ const NavBar = () => {
             <a onClick={handleLogout} style={linkStyle}>
               Logout
             </a>
-            <h6>Hello {user.firstName}</h6>
+            <h6 className="absolute right-0 mt-1 mr-2">
+              Wellcome {user.firstName}
+            </h6>{" "}
           </>
         );
       case "coordinator":
@@ -73,11 +77,12 @@ const NavBar = () => {
             <Link href="/events" style={linkStyle}>
               Events
             </Link>
-            {/* <Link href="/volunteer" style={linkStyle}>Volunteer</Link> */}
             <a onClick={handleLogout} style={linkStyle}>
               Logout
             </a>
-            <h6>Hello {user.firstName}</h6>
+            <h6 className="absolute right-0 mt-1 mr-2">
+              Wellcome {user.firstName}
+            </h6>{" "}
           </>
         );
       case "student":
@@ -98,7 +103,9 @@ const NavBar = () => {
             <a onClick={handleLogout} style={linkStyle}>
               Logout
             </a>
-            <h6>Hello {user.firstName}</h6>
+            <h6 className="absolute right-0 mt-1 mr-2">
+              Wellcome {user.firstName}
+            </h6>{" "}
           </>
         );
       default:
@@ -122,7 +129,6 @@ const NavBar = () => {
             <Link href="/contact" style={linkStyle}>
               Contact Us
             </Link>
-            {/* <h6>Hello {user?.firstName}</h6> */}
           </>
         );
     }

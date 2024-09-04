@@ -1,7 +1,6 @@
 // "use client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import NavBar from "./NavBar";
 import useLoginStore from "@/store/loginStore";
 import { useEffect } from "react";

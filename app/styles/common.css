@@ -22,28 +22,53 @@
 .theme-color {
   @apply text-red-500;
 }
+/* ----------------------------------------------------------------------- */
 
 table{
     @apply min-w-full bg-white;
 }
+th{
+ @apply py-2 px-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase
 
+}
+td{
+    @apply border-b border-gray-200 px-2 py-2 text-sm;
+
+}
+tr:hover {
+  @apply bg-gray-100;
+  @apply transition-colors duration-200;
+}
+
+/* Link with hover effects */
+.link-button {
+  @apply relative inline-flex items-center text-red-500 hover:text-red-700 transition-colors duration-300;
+}
+
+/* Optional label for link */
+.link-button .icon {
+  @apply h-6 w-6 transform transition-transform duration-300;
+}
+
+/* Hover state for the icon */
+.link-button:hover .icon {
+  @apply translate-x-1;
+}
+
+.delete-icon {
+  @apply text-red-600 hover:text-red-800; /* Color and hover effects */
+  @apply h-5 w-5; /* Size adjustments */
+}
+
+/* .delete-icon:hover {
+  @apply h-6 w-6 transform transition-transform duration-300;
+
+} */
+/* --------------------------------------------------------------------------------------------------------------- */
 .flex-center-gap {
     @apply flex justify-center gap-8 py-2 bg-custom-brown;
   }
   
-.table-header {
- @apply py-2 px-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase
-    /* @apply bg-custom-brown text-white border-b-2 border-gray-300 px-6 py-3 text-left text-sm font-medium; */
-}
-
-.table-cell {
-  @apply border-b border-gray-200 px-2 py-2 text-sm;
-}
-
-.table-row-hover:hover {
-  @apply bg-gray-100;
-  @apply transition-colors duration-200;
-}
 
 .btn_update{
   @apply bg-gray-500 hover:bg-gray-700 text-white py-1 px-3 rounded focus:outline-none m-1;
@@ -55,3 +80,7 @@ table{
 .btn_add{
   @apply bg-red-500 hover:bg-red-700 text-white  py-1 m-1 px-4 rounded  mr-2;
 }
+
+/* css for icons */
+/* IconButton.module.css */
+

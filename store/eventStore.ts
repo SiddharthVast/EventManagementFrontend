@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import axios from "axios";
-import { Event } from "./interfaces_Data";
 export interface EventStoreState {
   events: Event[];
   event: Event;
@@ -9,6 +8,19 @@ export interface EventStoreState {
   deleteEvent: (id: number) => void;
   addEvent: (data: EventData) => void;
   updateEvent: (data: EventData) => void;
+}
+export interface Event {
+  id: number;
+  eventType: string;
+  eventName: string;
+  members: string;
+  venue: string;
+  startDateTime: string;
+  endDateTime: string;
+  festivalId: number;
+  status: string;
+  // pointtojudge: PointsToJudge[];
+  // usereventregs: User_event_reg[];
 }
 export interface EventData {
   id?: number;

@@ -1,11 +1,19 @@
 import axios from "axios";
 import { create } from "zustand";
 import { User } from "./userStore";
-
 interface Input {
   email: string;
   password: string;
 }
+
+// interface User {
+//   firstName: string;
+//   lastName: string;
+//   mobileNumber: string;
+//   courseName?: string;
+//   role: string;
+//   // Add other user properties if needed
+// }
 
 interface LoginState {
   token: string;
