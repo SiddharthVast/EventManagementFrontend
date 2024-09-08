@@ -3,7 +3,6 @@ import { useRouter } from "next/navigation";
 import useLoginStore from "@/store/loginStore";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import React, { useState } from "react";
 import Modal from "../modal/modal";
@@ -11,8 +10,6 @@ import axios from "axios";
 import Link from "next/link";
 
 interface FormValues {
-  email: string;
-  password: string;
   email: string;
   password: string;
 }
@@ -28,17 +25,6 @@ const resetPasswordSchema = yup.object().shape({
 });
 
 const Login = () => {
-  const login = useLoginStore((state) => state.login);
-  const fetchUser = useLoginStore((state) => state.fetchUser);
-  const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<FormValues>({
-    resolver: yupResolver(schema),
-  });
   const login = useLoginStore((state) => state.login);
   const fetchUser = useLoginStore((state) => state.fetchUser);
   const router = useRouter();
@@ -77,6 +63,8 @@ const Login = () => {
         router.push("/superadmin");
       } else if (user?.role === "volunteer") {
         router.push("/admin");
+      } else if (user?.role === "judge") {
+        router.push("/judge/events");
       } else {
         router.push("/student");
       }
@@ -114,10 +102,6 @@ const Login = () => {
     }
   };
 
-  const handleReset = () => {
-    reset();
-    setError("");
-  };
   const handleReset = () => {
     reset();
     setError("");
