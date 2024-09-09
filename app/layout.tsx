@@ -1,9 +1,7 @@
-// "use client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "./NavBar";
-import useLoginStore from "@/store/loginStore";
-import { useEffect } from "react";
+import { UserProvider } from "./context/UserContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,16 +12,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <>
+        <UserProvider>
           <NavBar />
           <main>{children}</main>
-        </>
+        </UserProvider>
       </body>
     </html>
   );

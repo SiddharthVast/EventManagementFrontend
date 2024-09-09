@@ -6,6 +6,7 @@ import "../../../styles/common.css";
 import Link from "next/link";
 import { ArrowRightIcon } from "@heroicons/react/24/solid"; // Example of importing an icon
 import useUserEventRegistrationStore from "@/store/user_event_registrationStore";
+import { ViewColumnsIcon } from "@heroicons/react/16/solid";
 
 const ShowEvents = () => {
   const { events, getAllEvents, deleteEvent } = useEventStore((state) => ({
@@ -159,6 +160,17 @@ const ShowEvents = () => {
                       >
                         <ArrowRightIcon className="icon" />
                       </Link>
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <td>
+                        <Link href={`/judge/view-scores/${event.id}`}>
+                          <button>
+                            <ViewColumnsIcon className="h-8 w-8 text-red-500 mt-4 animate-bounce" />
+                          </button>
+                        </Link>
+                      </td>
                     </div>
                   </td>
                   <td className="py-2 px-2 border-b border-gray-200 text-sm text-center">

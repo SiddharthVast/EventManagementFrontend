@@ -60,6 +60,8 @@ const Login = () => {
         router.push("/superadmin");
       } else if (user?.role === "volunteer") {
         router.push("/admin");
+      } else if (user?.role === "judge") {
+        router.push("/judge/events");
       } else {
         router.push("/student");
       }

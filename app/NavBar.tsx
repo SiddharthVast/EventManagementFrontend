@@ -5,10 +5,13 @@ import React, { useEffect } from "react";
 import useLoginStore from "@/store/loginStore";
 import { useRouter } from "next/navigation";
 import "./styles/common.css";
+import { useUser } from "./context/UserContext"; // Adjust the path as needed
 
 const NavBar = () => {
+  const { user } = useUser(); // Access user data from context
+
   const logout = useLoginStore((state) => state.logout);
-  const user = useLoginStore((state) => state.user);
+  // const user = useLoginStore((state) => state.user);
   const login = useLoginStore((state) => state.login);
   const router = useRouter();
 
@@ -16,7 +19,6 @@ const NavBar = () => {
     logout();
     router.push("/login"); // Redirect to login page after logout
   };
-  console.log("User data : ", user);
   const renderLinks = () => {
     switch (user?.role) {
       case "superadmin":
@@ -83,6 +85,26 @@ const NavBar = () => {
             <h6 className="absolute right-0 mt-1 mr-2">
               Wellcome {user.firstName}
             </h6>{" "}
+          </>
+        );
+      case "judge":
+        return (
+          <>
+            <Link href="/events" style={linkStyle}>
+              Home
+            </Link>
+            <Link href="/about" style={linkStyle}>
+              About Project
+            </Link>
+            <Link href="/judge/events" style={linkStyle}>
+              Events
+            </Link>
+            <a onClick={handleLogout} style={linkStyle}>
+              Logout
+            </a>
+            <h6 className="absolute right-0 mt-1 mr-2">
+              Wellcome {user.firstName}
+            </h6>
           </>
         );
       case "student":
