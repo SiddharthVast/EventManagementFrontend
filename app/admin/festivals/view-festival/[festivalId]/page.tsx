@@ -8,6 +8,7 @@ import useFestivalStore, {
 } from "../../../../../store/festivalStore";
 import { useRouter } from "next/navigation";
 import useLoginStore from "@/store/loginStore";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const schema = yup.object().shape({
   festivalTitle: yup
@@ -103,8 +104,15 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="flex justify-center items-start p-8 pt-20">
-        <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8">
-          <h2 className="text-2xl font-semibold text-red-500 mb-6 text-center">
+        <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 relative ">
+          
+          <button
+            onClick={() => router.push("/admin/festivals/view-festival")}
+            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+          >
+            <XMarkIcon className="h-6 w-6" />
+          </button>
+          <h2 className="text-2xl font-semibold text-red-500 mb-6 text-center ">
             Update Festival Details
           </h2>
           <form onSubmit={handleSubmit(onSubmitHandler)}>
@@ -206,10 +214,7 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
               )}
             </div>
             <div className="flex justify-center">
-              <button
-                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
-                type="submit"
-              >
+              <button className="update" type="submit">
                 Update
               </button>
             </div>

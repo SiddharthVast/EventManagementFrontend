@@ -179,10 +179,7 @@ const StudentRegistration = () => {
             </div>
           </div>
           <div className="mt-6">
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
-            >
+            <button type="submit" className="register">
               Register
             </button>
           </div>

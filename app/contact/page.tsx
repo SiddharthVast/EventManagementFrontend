@@ -1,23 +1,26 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import whereToFindUs from "../../public/WhereToFindUs.jpg";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 import useContactUsStore, { Contact } from "@/store/contactusStore";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Loading from "../loading";
 
 const schema = Yup.object().shape({
-  name: Yup.string().required('Name is required'),
-  email: Yup.string().email('Invalid email format').required('Email is required'),
+  name: Yup.string().required("Name is required"),
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Email is required"),
   mobileNumber: Yup.string()
     .matches(/^\d{10}$/, "Mobile Number must be exactly 10 digits")
     .required("Mobile Number is required"),
-  message: Yup.string().required('Message is required')
+  message: Yup.string().required("Message is required"),
 });
 
-const ContactUsForm = () => { 
+const ContactUsPage = () => {
   const contactUs = useContactUsStore((state) => state.handleContactSubmission);
   const router = useRouter();
   const {
@@ -28,20 +31,28 @@ const ContactUsForm = () => {
   } = useForm<Contact>({
     resolver: yupResolver(schema),
   });
+
   const [success, setSuccess] = useState("");
-  const [error, setError] = useState(" ");
+  const [error, setError] = useState("");
+  const [loader, setLoader] = useState(false);
+
   const onSubmitHandler = async (data: Contact) => {
-  try {
-    await contactUs(data);
-    setSuccess("Contact us Form Submited Successfully!")
-    setError("");
-    reset();
-    router.push("/")
-  } catch (error) {
-    setError("Failed to Submit Contact Us Form");
-    setSuccess("");
-  }
-}
+    setLoader(true); // Start loader
+    try {
+      await contactUs(data);
+      setSuccess("Contact Us Form Submitted Successfully!");
+      setError("");
+      reset();
+      alert("Form Submitted Successfully!");
+      router.push("/");
+    } catch (error) {
+      setError("Failed to Submit Contact Us Form");
+      setSuccess("");
+      alert("Form Submission Failed!");
+    } finally {
+      setLoader(false); // Stop loader
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -86,7 +97,6 @@ const ContactUsForm = () => {
                 />
                 {errors.mobileNumber && (
                   <p className="text-red-500 mt-1">
-                    {" "}
                     {errors.mobileNumber.message}
                   </p>
                 )}
@@ -97,21 +107,28 @@ const ContactUsForm = () => {
                 </label>
                 <textarea
                   {...register("message")}
-                  className="block w-full px-4 py-2 border rounded-md
-                  focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   rows={5}
                   placeholder="Your Message"
                 />
-                {errors.message && <p className="text-red-500 mt-1">{errors.message.message}</p>}
+                {errors.message && (
+                  <p className="text-red-500 mt-1">{errors.message.message}</p>
+                )}
               </div>
+
+              {/* Use the Loading component here */}
+              {loader && <Loading />}
+
               <div className="flex space-x-4">
                 <button
                   type="submit"
-                  className="w-1/2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
+                  disabled={loader}
+                  className={`w-1/2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors ${
+                    loader ? "cursor-not-allowed opacity-50" : ""
+                  }`}
                 >
                   Submit
                 </button>
-              
               </div>
             </form>
           </div>
@@ -151,5 +168,4 @@ const ContactUsForm = () => {
   );
 };
 
-export default ContactUsForm;
-
+export default ContactUsPage;

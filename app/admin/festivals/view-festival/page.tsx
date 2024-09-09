@@ -4,6 +4,7 @@ import useFestivalStore from "../../../../store/festivalStore";
 import useUserStore from "../../../../store/userStore";
 import Link from "next/link";
 import Image from "next/image";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/16/solid";
 
 const ViewFestival = () => {
   const festivals = useFestivalStore((state) => state.festivals);
@@ -28,39 +29,20 @@ const ViewFestival = () => {
           <table className="min-w-full bg-white">
             <thead>
               <tr>
-                {/* Center-aligned column headings */}
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-center text-sm font-semibold text-gray-600 uppercase">
-                  Image
-                </th>
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-center text-sm font-semibold text-gray-600 uppercase">
-                  Title
-                </th>
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-center text-sm font-semibold text-gray-600 uppercase">
-                  Start Date
-                </th>
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-center text-sm font-semibold text-gray-600 uppercase">
-                  End Date
-                </th>
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-center text-sm font-semibold text-gray-600 uppercase">
-                  Description
-                </th>
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-center text-sm font-semibold text-gray-600 uppercase">
-                  Status
-                </th>
-                {/* New Event column */}
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-center text-sm font-semibold text-gray-600 uppercase">
-                  Event
-                </th>
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-center text-sm font-semibold text-gray-600 uppercase">
-                  Actions
-                </th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Event</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {festivals.map((festival) => (
                 <tr key={festival.id}>
-                  {/* Center-aligned data cells */}
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
+                  <td className="py-2 px-4 border-b border-gray-200 text-sm text-left">
                     <Image
                       src={
                         typeof festival.imageUrl === "string"
@@ -76,13 +58,13 @@ const ViewFestival = () => {
                   <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
                     {festival.festivalTitle}
                   </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
+                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
                     {new Date(festival.startDate).toLocaleString("en-US", {
                       dateStyle: "medium",
                       timeStyle: "short",
                     })}
                   </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
+                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
                     {new Date(festival.endDate).toLocaleString("en-US", {
                       dateStyle: "medium",
                       timeStyle: "short",
@@ -110,16 +92,17 @@ const ViewFestival = () => {
                   </td>
                   <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
                     <div className="flex space-x-2 justify-center">
-                      <Link href={`/admin/festivals/view-festival/${festival.id}`}>
-                        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline">
-                          Update
+                      <Link
+                        href={`/admin/festivals/view-festival/${festival.id}`}
+                      >
+                        <button>
+                          <PencilSquareIcon className=" update-icon" />
                         </button>
                       </Link>
                       <button
-                        className="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline"
                         onClick={() => deleteFestival(festival.id)}
                       >
-                        Delete
+                        <TrashIcon className=" delete-icon" />
                       </button>
                     </div>
                   </td>

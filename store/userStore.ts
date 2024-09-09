@@ -33,7 +33,7 @@ export interface UserData {
   password: string;
   confirmPassword?: string;
   mobileNumber: string;
-  details: string;
+  details?: string;
   courseName?: string;
   role: string;
   collegeId?: number;
@@ -78,6 +78,8 @@ const useUserStore = create<UserStoreState>((set) => ({
   },
 
   addUser: async (data: UserData) => {
+    // Exclude confirmPassword from the data sent to the backend
+    // const { confirmPassword, ...userData } = data;
     const res = await http.post("/users", data, {
       headers: { authorization: sessionStorage.token },
     });
