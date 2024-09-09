@@ -1,10 +1,10 @@
 "use client";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import useLoginStore from "@/store/loginStore";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import React, { useState } from "react";
 import Modal from "../modal/modal";
 import axios from "axios";
 import Link from "next/link";
@@ -17,7 +17,6 @@ interface FormValues {
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().min(8).max(255).required(),
-  role: yup.string(),
 });
 
 const resetPasswordSchema = yup.object().shape({
@@ -51,12 +50,10 @@ const Login = () => {
 
   const onSubmitHandler = async (data: FormValues) => {
     try {
-      console.log(data);
-      let res = await login(data);
-      console.log(res);
+      const res = await login(data);
       await fetchUser();
       const user = useLoginStore.getState().user;
-      console.log(user);
+
       if (user?.role === "admin") {
         router.push("/admin");
       } else if (user?.role === "superadmin") {
@@ -86,9 +83,6 @@ const Login = () => {
         }
       );
 
-      console.log("Response status:", response.status);
-      console.log("Response data:", response.data);
-
       if (response.status === 200) {
         alert("A reset link has been sent to your email.");
         setShowResetModal(false);
@@ -109,7 +103,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md">
+      <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md -mt-10">
         <h2 className="text-2xl font-bold mb-6 text-left">
           Login to Your Account
         </h2>
@@ -123,9 +117,7 @@ const Login = () => {
               className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.email && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.email.message}
-              </p>
+              <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
             )}
           </div>
           <div className="mb-6">
@@ -136,9 +128,7 @@ const Login = () => {
               className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.password && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.password.message}
-              </p>
+              <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
             )}
           </div>
           <div className="flex space-x-4">
@@ -182,9 +172,7 @@ const Login = () => {
               className="block w-full px-4 py-2 border rounded-md"
             />
             {resetErrors.email && (
-              <p className="text-red-500 text-xs mt-1">
-                {resetErrors.email.message}
-              </p>
+              <p className="text-red-500 text-xs mt-1">{resetErrors.email.message}</p>
             )}
             <button
               type="submit"
