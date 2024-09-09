@@ -12,7 +12,7 @@ export interface UserEventRegistrationStoreState {
   addRegistration: (data: {
     eventId: number;
     userId: number;
-    topic: string;
+    topic?: string;
   }) => void;
   getRegByEidRole: (id: number, userRole: string) => void;
 
