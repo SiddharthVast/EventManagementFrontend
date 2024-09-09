@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import useUserEventRegistartionStore from "@/store/user_event_registrationStore";
+import useEventStore from "@/store/eventStore";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const schema = yup.object().shape({
     userId: yup.number().required("Coordinator is required"),
@@ -24,6 +26,10 @@ const AssignCoordinatorForm = ({ params: { eventId } }: Props) => {
         getAllUsers: state.getAllUsers,
     }));
     const addRegistration = useUserEventRegistartionStore((state) => state.addRegistration);
+    const { event, getEventById } = useEventStore((state) => ({
+        event: state.event,
+        getEventById: state.getEventById,
+    }));
 
     const {
         register,
@@ -46,10 +52,17 @@ const AssignCoordinatorForm = ({ params: { eventId } }: Props) => {
         }
     }, [getAllUsers, users.length]);
 
+    useEffect(() => {
+        if (eventId) {
+            getEventById(parseInt(eventId));
+        }
+    }, [eventId, getEventById]);
     const onSubmitHandler = (data: { userId: number }) => {
         addRegistration({ ...data, eventId: parseInt(eventId) });
         reset();
-        router.push("/admin/events/view-event");
+        if (event?.festival?.id) {
+            router.push(`/admin/events/view-event/${event.festival.id}`); // Redirect using the festival id
+        }
     };
 
     return (
@@ -57,7 +70,14 @@ const AssignCoordinatorForm = ({ params: { eventId } }: Props) => {
             onSubmit={handleSubmit(onSubmitHandler)}
             className="bg-gray-100 min-h-screen flex justify-center items-center"
         >
-            <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl">
+            <div className="relative bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl">
+                <button
+                    type="button"
+                    onClick={() => router.push(`/admin/events/view-event/${event.festival.id}`)}
+                    className="absolute top-4 right-4"
+                >
+                    <XMarkIcon className="h-6 w-6 text-gray-500 hover:text-gray-700" />
+                </button>
                 <h2 className="text-2xl font-semibold mb-6">Assign Coordinators for Event</h2>
                 <div className="mb-4">
                     <label htmlFor="userId" className="font-medium mb-2 block">
@@ -80,12 +100,14 @@ const AssignCoordinatorForm = ({ params: { eventId } }: Props) => {
                         <p className="text-red-500 text-xs italic">{errors.userId.message}</p>
                     )}
                 </div>
-                <button
-                    type="submit"
-                    className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded"
-                >
-                    Assign Coordinator
-                </button>
+                <div className=" flex justify-center">
+                    <button
+                        type="submit"
+                        className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded flex space-x-2 justify-center"
+                    >
+                        Assign Coordinator
+                    </button>
+                </div>
             </div>
         </form>
     );

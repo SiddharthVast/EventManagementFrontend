@@ -12,13 +12,12 @@ export interface UserStoreState {
   addUser: (data: UserData) => void;
 }
 
- export interface User {
+export interface User {
   id: number;
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  // confirmPassword?: string;
   mobileNumber: string;
   details: string;
   courseName?: string;
@@ -32,7 +31,7 @@ export interface UserData {
   lastName: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
   mobileNumber: string;
   details: string;
   courseName?: string;
@@ -79,8 +78,6 @@ const useUserStore = create<UserStoreState>((set) => ({
   },
 
   addUser: async (data: UserData) => {
-    // Exclude confirmPassword from the data sent to the backend
-    // const { confirmPassword, ...userData } = data;
     const res = await http.post("/users", data, {
       headers: { authorization: sessionStorage.token },
     });
@@ -92,7 +89,7 @@ const useUserStore = create<UserStoreState>((set) => ({
   updateUser: async (data: UserData) => {
     try {
       const res = await http.patch(`/users/${data.id}`, data, {
-        headers: { authorization: `Bearer ${sessionStorage.getItem("token")}` }, // Correct token handling
+        headers: { authorization: `${sessionStorage.getItem("token")}` },
       });
       set((state) => ({
         users: state.users.map((user) =>
@@ -107,7 +104,7 @@ const useUserStore = create<UserStoreState>((set) => ({
   deleteUser: async (id: number) => {
     try {
       const res = await http.delete(`/users/${id}`, {
-        headers: { authorization: `Bearer ${sessionStorage.getItem("token")}` }, // Correct token handling
+        headers: { authorization: `${sessionStorage.getItem("token")}` },
       });
       if (res.status === 200) {
         set((state) => ({
