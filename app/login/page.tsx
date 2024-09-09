@@ -161,8 +161,17 @@ const Login = () => {
           </div>
         </form>
         <div className="flex flex-col items-center mt-6 space-y-2">
-          <Link href="/registration" className="text-blue-500 hover:underline">
-             Sign up?
+
+          <Link href="student/registration" className="text-blue-500 hover:underline">
+            Sign up?
+          </Link>
+          <Link
+            href="#"
+            onClick={() => setShowResetModal(true)}
+            className="text-blue-500 hover:underline"
+          >
+            Forgot Password?
+
           </Link>
         </div>
       </div>
