@@ -42,7 +42,6 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
   const [eventName, setEventName] = useState<string | null>(null);
 
   const { addPoints } = usePointToJudgeStore();
-  // const getAllPoints = usePointToJudgeStore((state) => state.getAllPoints);
   const pointsToJudge = usePointToJudgeStore((state) => state.pointsToJudge);
   const pointToJudge = usePointToJudgeStore((state) => state.pointToJudge);
   const getPointsById = usePointToJudgeStore((state) => state.getPointsById);
@@ -181,14 +180,6 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
               }
             >
               Reset
-            </button>
-            <button
-              className={`bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 ${loading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? "Submitting..." : "Submit"}
             </button>
           </div>
 

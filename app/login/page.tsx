@@ -12,7 +12,7 @@ import Link from "next/link";
 interface FormValues {
   email: string;
   password: string;
-  // role: yup.string(),
+
 }
 
 const schema = yup.object().shape({
@@ -135,6 +135,15 @@ const Login = () => {
               <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
             )}
           </div>
+          <div className="flex justify-end">
+            <Link
+              href="#"
+              onClick={() => setShowResetModal(true)}
+              className="text-blue-500 hover:underline "
+            >
+              Forgot Password?
+            </Link>
+          </div>
           <div className="flex space-x-4">
             <button
               type="submit"
@@ -153,14 +162,7 @@ const Login = () => {
         </form>
         <div className="flex flex-col items-center mt-6 space-y-2">
           <Link href="/registration" className="text-blue-500 hover:underline">
-            Sign up?
-          </Link>
-          <Link
-            href="#"
-            onClick={() => setShowResetModal(true)}
-            className="text-blue-500 hover:underline"
-          >
-            Forgot Password?
+             Sign up?
           </Link>
         </div>
       </div>
