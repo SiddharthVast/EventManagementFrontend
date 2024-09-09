@@ -3,7 +3,7 @@ import AdminSummerImage from "../../public/JpgAdminSummerImage.jpg";
 import Image from "next/image";
 import MusicConnection from "../../public/AdminMusicNightImage.jpg";
 
-const Student = () => {
+const Coordinator = () => {
     return (
         <div className="flex">
             <div className="w-3/4 bg-white p-4">
@@ -13,7 +13,7 @@ const Student = () => {
                 <ul>
                     <li className="mb-2">
                         <Link
-                            href="/student/"
+                            href="/coordinator/"
                             className="block w-full bg-red-700 text-white text-lg py-5 px-4"
                         >
                             Events
@@ -21,15 +21,15 @@ const Student = () => {
                     </li>
                     <li className="mb-2">
                         <Link
-                            href="/student/"
+                            href="/coordinator/"
                             className="block w-full bg-red-700 text-white text-lg py-5 px-4"
                         >
-                            My Registered Events
+                            My Work
                         </Link>
                     </li>
                     <li className="mb-2">
                         <Link
-                            href="/student/my-account"
+                            href="/coordinator/"
                             className="block w-full bg-red-700 text-white text-lg py-5 px-4"
                         >
                             My Account
@@ -60,4 +60,4 @@ const Student = () => {
     );
 };
 
-export default Student;
+export default Coordinator;

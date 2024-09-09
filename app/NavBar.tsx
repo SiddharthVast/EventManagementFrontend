@@ -12,12 +12,11 @@ const NavBar = () => {
 
   const logout = useLoginStore((state) => state.logout);
   // const user = useLoginStore((state) => state.user);
-  const login = useLoginStore((state) => state.login);
   const router = useRouter();
 
   const handleLogout = () => {
     logout();
-    router.push("/login"); // Redirect to login page after logout
+    router.push("/login");
   };
   const renderLinks = () => {
     switch (user?.role) {
@@ -30,9 +29,6 @@ const NavBar = () => {
             <Link href="/about" style={linkStyle}>
               About Project
             </Link>
-            {/* <Link href="/events" style={linkStyle}>
-              Events
-            </Link> */}
             <Link href="/superadmin" style={linkStyle}>
               Colleges{" "}
             </Link>
@@ -40,7 +36,7 @@ const NavBar = () => {
               Logout
             </a>
             <h6 className="absolute right-0 mt-1 mr-2">
-              Wellcome {user.firstName}
+              Welcome {user.firstName}
             </h6>
           </>
         );
@@ -57,13 +53,13 @@ const NavBar = () => {
               Events
             </Link>
             <Link href="/admin" style={linkStyle}>
-              Admin
+              Administration
             </Link>
             <a onClick={handleLogout} style={linkStyle}>
               Logout
             </a>
             <h6 className="absolute right-0 mt-1 mr-2">
-              Wellcome {user.firstName}
+              Welcome {user.firstName}
             </h6>{" "}
           </>
         );
@@ -79,12 +75,15 @@ const NavBar = () => {
             <Link href="/events" style={linkStyle}>
               Events
             </Link>
+            <Link href="/coordinator" style={linkStyle}>
+              Coordinator
+            </Link>
             <a onClick={handleLogout} style={linkStyle}>
               Logout
             </a>
             <h6 className="absolute right-0 mt-1 mr-2">
-              Wellcome {user.firstName}
-            </h6>{" "}
+              Welcome {user.firstName}
+            </h6>
           </>
         );
       case "judge":
@@ -103,8 +102,28 @@ const NavBar = () => {
               Logout
             </a>
             <h6 className="absolute right-0 mt-1 mr-2">
-              Wellcome {user.firstName}
+              Welcome {user.firstName}
             </h6>
+          </>
+        );
+      case "judge":
+        return (
+          <>
+            <Link href="/events" style={linkStyle}>
+              Home
+            </Link>
+            <Link href="/about" style={linkStyle}>
+              About Project
+            </Link>
+            <Link href="/judge/events" style={linkStyle}>
+              Events
+            </Link>
+            <a onClick={handleLogout} style={linkStyle}>
+              Logout
+            </a>
+            <h6 className="absolute right-0 mt-1 mr-2">
+              Welcome {user.firstName}
+            </h6>{" "}
           </>
         );
       case "student":
@@ -126,7 +145,7 @@ const NavBar = () => {
               Logout
             </a>
             <h6 className="absolute right-0 mt-1 mr-2">
-              Wellcome {user.firstName}
+              Welcome {user.firstName}
             </h6>{" "}
           </>
         );
@@ -142,7 +161,7 @@ const NavBar = () => {
             <Link href="/events" style={linkStyle}>
               Events
             </Link>
-            <Link href="/registration" style={linkStyle}>
+            <Link href="student/registration" style={linkStyle}>
               Student Registration
             </Link>
             <Link href="/login" style={linkStyle}>
@@ -159,7 +178,7 @@ const NavBar = () => {
   const linkStyle = {
     color: "white",
     textDecoration: "none",
-    cursor: "pointer", // Ensure pointer cursor for logout
+    cursor: "pointer",
   };
 
   return (

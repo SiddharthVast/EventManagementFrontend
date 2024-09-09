@@ -18,11 +18,11 @@
 .navbar-with-menu-list {
     @apply flex justify-center gap-8 py-4 bg-custom-brown;
   }
-  /*  */
+
 .theme-color {
   @apply text-red-500;
 }
-/* ----------------------------------------------------------------------- */
+
 
 table{
     @apply min-w-full bg-white;
@@ -60,11 +60,21 @@ tr:hover {
   @apply h-5 w-5; /* Size adjustments */
 }
 
-/* .delete-icon:hover {
-  @apply h-6 w-6 transform transition-transform duration-300;
+.update-icon{
+  @apply text-blue-600 hover:text-blue-800;
+  @apply h-5 w-5
+}
 
-} */
-/* --------------------------------------------------------------------------------------------------------------- */
+.assign-icon{
+  @apply text-green-600 hover:text-green-800 justify-center;
+   @apply h-5 w-5
+}
+
+.rightdirection-icon{
+    @apply text-red-600 hover:text-red-800; /* Color and hover effects */
+    @apply h-6 w-6;
+}
+
 .flex-center-gap {
     @apply flex justify-center gap-8 py-2 bg-custom-brown;
   }
@@ -81,6 +91,20 @@ tr:hover {
   @apply bg-red-500 hover:bg-red-700 text-white  py-1 m-1 px-4 rounded  mr-2;
 }
 
+.submit{
+  @apply bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded  mr-2;
+}
+
+.reset{
+  @apply bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded;
+  /* @layer  */
+}
+
+.update{
+  @apply bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2;
+}
+.register{
+  @apply w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors;
+}
 /* css for icons */
 /* IconButton.module.css */
-

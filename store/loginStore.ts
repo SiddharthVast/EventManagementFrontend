@@ -6,15 +6,6 @@ interface Input {
   password: string;
 }
 
-// interface User {
-//   firstName: string;
-//   lastName: string;
-//   mobileNumber: string;
-//   courseName?: string;
-//   role: string;
-//   // Add other user properties if needed
-// }
-
 interface LoginState {
   token: string;
   user: User | null;
@@ -80,6 +71,8 @@ const useLoginStore = create<LoginState>((set, get) => ({
         console.error("Failed to fetch user:", error);
       }
     }
+
+    // return response?.data
   },
 
   logout: () => {

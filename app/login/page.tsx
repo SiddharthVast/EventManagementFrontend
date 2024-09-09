@@ -12,6 +12,7 @@ import Link from "next/link";
 interface FormValues {
   email: string;
   password: string;
+  // role: yup.string(),
 }
 
 const schema = yup.object().shape({
@@ -50,16 +51,19 @@ const Login = () => {
 
   const onSubmitHandler = async (data: FormValues) => {
     try {
-      const res = await login(data);
-      await fetchUser();
+      console.log(data);
+      let res = await login(data);
+      console.log(res);
+      const fetch = await fetchUser();
+      console.log("Fetch:", fetch);
       const user = useLoginStore.getState().user;
 
       if (user?.role === "admin") {
         router.push("/admin");
       } else if (user?.role === "superadmin") {
         router.push("/superadmin");
-      } else if (user?.role === "volunteer") {
-        router.push("/admin");
+      } else if (user?.role === "coordinator") {
+        router.push("/coordinator");
       } else if (user?.role === "judge") {
         router.push("/judge/events");
       } else {

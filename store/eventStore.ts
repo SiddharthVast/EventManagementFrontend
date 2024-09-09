@@ -1,13 +1,15 @@
 import { create } from "zustand";
 import axios from "axios";
+import { Festival } from "./festivalStore";
 export interface EventStoreState {
   events: Event[];
   event: Event;
   getAllEvents: () => void;
-  getEventById: (id: string) => void;
+  getEventById: (id: number) => void;
   deleteEvent: (id: number) => void;
   addEvent: (data: EventData) => void;
   updateEvent: (data: EventData) => void;
+  uploadImageToCloudinary: (file: File) => Promise<string>;
 }
 export interface Event {
   id: number;
@@ -17,10 +19,9 @@ export interface Event {
   venue: string;
   startDateTime: string;
   endDateTime: string;
-  festivalId: number;
-  status: string;
-  // pointtojudge: PointsToJudge[];
-  // usereventregs: User_event_reg[];
+  festival: Festival
+  status: boolean;
+  imageUrl: string | FileList;
 }
 export interface EventData {
   id?: number;
@@ -30,12 +31,12 @@ export interface EventData {
   venue: string;
   startDateTime: string;
   endDateTime: string;
-  festivalId: number;
-  status: string;
-  // pointtojudge: PointsToJudge[];
-  // usereventregs: User_event_reg[];
+  festivalId?: number;
+  status: boolean;
+  imageUrl: string | FileList;
 }
 const http = axios.create({ baseURL: "http://localhost:3000" });
+
 const useEventStore = create<EventStoreState>((set) => ({
   events: [],
   event: {
@@ -46,31 +47,34 @@ const useEventStore = create<EventStoreState>((set) => ({
     venue: "",
     startDateTime: "",
     endDateTime: "",
-    festivalId: 0,
-    status: "",
+    status: true,
+    imageUrl: "",
+    festival: {
+      id: 0,
+      festivalTitle: "",
+      startDate: "",
+      endDate: "",
+      imageUrl: "",
+      description: "",
+      college: {
+        id: 0,
+        collegeName: "",
+        number: "",
+        emailId: "",
+        address: "",
+      },
+      status: true,
+    }
   },
-  // pointtojudge: PointsToJudge[],
-  // usereventregs: User_event_reg[]
 
   getAllEvents: async () => {
     const res = await http.get("/events");
     set(() => ({ events: res.data }));
   },
-  getEventById: async (id: string) => {
+  getEventById: async (id: number) => {
     const res = await http.get(`/events/${id}`);
     set((state: EventStoreState) => ({ event: res.data }));
   },
-  deleteEvent: async (id: number) => {
-    const res = await http.delete(`/events/${id}`, {
-      headers: { authorization: sessionStorage.token },
-    });
-    if (res.status === 200) {
-      set((state) => ({
-        events: state.events.filter((e) => e.id !== id),
-      }));
-    }
-  },
-
   addEvent: async (data: EventData) => {
     const res = await http.post("/events", data, {
       headers: { authorization: sessionStorage.token },
@@ -90,6 +94,34 @@ const useEventStore = create<EventStoreState>((set) => ({
       console.error("Error updating events:", error);
     }
   },
+
+  deleteEvent: async (id: number) => {
+    const res = await http.delete(`/events/${id}`, {
+      headers: { authorization: sessionStorage.token },
+    });
+    if (res.status === 200) {
+      set((state) => ({
+        events: state.events.filter((e) => e.id !== id),
+      }));
+    }
+  },
+  uploadImageToCloudinary: async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "EVENT_MGMT_SYS");
+
+    try {
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dqkyppmk2/image/upload",
+        formData
+      );
+      return response.data.secure_url;
+    } catch (error) {
+      console.error("Error uploading image to Cloudinary:", error);
+      throw new Error("Failed to upload image");
+    }
+  },
+
 }));
 
 export default useEventStore;
