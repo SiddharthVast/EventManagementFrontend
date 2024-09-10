@@ -161,7 +161,7 @@ const NavBar = () => {
             <Link href="/events" style={linkStyle}>
               Events
             </Link>
-            <Link href="student/registration" style={linkStyle}>
+            <Link href="/student/registration" style={linkStyle}>
               Student Registration
             </Link>
             <Link href="/login" style={linkStyle}>

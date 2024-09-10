@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import useUserStore from "@/store/userStore";
-import useCollegeStore from "@/store/collegeStore";
-// Define validation schema
+import { useUser } from "../context/UserContext"; // Adjust the path as needed
+
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
   lastName: yup.string().required("Last Name is required"),
@@ -14,10 +14,7 @@ const schema = yup.object().shape({
   password: yup.string().required("Password is required"),
   mobileNumber: yup.string().required("Mobile Number is required"),
   details: yup.string(),
-  collegeId: yup
-    .number()
-    .required("College is required")
-    .typeError("College must be a number"), // Update to number
+  role: yup.string(),
 });
 
 interface FormData {
@@ -27,16 +24,22 @@ interface FormData {
   password: string;
   mobileNumber: string;
   details?: string;
-  collegeId: number; // Update to number
+  role?: string;
 }
 
-const AddStudent = () => {
+interface Props {
+  params: {
+    eventId: string;
+  };
+}
+
+const AddUserByAdmin = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const role = searchParams.get("role");
+  const { user, logout } = useUser();
   const { addUser } = useUserStore();
-  const { getAllColleges, colleges } = useCollegeStore((state) => ({
-    colleges: state.colleges,
-    getAllColleges: state.getAllColleges,
-  }));
+
   const {
     register,
     handleSubmit,
@@ -46,30 +49,41 @@ const AddStudent = () => {
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {
-    // Fetch colleges data
-    getAllColleges();
-  }, []);
+  // const onSubmit = async (data: FormData) => {
+  //   try {
+  //     const userData = {
+  //       ...data,
+  //       role: role || "student",
+  //       collegeId: user.college.id,
+  //     };
+  //     console.log(userData);
+  //     await addUser(userData);
+  //     alert(`${role} Added successfully...`);
+  //     router.push("/admin");
+  //   } catch (error) {
+  //     console.error("Failed to add user:", error);
+  //   }
+  // };
   const onSubmit = async (data: FormData) => {
     try {
-      // Append the role as "student" and include collegeId in the user data
       const userData = {
         ...data,
-        role: "student",
+        role: role || "student",
+        collegeId: user.college.id,
       };
-
+      console.log("userData before sending:", userData);
       await addUser(userData);
-      alert("Registration successful.");
-      router.push("/login");
+      alert(`${role} Added successfully...`);
+      router.push("/admin");
     } catch (error) {
-      console.error("Failed to add register:", error);
+      console.error("Failed to add user:", error);
     }
   };
 
   return (
     <div className="bg-gray-100 min-h-screen p-8">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
-        <h1 className="text-2xl font-semibold text-red-500 mb-6">Register</h1>
+        <h1 className="text-2xl font-semibold text-red-500 mb-6">Add {role}</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -154,25 +168,6 @@ const AddStudent = () => {
               <p className="text-red-500 mt-1">{errors.details.message}</p>
             )}
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              College
-            </label>
-            <select
-              {...register("collegeId")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            >
-              <option value="">Select College</option>
-              {colleges.map((college) => (
-                <option key={college.id} value={college.id}>
-                  {college.collegeName}
-                </option>
-              ))}
-            </select>
-            {errors.collegeId && (
-              <p className="text-red-500 mt-1">{errors.collegeId.message}</p>
-            )}
-          </div>
 
           <div className="flex justify-end">
             <button
@@ -195,4 +190,4 @@ const AddStudent = () => {
   );
 };
 
-export default AddStudent;
+export default AddUserByAdmin;

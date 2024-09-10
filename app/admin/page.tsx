@@ -29,10 +29,34 @@ const Admin = () => {
           </li>
           <li className="mb-2">
             <Link
-              href="/admin/coordinator/add-coordinator"
+              href={`/registration?role=coordinator`}
               className="block w-full bg-red-700 text-white text-lg py-5 px-4"
             >
               Add Coordinator
+            </Link>
+          </li>
+          <li className="mb-2">
+            <Link
+              href={`/registration?role=judge`}
+              className="block w-full bg-red-700 text-white text-lg py-5 px-4"
+            >
+              Add Judge
+            </Link>
+          </li>
+          <li className="mb-2">
+            <Link
+              href="/admin/events/view-event/new"
+              className="block w-full bg-red-700 text-white text-lg py-5 px-4"
+            >
+              Add Event
+            </Link>
+          </li>
+          <li className="mb-2">
+            <Link
+              href="/admin/events/view-event"
+              className="block w-full bg-red-700 text-white text-lg py-5 px-4"
+            >
+              View Events
             </Link>
           </li>
           <li className="mb-2">

@@ -5,7 +5,7 @@ import usePointToJudgeStore from "@/store/pointsToJudgeStore";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useRouter } from "next/router"; // Ensure you import from 'next/router', not 'next/navigation'
+import { useRouter } from "next/navigation"; // Ensure you import from 'next/router', not 'next/navigation'
 
 // Define the schema with yup
 const schema = yup.object().shape({
@@ -32,7 +32,7 @@ interface Props {
 
 const JudgePanel = ({ params: { eventId } }: Props) => {
   const router = useRouter();
-  const { id, eventName } = router.query;
+  // const { id, eventName } = router.query;
   const {
     handleSubmit,
     formState: { errors },
@@ -59,7 +59,6 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
     (state) => state.updateUserEvntReg
   );
 
-  const [topics, setTopics] = useState<{ [studentId: number]: string }>({});
   const [scores, setScores] = useState<{ [studentId: number]: number[] }>({});
 
   useEffect(() => {
@@ -122,7 +121,9 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Event:</h1>
+      <h1 className="text-2xl font-bold mb-4">
+        Event:{students[0].event.eventName}
+      </h1>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <table className="min-w-full bg-white">

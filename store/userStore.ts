@@ -19,7 +19,7 @@ export interface User {
   email: string;
   password: string;
   mobileNumber: string;
-  details: string;
+  details?: string;
   courseName?: string;
   role: string;
   college?: College;
@@ -31,7 +31,7 @@ export interface UserData {
   lastName: string;
   email: string;
   password: string;
-  confirmPassword?: string;
+  // confirmPassword: string;
   mobileNumber: string;
   details?: string;
   courseName?: string;
@@ -78,8 +78,6 @@ const useUserStore = create<UserStoreState>((set) => ({
   },
 
   addUser: async (data: UserData) => {
-    // Exclude confirmPassword from the data sent to the backend
-    // const { confirmPassword, ...userData } = data;
     const res = await http.post("/users", data, {
       headers: { authorization: sessionStorage.token },
     });
