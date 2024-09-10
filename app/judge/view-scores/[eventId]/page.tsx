@@ -1,43 +1,144 @@
+// "use client";
+// import React, { useEffect, useState } from "react";
+// import useUserEventRegistrationStore from "../../../../store/user_event_registrationStore";
+
+// interface Props {
+//   params: {
+//     eventId: number;
+//   };
+// }
+// const RegistrationTable = ({ params: { eventId } }: Props) => {
+//   const { registrations, getRegByEidRole } = useUserEventRegistrationStore();
+//   const [sortedRegistrations, setSortedRegistrations] = useState(registrations);
+
+//   // Fetch the registrations when the component mounts
+//   useEffect(() => {
+//     getRegByEidRole(eventId, "student");
+//   }, []);
+//   useEffect(() => {
+//     const sortedData = [...registrations].sort(
+//       (a, b) => b.totalScores - a.totalScores
+//     );
+//     setSortedRegistrations(sortedData);
+
+//     // setSortedRegistrations(registrations);
+//   }, [registrations]);
+
+//   // const handleSort = () => {
+//   //   const sortedData = [...registrations].sort(
+//   //     (a, b) => b.totalScores - a.totalScores
+//   //   );
+//   //   setSortedRegistrations(sortedData);
+//   // };
+//   return (
+//     <div className="overflow-x-auto p-5">
+//       <table className="min-w-full bg-white shadow-md rounded-lg">
+//         <thead>
+//           <tr>
+//             <th className="py-2 px-4 border-b">Participant</th>
+//             <th className="py-2 px-4 border-b">Topic</th>
+//             <th className="py-2 px-4 border-b">Scores</th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {sortedRegistrations.length > 0 ? (
+//             sortedRegistrations.map((registration, index) => (
+//               <tr
+//                 key={registration.id}
+//                 className={index < 3 ? "bg-yellow-100 font-bold" : ""}
+//               >
+//                 <td className="py-2 px-4 border-b">
+//                   {registration.groupName !== "NA"
+//                     ? registration.groupName + " " + "Group"
+//                     : `${registration.user.firstName} ${registration.user.lastName}`}
+//                 </td>
+
+//                 <td className="py-2 px-4 border-b">{registration.topic}</td>
+//                 <td className="py-2 px-4 border-b">
+//                   {registration.totalScores}
+//                 </td>
+//               </tr>
+//             ))
+//           ) : (
+//             <tr>
+//               <td colSpan={3} className="py-4 text-center">
+//                 No registrations found.
+//               </td>
+//             </tr>
+//           )}
+//         </tbody>
+//       </table>
+//     </div>
+//   );
+// };
+
+// export default RegistrationTable;
 "use client";
 import React, { useEffect, useState } from "react";
 import useUserEventRegistrationStore from "../../../../store/user_event_registrationStore";
+
+interface UserEventRegistration {
+  id: number;
+  groupName: string;
+  topic: string;
+  totalScores: number;
+  user?: {
+    firstName: string;
+    lastName: string;
+  } | null; // user can be null or undefined
+}
 
 interface Props {
   params: {
     eventId: number;
   };
 }
+
 const RegistrationTable = ({ params: { eventId } }: Props) => {
   const { registrations, getRegByEidRole } = useUserEventRegistrationStore();
-  const [sortedRegistrations, setSortedRegistrations] = useState(registrations);
+  const [sortedRegistrations, setSortedRegistrations] = useState<
+    UserEventRegistration[]
+  >([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Fetch the registrations when the component mounts
   useEffect(() => {
-    getRegByEidRole(eventId, "student");
-  }, []);
-  useEffect(() => {
-    const sortedData = [...registrations].sort(
-      (a, b) => b.totalScores - a.totalScores
-    );
-    setSortedRegistrations(sortedData);
+    const fetchAndSortRegistrations = async () => {
+      setLoading(true); // Set loading state to true
+      setError(null); // Clear any previous errors
 
-    // setSortedRegistrations(registrations);
-  }, [registrations]);
+      try {
+        await getRegByEidRole(eventId, "student");
+        // Assuming registrations is updated in the store and will reflect the latest data
+        const fetchedRegistrations = [...registrations];
+        const sortedData = fetchedRegistrations.sort(
+          (a, b) => b.totalScores - a.totalScores
+        );
+        setSortedRegistrations(sortedData);
+      } catch (error) {
+        setError("Failed to load data");
+      } finally {
+        setLoading(false); // Set loading state to false after fetching
+      }
+    };
 
-  const handleSort = () => {
-    const sortedData = [...registrations].sort(
-      (a, b) => b.totalScores - a.totalScores
-    );
-    setSortedRegistrations(sortedData);
-  };
+    fetchAndSortRegistrations();
+  }, [eventId, getRegByEidRole, registrations]); // Ensure dependencies are correct
+
+  if (loading) return <div>Loading...</div>; // Show loading state
+  if (error) return <div>{error}</div>; // Show error state
+
   return (
     <div className="overflow-x-auto p-5">
-      <table className="min-w-full bg-white shadow-md rounded-lg">
+      <h1 className="text-xl font-bold text-white bg-red-800 p-2 mx-10 rounded-md">
+        Result of Event: {registrations[0].event.eventName}
+      </h1>{" "}
+      <table className="m-10">
         <thead>
           <tr>
-            <th className="py-2 px-4 border-b">Participant</th>
-            <th className="py-2 px-4 border-b">Topic</th>
-            <th className="py-2 px-4 border-b">Scores</th>
+            <th>Participant</th>
+            <th>Topic</th>
+            <th>Scores</th>
           </tr>
         </thead>
         <tbody>
@@ -47,23 +148,21 @@ const RegistrationTable = ({ params: { eventId } }: Props) => {
                 key={registration.id}
                 className={index < 3 ? "bg-yellow-100 font-bold" : ""}
               >
-                <td className="py-2 px-4 border-b">
+                <td>
                   {registration.groupName !== "NA"
-                    ? registration.groupName + " " + "Group"
-                    : `${registration.user.firstName} ${registration.user.lastName}`}
+                    ? `${registration.groupName} Group`
+                    : registration.user
+                    ? `${registration.user.firstName} ${registration.user.lastName}`
+                    : "Unknown Participant"}
                 </td>
 
-                <td className="py-2 px-4 border-b">{registration.topic}</td>
-                <td className="py-2 px-4 border-b">
-                  {registration.totalScores}
-                </td>
+                <td>{registration.topic}</td>
+                <td>{registration.totalScores}</td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={3} className="py-4 text-center">
-                No registrations found.
-              </td>
+              <td colSpan={3}>No registrations found.</td>
             </tr>
           )}
         </tbody>

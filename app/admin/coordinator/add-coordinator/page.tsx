@@ -1,64 +1,70 @@
 "use client";
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { useRouter } from 'next/navigation';
-import useUserStore from '@/store/userStore';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useRouter, useSearchParams } from "next/navigation";
+import useUserStore from "@/store/userStore";
+import { useUser } from "../../../context/UserContext"; // Adjust the path as needed
 import { XMarkIcon } from '@heroicons/react/24/solid';
 
 const schema = yup.object().shape({
-    firstName: yup.string().required("First Name is required"),
-    lastName: yup.string().required("Last Name is required"),
-    email: yup.string().email("Invalid email").required("Email is required"),
-    password: yup.string().required("Password is required"),
-    mobileNumber: yup.string().required("Mobile Number is required"),
-    details: yup.string().required("Details are required"),
-    role: yup.string(),
+  firstName: yup.string().required("First Name is required"),
+  lastName: yup.string().required("Last Name is required"),
+  email: yup.string().email("Invalid email").required("Email is required"),
+  password: yup.string().required("Password is required"),
+  mobileNumber: yup.string().required("Mobile Number is required"),
+  details: yup.string(),
+  role: yup.string(),
 });
 
 interface FormData {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    mobileNumber: string;
-    details: string;
-    role?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  mobileNumber: string;
+  details?: string;
+  role?: string;
 }
 
 interface Props {
-    params: {
-        eventId: string;
-    };
+  params: {
+    eventId: string;
+  };
 }
 
-const AddCoordinatorForm = ({ params: { eventId } }: Props) => {
-    const router = useRouter();
-    const { addUser } = useUserStore();
+const AddCoordinatorForm = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const role = searchParams.get("role");
+  const { user, logout } = useUser();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm<FormData>({
-        resolver: yupResolver(schema),
-    });
+  const { addUser } = useUserStore();
 
-    const onSubmit = async (data: FormData) => {
-        try {
-            const userData = {
-                ...data,
-                role: data.role || "coordinator",
-            };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
 
-            await addUser(userData);
-            router.push('/admin');
-        } catch (error) {
-            console.error('Failed to add coordinator:', error);
-        }
-    };
+  const onSubmit = async (data: FormData) => {
+    try {
+      const userData = {
+        ...data,
+        role: role || "student",
+        collegeId: user.college.id,
+      };
+
+      await addUser(userData);
+      router.push("/admin");
+    } catch (error) {
+      console.error("Failed to add coordinator:", error);
+    }
+  };
 
     return (
     <div className="bg-gray-100 min-h-screen p-8">
