@@ -116,13 +116,13 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
   return (
     <div className="bg-gray-100 min-h-screen p-8">
       <div className="relative max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
-        <button
+        {/* <button
           type="button"
-          onClick={() => router.push(`/admin/events/view-event/${event.festival.id}`)}
+          onClick={() => router.push(`/admin/events/view-event`)}
           className="absolute top-4 right-4"
         >
           <XMarkIcon className="h-6 w-6 absolute -right-2 text-gray-500 hover:text-gray-700" />
-        </button>
+        </button> */}
         <div className="text-center mb-6">
           <h1 className="text-xl font-bold text-white bg-red-800 p-2 rounded-md">
             {eventName}
@@ -180,6 +180,9 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
               }
             >
               Reset
+            </button>
+            <button className="submit" type="submit">
+              Submit
             </button>
           </div>
 
