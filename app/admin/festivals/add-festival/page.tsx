@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import useFestivalStore, {
   FestivalData,
 } from "../../../../store/festivalStore";
-import { XMarkIcon } from "@heroicons/react/24/solid"; // Import the cross icon
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import useLoginStore from "@/store/loginStore";
 
 const schema = yup.object().shape({
@@ -39,7 +39,6 @@ const AddFestival = () => {
     try {
       await fetchUser();
       const user = useLoginStore.getState().user;
-
       if (!user || !user.college || user.college.id === 0) {
         throw new Error("User is not logged in or college data is invalid");
       }
@@ -72,7 +71,6 @@ const AddFestival = () => {
   return (
     <div className="bg-gray-100 min-h-screen p-8">
       <div className="relative max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
-        {/* Cross Icon at the top-right corner */}
         <button
           onClick={() => router.push("/admin")}
           className="absolute top-4 right-4 text-gray-500 hover:text-red-500"

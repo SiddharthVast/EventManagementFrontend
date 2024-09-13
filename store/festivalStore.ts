@@ -63,14 +63,13 @@ const useFestivalStore = create<FestivalStoreState>((set) => ({
     const res = await http.get(`/festivals/${id}`);
     set((state: FestivalStoreState) => ({ festival: res.data }));
   },
+
   getByCollege: async (id: number) => {
     try {
-      // console.log("in store", id);
       const res = await http.get(`/festivals/getByCollege/${id}`);
-      // console.log("result in store:", res);
-      set((state: FestivalStoreState) => ({ festival: res.data }));
+      set(() => ({ festivals: res.data }));
     } catch (error) {
-      console.error("Error fetching festival:", error);
+      console.error("Error fetching festivals by college:", error);
     }
   },
 

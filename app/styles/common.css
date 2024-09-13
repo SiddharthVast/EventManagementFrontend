@@ -28,11 +28,11 @@ table{
     @apply min-w-full bg-white;
 }
 th{
- @apply py-2 px-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase
+ @apply  py-2 px-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase text-center
 
 }
 td{
-    @apply border-b border-gray-200 px-2 py-2 text-sm;
+    @apply border-b border-gray-200 px-2 py-2 text-sm text-center; 
 
 }
 tr:hover {

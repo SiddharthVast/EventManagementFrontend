@@ -5,27 +5,33 @@ import useUserStore from "../../../../store/userStore";
 import Link from "next/link";
 import Image from "next/image";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/16/solid";
+import useLoginStore from "@/store/loginStore";
 
 const ViewFestival = () => {
   const festivals = useFestivalStore((state) => state.festivals);
-  const { getAllFestivals } = useFestivalStore();
   const { users, getAllUsers } = useUserStore();
   const deleteFestival = useFestivalStore((state) => state.deleteFestival);
+  const { getByCollege } = useFestivalStore();
+  const { user } = useLoginStore();
+  const collegeId = user?.college?.id;
+
 
   useEffect(() => {
     if (users.length === 0) {
       getAllUsers();
     }
-    if (festivals.length === 0) {
-      getAllFestivals();
+
+    if (collegeId) {
+      getByCollege(collegeId);
     }
-  }, [getAllFestivals, getAllUsers, users.length, festivals.length]);
+  }, [getAllUsers, collegeId, users.length]);
+
 
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="flex justify-center items-start p-8 pt-20">
         <div className="w-full max-w-6xl bg-white shadow-lg rounded-lg p-8">
-          <h1 className="text-2xl font-semibold text-red-500 mb-6 text-left">Techfest</h1>
+          <h1 className="text-2xl font-semibold text-red-500 mb-6 text-left">Collegefest</h1>
           <table className="min-w-full bg-white">
             <thead>
               <tr>
