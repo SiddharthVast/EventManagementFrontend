@@ -15,7 +15,6 @@ const schema = yup.object().shape({
   startDate: yup.string().required("Start Date is required"),
   endDate: yup.string().required("End Date is required"),
   description: yup.string().required("Description is required"),
-  status: yup.boolean().required("Status is required"),
 });
 
 const AddFestival = () => {
@@ -49,7 +48,6 @@ const AddFestival = () => {
       data.append("startDate", formData.startDate);
       data.append("endDate", formData.endDate);
       data.append("description", formData.description);
-      data.append("status", formData.status ? "true" : "false");
 
       if (formData.imageUrl && formData.imageUrl.length > 0) {
         data.append("file", formData.imageUrl[0]);
@@ -62,9 +60,19 @@ const AddFestival = () => {
       setError("");
       reset();
       router.push("/admin");
-    } catch (err) {
-      console.error("Error adding festival:", err);
-      setError("Failed to add festival");
+    } catch (err: unknown) {
+      // Type-check the error to ensure it has the properties we expect
+      if (err instanceof Error) {
+        if (err.message === "Thhis college already has an active festival.") {
+          setError(
+            "Failed to add festival: Thhis college already has an active festival."
+          );
+        } else {
+          setError("Failed to add festival: " + err.message);
+        }
+      } else {
+        setError("Failed to add festival: An unknown error occurred.");
+      }
       setSuccess("");
     }
   };
@@ -72,7 +80,6 @@ const AddFestival = () => {
   return (
     <div className="bg-gray-100 min-h-screen p-8">
       <div className="relative max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
-        {/* Cross Icon at the top-right corner */}
         <button
           onClick={() => router.push("/admin")}
           className="absolute top-4 right-4 text-gray-500 hover:text-red-500"
@@ -81,8 +88,19 @@ const AddFestival = () => {
         </button>
 
         <h2 className="text-2xl font-semibold text-red-500 mb-6 text-center">
-          Festival Registration
+          College Fest Registration
         </h2>
+        {/* Error and Success Messages */}
+        {error && (
+          <div className="mb-4 p-4 bg-red-200 text-red-700 border border-red-400 rounded">
+            {error}
+          </div>
+        )}
+        {success && (
+          <div className="mb-4 p-4 bg-green-200 text-green-700 border border-green-400 rounded">
+            {success}
+          </div>
+        )}
         <form onSubmit={handleSubmit(onSubmitHandler)}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -137,34 +155,6 @@ const AddFestival = () => {
             />
             {errors.imageUrl && (
               <p className="text-red-500 mt-1">{errors.imageUrl.message}</p>
-            )}
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Status
-            </label>
-            <div className="flex items-center">
-              <label className="inline-flex items-center mr-4">
-                <input
-                  type="radio"
-                  value="true"
-                  {...register("status")}
-                  className="form-radio"
-                />
-                <span className="ml-2">Open</span>
-              </label>
-              <label className="inline-flex items-center">
-                <input
-                  type="radio"
-                  value="false"
-                  {...register("status")}
-                  className="form-radio"
-                />
-                <span className="ml-2">Closed</span>
-              </label>
-            </div>
-            {errors.status && (
-              <p className="text-red-500 mt-1">{errors.status.message}</p>
             )}
           </div>
 

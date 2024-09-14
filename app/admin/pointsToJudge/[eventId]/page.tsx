@@ -46,14 +46,16 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
   const pointToJudge = usePointToJudgeStore((state) => state.pointToJudge);
   const getPointsById = usePointToJudgeStore((state) => state.getPointsById);
   const deletePointToJudge = usePointToJudgeStore((state) => state.deletePoint);
-  const { event } = useEventStore((state) => ({
+  const { event, getEventById } = useEventStore((state) => ({
     event: state.event,
+    getEventById: state.getEventById,
   }));
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     getPointsById(eventId);
+    getEventById(+eventId);
     pointsToJudge;
     const urlParams = new URLSearchParams(window.location.search);
     const name = urlParams.get("name");
@@ -75,13 +77,6 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
     },
   });
 
-  // Set eventId if params change
-  // useEffect(() => {
-  //   setValue("eventId", parseInt(eventId, 10));
-
-  // }, [eventId, setValue]);
-
-  // Manage field array
   const { fields, append, remove } = useFieldArray({
     name: "points",
     control,
@@ -91,7 +86,6 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
   const onSubmit = async (data: FormData) => {
     setLoading(true);
     setError(null);
-
     try {
       await addPoints(
         data.points.map((point) => ({
@@ -116,13 +110,15 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
   return (
     <div className="bg-gray-100 min-h-screen p-8">
       <div className="relative max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
-        {/* <button
+        <button
           type="button"
-          onClick={() => router.push(`/admin/events/view-event`)}
+          onClick={() =>
+            router.push(`/admin/events/view-event/${event.festival.id}`)
+          }
           className="absolute top-4 right-4"
         >
           <XMarkIcon className="h-6 w-6 absolute -right-2 text-gray-500 hover:text-gray-700" />
-        </button> */}
+        </button>
         <div className="text-center mb-6">
           <h1 className="text-xl font-bold text-white bg-red-800 p-2 rounded-md">
             {eventName}
@@ -207,6 +203,13 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
             </tbody>
           </table>
         </form>
+        {/* <button
+          onClick={() =>
+            router.push(`/admin/events/view-event/${event.festival.id}`)
+          }
+        >
+          Done
+        </button> */}
       </div>
     </div>
   );

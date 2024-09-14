@@ -49,21 +49,6 @@ const AddUserByAdmin = () => {
     resolver: yupResolver(schema),
   });
 
-  // const onSubmit = async (data: FormData) => {
-  //   try {
-  //     const userData = {
-  //       ...data,
-  //       role: role || "student",
-  //       collegeId: user.college.id,
-  //     };
-  //     console.log(userData);
-  //     await addUser(userData);
-  //     alert(`${role} Added successfully...`);
-  //     router.push("/admin");
-  //   } catch (error) {
-  //     console.error("Failed to add user:", error);
-  //   }
-  // };
   const onSubmit = async (data: FormData) => {
     try {
       const userData = {
@@ -71,13 +56,11 @@ const AddUserByAdmin = () => {
         role: role || "student",
         collegeId: user.college.id,
       };
-      console.log("userData before sending:", userData);
       await addUser(userData);
       alert(`${role} Added successfully...`);
-      router.push("/admin");
-    } catch (error) {
-      console.error("Failed to add user:", error);
-    }
+      if (role === "admin") router.push("/superadmin");
+      else router.push("/admin");
+    } catch (error) {}
   };
 
   return (

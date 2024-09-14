@@ -19,8 +19,8 @@ export interface Event {
   venue: string;
   startDateTime: string;
   endDateTime: string;
-  festival: Festival
-  status: boolean;
+  festival: Festival;
+  status?: boolean;
   imageUrl: string | FileList;
 }
 export interface EventData {
@@ -32,7 +32,7 @@ export interface EventData {
   startDateTime: string;
   endDateTime: string;
   festivalId?: number;
-  status: boolean;
+  status?: boolean;
   imageUrl: string | FileList;
 }
 const http = axios.create({ baseURL: "http://localhost:3000" });
@@ -64,7 +64,7 @@ const useEventStore = create<EventStoreState>((set) => ({
         address: "",
       },
       status: true,
-    }
+    },
   },
 
   getAllEvents: async () => {
@@ -121,7 +121,6 @@ const useEventStore = create<EventStoreState>((set) => ({
       throw new Error("Failed to upload image");
     }
   },
-
 }));
 
 export default useEventStore;

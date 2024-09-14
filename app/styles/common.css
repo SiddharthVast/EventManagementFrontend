@@ -28,16 +28,17 @@ table{
     @apply min-w-full bg-white;
 }
 th{
- @apply py-2 px-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase
+ @apply text-center py-2 px-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase
 
 }
 td{
-    @apply border-b border-gray-200 px-2 py-2 text-sm;
+    @apply px-2 py-2 border-b border-gray-200  text-sm text-center;
 
 }
 tr:hover {
   @apply bg-gray-100;
   @apply transition-colors duration-200;
+
 }
 
 /* Link with hover effects */
@@ -106,5 +107,61 @@ tr:hover {
 .register{
   @apply w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors;
 }
-/* css for icons */
-/* IconButton.module.css */
+/* ------------------------------------------------------------------------------------------ */
+/* css for first page of user where we are displaying which functionality user can do: like add festivals,view festivals,...etc*/
+/* common.css */
+
+/* General styling for buttons */
+.btn-main {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.375rem; /* Rounded corners */
+  font-size: 1.125rem; /* Larger text for visibility */
+  font-weight: 600; /* Semi-bold text */
+  text-align: center;
+  text-decoration: none; /* Remove underline */
+  color: #000000; /* Black text color */
+  background-color: #ffffff; /* White background */
+  border: 1px solid #d1d5db; /* Grey border */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Specific styling for "Add New College" button */
+.btn-add-new-college {
+  /* Inherits styles from .btn-main */
+}
+
+.btn-add-new-college:hover {
+  background-color: #f3f4f6; /* Light grey background on hover */
+  border-color: #a1a1a1; /* Slightly darker grey border on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+
+.btn-view-colleges:hover {
+  background-color: #f3f4f6; /* Light grey background on hover */
+  border-color: #a1a1a1; /* Slightly darker grey border on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+/* Optional: Styling for button container */
+.button-container {
+  margin-top: 1rem; /* Space above the buttons */
+  gap: 1rem; /* Space between buttons */
+  display: flex; /* Align buttons horizontally */
+  flex-direction: column; /* Stack buttons vertically */
+}
+
+
+
+
+
+
+
+
+
+
