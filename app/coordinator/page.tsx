@@ -13,18 +13,10 @@ const Coordinator = () => {
                 <ul>
                     <li className="mb-2">
                         <Link
-                            href="/coordinator/"
+                            href="/coordinator/my-task"
                             className="block w-full bg-red-700 text-white text-lg py-5 px-4"
                         >
-                            Events
-                        </Link>
-                    </li>
-                    <li className="mb-2">
-                        <Link
-                            href="/coordinator/"
-                            className="block w-full bg-red-700 text-white text-lg py-5 px-4"
-                        >
-                            My Work
+                            My Task
                         </Link>
                     </li>
                     <li className="mb-2">
