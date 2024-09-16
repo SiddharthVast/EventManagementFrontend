@@ -7,7 +7,7 @@ export interface CollegeStoreState {
   getAllColleges: () => void;
   getCollegeById: (id: string) => void;
   deleteCollege: (id: number) => void;
-  updateCollege: (data: CollegeData) => void;
+  updateCollege: (id: number, data: CollegeData) => void;
   addCollege: (data: CollegeData) => void;
 }
 export interface College {
@@ -63,15 +63,29 @@ const useCollegeStore = create<CollegeStoreState>((set) => ({
     }));
   },
 
-  updateCollege: async function (data: CollegeData) {
+  updateCollege: async function (id, data) {
     try {
-      const res = await http.patch(`/colleges/${data.id}`, data, {
+      const res = await http.patch(`/colleges/${id}`, data, {
         headers: { authorization: sessionStorage.token },
       });
       set((state) => ({ colleges: [...state.colleges, res.data] }));
     } catch (error) {
       console.error("Error updating college:", error);
     }
+    // const response = await fetch(`http://localhost:3000/colleges/${id}`, {
+    //   method: "PATCH",
+    //   headers: {
+    //     " Content-Type": "application/json",
+    //     Authorization: sessionStorage.token || "",
+    //   },
+    //   body: JSON.stringify(data),
+    // });
+    // if (response.ok) {
+    //   const updatedCollege = await response.json();
+    //   set((state) => ({
+    //     colleges: state.colleges.map((m) => (m.id === id ? updatedCollege : m))
+    //   }));
+    // }
   },
 }));
 

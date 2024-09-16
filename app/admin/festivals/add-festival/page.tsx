@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import useFestivalStore, {
   FestivalData,
 } from "../../../../store/festivalStore";
-import { XMarkIcon } from "@heroicons/react/24/solid"; // Import the cross icon
+import { XMarkIcon } from "@heroicons/react/24/solid"; 
 import useLoginStore from "@/store/loginStore";
 
 const schema = yup.object().shape({

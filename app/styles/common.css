@@ -5,19 +5,44 @@
 @tailwind utilities;
 
 
-/* For header bg-color and text color */
-.main-header {
-    @apply bg-custom-brown-head text-white; 
-}
-/* This is for college event management heading */
-.header-title {
-    @apply py-7 text-center text-3xl font-bold;
 
-  }
-  /* For navbar we change tailwind.config.js and applying here */
+
+.main-header {
+  @apply bg-custom-brown-head text-white w-full;
+}
+
+.header-content {
+  @apply flex items-center justify-between px-4; /* Flexbox for layout and padding */
+  position: relative; /* To allow centering the header while keeping the logo on the left */
+}
+
+.logo {
+  @apply h-20 w-auto ml-4; /* Adjust logo height and add margin-left */
+}
+
+.header-title {
+  position: absolute; /* Center the title absolutely */
+  left: 50%;
+  transform: translateX(-50%);
+  @apply text-3xl font-bold text-center; /* Text styles for the title */
+}
+
 .navbar-with-menu-list {
-    @apply flex justify-center gap-8 py-4 bg-custom-brown;
-  }
+  @apply flex justify-center gap-8 py-4 bg-custom-brown; /* Flexbox for navbar styling */
+}
+
+.nav-link {
+  @apply text-white no-underline cursor-pointer
+
+}
+
+.welcome-message {
+  @apply text-white ml-4; /* Styling for welcome message */
+}
+
+
+
+
 
 .theme-color {
   @apply text-red-500;

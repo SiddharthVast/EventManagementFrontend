@@ -1,173 +1,141 @@
 "use client";
-
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React from "react";
 import useLoginStore from "@/store/loginStore";
 import { useRouter } from "next/navigation";
 import "./styles/common.css";
-import { useUser } from "./context/UserContext"; // Adjust the path as needed
+import { useUser } from "./context/UserContext";
 
 const NavBar = () => {
   const { user } = useUser(); // Access user data from context
-
   const logout = useLoginStore((state) => state.logout);
-  // const user = useLoginStore((state) => state.user);
   const router = useRouter();
 
   const handleLogout = () => {
     logout();
     router.push("/login");
   };
+
   const renderLinks = () => {
     switch (user?.role) {
       case "superadmin":
         return (
           <>
-            <Link href="/" style={linkStyle}>
+            <Link href="/" className="nav-link">
               Home
             </Link>
-            <Link href="/about" style={linkStyle}>
+            <Link href="/about" className="nav-link">
               About Project
             </Link>
-            <Link href="/superadmin" style={linkStyle}>
-              Colleges{" "}
+            <Link href="/superadmin" className="nav-link">
+              Colleges
             </Link>
-            <a onClick={handleLogout} style={linkStyle}>
+            <a onClick={handleLogout} className="nav-link">
               Logout
             </a>
-            <h6 className="absolute right-0 mt-1 mr-2">
-              Welcome {user.firstName}
-            </h6>
+            <h6 className="welcome-message">Welcome {user.firstName}</h6>
           </>
         );
       case "admin":
         return (
           <>
-            <Link href="/" style={linkStyle}>
+            <Link href="/" className="nav-link">
               Home
             </Link>
-            <Link href="/about" style={linkStyle}>
+            <Link href="/about" className="nav-link">
               About Project
             </Link>
-            <Link href="/admin/events/view-event" style={linkStyle}>
+            <Link href="/admin/events/view-event" className="nav-link">
               Events
             </Link>
-            <Link href="/admin" style={linkStyle}>
+            <Link href="/admin" className="nav-link">
               Administration
             </Link>
-            <a onClick={handleLogout} style={linkStyle}>
+            <a onClick={handleLogout} className="nav-link">
               Logout
             </a>
-            <h6 className="absolute right-0 mt-1 mr-2">
-              Welcome {user.firstName}
-            </h6>{" "}
+            <h6 className="welcome-message">Welcome {user.firstName}</h6>
           </>
         );
       case "coordinator":
         return (
           <>
-            <Link href="/" style={linkStyle}>
+            <Link href="/" className="nav-link">
               Home
             </Link>
-            <Link href="/about" style={linkStyle}>
+            <Link href="/about" className="nav-link">
               About Project
             </Link>
-            <Link href="/events" style={linkStyle}>
+            <Link href="/events" className="nav-link">
               Events
             </Link>
-            <Link href="/coordinator" style={linkStyle}>
+            <Link href="/coordinator" className="nav-link">
               Coordinator
             </Link>
-            <a onClick={handleLogout} style={linkStyle}>
+            <a onClick={handleLogout} className="nav-link">
               Logout
             </a>
-            <h6 className="absolute right-0 mt-1 mr-2">
-              Welcome {user.firstName}
-            </h6>
+            <h6 className="welcome-message">Welcome {user.firstName}</h6>
           </>
         );
       case "judge":
         return (
           <>
-            <Link href="/events" style={linkStyle}>
+            <Link href="/events" className="nav-link">
               Home
             </Link>
-            <Link href="/about" style={linkStyle}>
+            <Link href="/about" className="nav-link">
               About Project
             </Link>
-            <Link href="/judge/events" style={linkStyle}>
+            <Link href="/judge/events" className="nav-link">
               Events
             </Link>
-            <a onClick={handleLogout} style={linkStyle}>
+            <a onClick={handleLogout} className="nav-link">
               Logout
             </a>
-            <h6 className="absolute right-0 mt-1 mr-2">
-              Welcome {user.firstName}
-            </h6>
-          </>
-        );
-      case "judge":
-        return (
-          <>
-            <Link href="/events" style={linkStyle}>
-              Home
-            </Link>
-            <Link href="/about" style={linkStyle}>
-              About Project
-            </Link>
-            <Link href="/judge/events" style={linkStyle}>
-              Events
-            </Link>
-            <a onClick={handleLogout} style={linkStyle}>
-              Logout
-            </a>
-            <h6 className="absolute right-0 mt-1 mr-2">
-              Welcome {user.firstName}
-            </h6>{" "}
+            <h6 className="welcome-message">Welcome {user.firstName}</h6>
           </>
         );
       case "student":
         return (
           <>
-            <Link href="/" style={linkStyle}>
+            <Link href="/" className="nav-link">
               Home
             </Link>
-            <Link href="/about" style={linkStyle}>
+            <Link href="/about" className="nav-link">
               About Project
             </Link>
-            <Link href="/events" style={linkStyle}>
+            <Link href="/events" className="nav-link">
               Events
             </Link>
-            <Link href="/student" style={linkStyle}>
+            <Link href="/student" className="nav-link">
               Student
             </Link>
-            <a onClick={handleLogout} style={linkStyle}>
+            <a onClick={handleLogout} className="nav-link">
               Logout
             </a>
-            <h6 className="absolute right-0 mt-1 mr-2">
-              Welcome {user.firstName}
-            </h6>{" "}
+            <h6 className="welcome-message">Welcome {user.firstName}</h6>
           </>
         );
       default:
         return (
           <>
-            <Link href="/" style={linkStyle}>
+            <Link href="/" className="nav-link">
               Home
             </Link>
-            <Link href="/about" style={linkStyle}>
+            <Link href="/about" className="nav-link">
               About Project
             </Link>
-            <Link href="/events" style={linkStyle}>
+            <Link href="/events" className="nav-link">
               Events
             </Link>
-            <Link href="/student/registration" style={linkStyle}>
+            <Link href="/student/registration" className="nav-link">
               Student Registration
             </Link>
-            <Link href="/login" style={linkStyle}>
+            <Link href="/login" className="nav-link">
               Login
             </Link>
-            <Link href="/contact" style={linkStyle}>
+            <Link href="/contact" className="nav-link" >
               Contact Us
             </Link>
           </>
@@ -175,16 +143,14 @@ const NavBar = () => {
     }
   };
 
-  const linkStyle = {
-    color: "white",
-    textDecoration: "none",
-    cursor: "pointer",
-  };
-
   return (
-    // <div style={{ backgroundColor: '#8B0000', color: 'white' }}>
     <div className="main-header">
-      <header className="header-title">College Event Management System</header>
+      <div className="header-content">
+        <img src="/logo_size.jpg" alt="logo" className="logo" />
+        <header className="header-title">
+          College Event Management System
+        </header>
+      </div>
       <nav className="navbar-with-menu-list">{renderLinks()}</nav>
     </div>
   );

@@ -21,7 +21,7 @@ export interface User {
   mobileNumber: string;
   details?: string;
   courseName?: string;
-  role: string;
+  role?: string;
   college?: College;
 }
 
@@ -35,7 +35,7 @@ export interface UserData {
   mobileNumber: string;
   details?: string;
   courseName?: string;
-  role: string;
+  role?: string;
   collegeId?: number;
 }
 

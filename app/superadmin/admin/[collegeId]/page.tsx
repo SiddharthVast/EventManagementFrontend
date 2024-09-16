@@ -3,9 +3,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useRouter, useSearchParams } from "next/navigation";
-import useUserStore from "@/store/userStore";
-import { useUser } from "../context/UserContext";
+import { useRouter } from "next/navigation";
+import useUserStore from "../../../../store/userStore";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
@@ -13,8 +13,8 @@ const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().required("Password is required"),
   mobileNumber: yup.string().required("Mobile Number is required"),
-  details: yup.string(),
-  role: yup.string(),
+  details: yup.string().required("Details are required"),
+  // role: yup.string(),
 });
 
 interface FormData {
@@ -23,21 +23,18 @@ interface FormData {
   email: string;
   password: string;
   mobileNumber: string;
-  details?: string;
-  role?: string;
+  details: string;
+  // role?: string;
 }
 
 interface Props {
   params: {
-    eventId: string;
+    collegeId: string;
   };
 }
 
-const AddUserByAdmin = () => {
+const AddAdminForm = ({ params: { collegeId } }: Props) => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const role = searchParams.get("role");
-  const { user, logout } = useUser();
   const { addUser } = useUserStore();
 
   const {
@@ -53,22 +50,27 @@ const AddUserByAdmin = () => {
     try {
       const userData = {
         ...data,
-        role: role || "student",
-        collegeId: user.college.id,
+        courseName: "",
+        collegeId: parseInt(collegeId),
+        role: "admin",
       };
-      console.log("userData before sending:", userData);
       await addUser(userData);
-      alert(`${role} Added successfully...`);
-      router.push("/admin");
+      router.push("/superadmin/college");
     } catch (error) {
-      console.error("Failed to add user:", error);
+      console.error("Failed to add admin:", error);
     }
   };
 
   return (
     <div className="bg-gray-100 min-h-screen p-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
-        <h1 className="text-2xl font-semibold text-red-500 mb-6">Add {role}</h1>
+      <div className="relative max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
+        <button
+          className="absolute top-4 right-4 text-gray-500 hover:text-red-500"
+          onClick={() => router.back()}
+        >
+          <XMarkIcon className="h-6 w-6" />
+        </button>
+        <h1 className="text-2xl font-semibold text-red-500 mb-6">Add Admin</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
@@ -154,19 +156,13 @@ const AddUserByAdmin = () => {
             )}
           </div>
 
-          <div className="flex justify-end">
-            <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
-              type="submit"
-            >
-              Submit
-            </button>
-            <button
-              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
-              onClick={() => reset()}
-            >
+          <div className="flex justify-end space-x-4">
+            <button className="reset" type="button" onClick={() => reset()}>
               Reset
+            </button>
+
+            <button className="submit" type="submit">
+              Submit
             </button>
           </div>
         </form>
@@ -175,4 +171,4 @@ const AddUserByAdmin = () => {
   );
 };
 
-export default AddUserByAdmin;
+export default AddAdminForm;
