@@ -22,22 +22,44 @@
 .theme-color {
   @apply text-red-500;
 }
+/* __________________________________________________________________________________________________________ */
+.main-div{
+ @apply bg-gray-100 min-h-screen p-8;
+}
+.input-form-div{
+  @apply w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 relative mx-auto 
+}
+.form-heading{
+  @apply text-2xl font-semibold text-red-500 mb-6 text-center
+}
+.error-div{
+  @apply mb-4 p-4 bg-red-200 text-red-700 border border-red-400 rounded
+}
+label{
+  @apply block text-gray-700 text-sm font-bold mb-2
+}
+input{
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight
+
+}
 
 
+/* __________________________________________________________________________________________________________ */
 table{
     @apply min-w-full bg-white;
 }
 th{
- @apply  py-2 px-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase text-center
+ @apply text-center py-2 px-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase
 
 }
 td{
-    @apply border-b border-gray-200 px-2 py-2 text-sm text-center; 
+    @apply px-2 py-2 border-b border-gray-200  text-sm text-center;
 
 }
 tr:hover {
   @apply bg-gray-100;
   @apply transition-colors duration-200;
+
 }
 
 /* Link with hover effects */
@@ -74,6 +96,9 @@ tr:hover {
     @apply text-red-600 hover:text-red-800; /* Color and hover effects */
     @apply h-6 w-6;
 }
+.xmark-icon{
+  @apply absolute h-6 w-5 top-4 right-4 text-gray-500 hover:text-red-500
+}
 
 .flex-center-gap {
     @apply flex justify-center gap-8 py-2 bg-custom-brown;
@@ -106,5 +131,58 @@ tr:hover {
 .register{
   @apply w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors;
 }
-/* css for icons */
-/* IconButton.module.css */
+/* ------------------------------------------------------------------------------------------ */
+/* css for first page of user where we are displaying which functionality user can do: like add festivals,view festivals,...etc*/
+/* common.css */
+
+/* General styling for buttons */
+.btn-main {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.375rem; /* Rounded corners */
+  font-size: 1.125rem; /* Larger text for visibility */
+  font-weight: 600; /* Semi-bold text */
+  text-align: center;
+  text-decoration: none; /* Remove underline */
+  color: #000000; /* Black text color */
+  background-color: #ffffff; /* White background */
+  border: 1px solid #d1d5db; /* Grey border */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+
+
+.btn-add-new-college:hover {
+  background-color: #f3f4f6; /* Light grey background on hover */
+  border-color: #a1a1a1; /* Slightly darker grey border on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+
+.btn-view-colleges:hover {
+  background-color: #f3f4f6; /* Light grey background on hover */
+  border-color: #a1a1a1; /* Slightly darker grey border on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+/* Optional: Styling for button container */
+.button-container {
+  margin-top: 1rem; /* Space above the buttons */
+  gap: 1rem; /* Space between buttons */
+  display: flex; /* Align buttons horizontally */
+  flex-direction: column; /* Stack buttons vertically */
+}
+
+
+
+
+
+
+
+
+
+

@@ -7,8 +7,9 @@ import useFestivalStore, {
   FestivalData,
 } from "../../../../../store/festivalStore";
 import { useRouter } from "next/navigation";
-import useLoginStore from "@/store/loginStore";
+// import useLoginStore from "@/store/loginStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { useUser } from "@/app/context/UserContext";
 
 const schema = yup.object().shape({
   festivalTitle: yup
@@ -21,7 +22,7 @@ const schema = yup.object().shape({
   description: yup
     .string()
     .required("Description can't be longer than 500 characters"),
-  status: yup.boolean().required("Status is required"),
+  // status: yup.boolean(),
 });
 
 interface Props {
@@ -35,8 +36,8 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
   const getFestival = useFestivalStore((state) => state.getFestivalById);
   const festival = useFestivalStore((state) => state.festival);
   const updateFestival = useFestivalStore((state) => state.updateFestival);
-  const fetchUser = useLoginStore((state) => state.fetchUser);
-
+  // const fetchUser = useLoginStore((state) => state.fetchUser);
+  const { user } = useUser();
   const {
     register,
     handleSubmit,
@@ -72,9 +73,6 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
 
   const onSubmitHandler: SubmitHandler<FestivalData> = async (formData) => {
     try {
-      await fetchUser();
-      const user = useLoginStore.getState().user;
-
       if (!user || !user.college || user.college.id === 0) {
         throw new Error("User is not logged in or college data is invalid");
       }
@@ -84,7 +82,6 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
       data.append("startDate", formData.startDate);
       data.append("endDate", formData.endDate);
       data.append("description", formData.description);
-      data.append("status", formData.status ? "true" : "false");
 
       if (formData.imageUrl && formData.imageUrl.length > 0) {
         data.append("file", formData.imageUrl[0]);
@@ -105,7 +102,6 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
     <div className="bg-gray-100 min-h-screen">
       <div className="flex justify-center items-start p-8 pt-20">
         <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 relative ">
-          
           <button
             onClick={() => router.push("/admin/festivals/view-festival")}
             className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -185,34 +181,7 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
                 </p>
               )}
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Status
-              </label>
-              <div className="flex items-center">
-                <label className="inline-flex items-center mr-4">
-                  <input
-                    type="radio"
-                    value="true"
-                    {...register("status")}
-                    className="form-radio"
-                  />
-                  <span className="ml-2">Open</span>
-                </label>
-                <label className="inline-flex items-center">
-                  <input
-                    type="radio"
-                    value="false"
-                    {...register("status")}
-                    className="form-radio"
-                  />
-                  <span className="ml-2">Closed</span>
-                </label>
-              </div>
-              {errors.status && (
-                <p className="text-red-500 mt-1">{errors.status.message}</p>
-              )}
-            </div>
+
             <div className="flex justify-center">
               <button className="update" type="submit">
                 Update

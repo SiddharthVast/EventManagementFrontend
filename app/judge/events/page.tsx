@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import useUserEventRegistrationStore, {
   UserEventRegistration,
 } from "@/store/user_event_registrationStore";
-import { useUser } from "../../context/UserContext"; // Adjust the path as needed
+import { useUser } from "../../context/UserContext";
 import { ForwardIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
@@ -21,7 +21,7 @@ const UserEvents = () => {
     if (user && user.id) {
       getRegistartionByUserId(user.id);
     }
-  }, [user, getRegistartionByUserId]);
+  }, [user, regData, getRegistartionByUserId]);
 
   useEffect(() => {
     setRegData(registrations); // Set registration data after fetching
@@ -51,14 +51,13 @@ const UserEvents = () => {
                     regData.map((data, index) => (
                       <tr>
                         <td>{data.event?.eventName}</td>
-                        <td>{data.event.venue}</td>
-                        <td>{data.event.startDateTime}</td>
-                        <td>{data.event.status ? "Open" : "Close"}</td>
+                        <td>{data.event?.venue}</td>
+                        <td>{data.event?.startDateTime}</td>
+                        <td>{data.event?.status ? "Open" : "Close"}</td>
                         <td>
                           <Link
                             href={{
-                              pathname: `/judge/events/${data.id}`,
-                              query: { eventName: data.event.eventName },
+                              pathname: `/judge/events/${data?.event?.id}`,
                             }}
                           >
                             <button>
@@ -66,13 +65,7 @@ const UserEvents = () => {
                             </button>
                           </Link>
                         </td>
-                        {/* <td>
-                          <Link href={`/judge/events/${data.id}`}>
-                            <button>
-                              <ForwardIcon className="h-8 w-8 text-red-500 mt-4 animate-bounce" />
-                            </button>
-                          </Link>
-                        </td> */}
+                    
                       </tr>
                     ))
                   ) : (

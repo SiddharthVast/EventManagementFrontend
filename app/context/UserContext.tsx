@@ -17,12 +17,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   const user = useLoginStore((state) => state.user);
   const fetchUser = useLoginStore((state) => state.fetchUser);
   const logout = useLoginStore((state) => state.logout);
-  // const getUserEvents = useUserEventRegistartionStore(
-  //   (state) => state.getRegistartionByUserId
-  // );
-  // const regEvents = useUserEventRegistartionStore(
-  //   (state) => state.registrations
-  // );
+
   useEffect(() => {
     const loadUser = async () => {
       if (!user) {
@@ -36,13 +31,6 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     loadUser();
   }, [user, fetchUser]);
 
-  // useEffect(() => {
-  //   if (user && user.role !== "admin" && user.role !== "superadmin") {
-  //     getUserEvents(12);
-  //     console.log("Fetch registered events", regEvents);
-  //     // You can add additional logic to fetch events or other actions here
-  //   }
-  // }, [user, getUserEvents]);
   return (
     <UserContext.Provider value={{ user, fetchUser, logout }}>
       {children}
