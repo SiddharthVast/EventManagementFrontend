@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import useFestivalStore, {
   FestivalData,
 } from "../../../../store/festivalStore";
-import { XMarkIcon } from "@heroicons/react/24/solid"; // Import the cross icon
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import useLoginStore from "@/store/loginStore";
 
 const schema = yup.object().shape({
@@ -38,7 +38,6 @@ const AddFestival = () => {
     try {
       await fetchUser();
       const user = useLoginStore.getState().user;
-
       if (!user || !user.college || user.college.id === 0) {
         throw new Error("User is not logged in or college data is invalid");
       }
@@ -78,18 +77,13 @@ const AddFestival = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-8">
-      <div className="relative max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
-        <button
-          onClick={() => router.push("/admin")}
-          className="absolute top-4 right-4 text-gray-500 hover:text-red-500"
-        >
-          <XMarkIcon className="h-6 w-6" />
+    <div className="main-div">
+      <div className="input-form-div">
+        <button onClick={() => router.push("/admin")}>
+          <XMarkIcon className="xmark-icon" />
         </button>
 
-        <h2 className="text-2xl font-semibold text-red-500 mb-6 text-center">
-          College Fest Registration
-        </h2>
+        <h2 className="form-heading">College Fest Registration</h2>
         {/* Error and Success Messages */}
         {error && (
           <div className="mb-4 p-4 bg-red-200 text-red-700 border border-red-400 rounded">
@@ -103,13 +97,10 @@ const AddFestival = () => {
         )}
         <form onSubmit={handleSubmit(onSubmitHandler)}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Title
-            </label>
+            <label>Title</label>
             <input
               type="text"
               {...register("festivalTitle")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter Festival Title"
             />
             {errors.festivalTitle && (
@@ -119,52 +110,31 @@ const AddFestival = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Start Date
-            </label>
-            <input
-              type="datetime-local"
-              {...register("startDate")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
+            <label>Start Date</label>
+            <input type="datetime-local" {...register("startDate")} />
             {errors.startDate && (
               <p className="text-red-500 mt-1">{errors.startDate.message}</p>
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              End Date
-            </label>
-            <input
-              type="datetime-local"
-              {...register("endDate")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
+            <label>End Date</label>
+            <input type="datetime-local" {...register("endDate")} />
             {errors.endDate && (
               <p className="text-red-500 mt-1">{errors.endDate.message}</p>
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Image
-            </label>
-            <input
-              type="file"
-              {...register("imageUrl")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            />
+            <label>Image</label>
+            <input type="file" {...register("imageUrl")} />
             {errors.imageUrl && (
               <p className="text-red-500 mt-1">{errors.imageUrl.message}</p>
             )}
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Description
-            </label>
+            <label>Description</label>
             <textarea
               {...register("description")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter Description"
               rows={4}
             ></textarea>

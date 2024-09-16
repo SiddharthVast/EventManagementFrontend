@@ -22,8 +22,29 @@
 .theme-color {
   @apply text-red-500;
 }
+/* __________________________________________________________________________________________________________ */
+.main-div{
+ @apply bg-gray-100 min-h-screen p-8;
+}
+.input-form-div{
+  @apply w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 relative mx-auto 
+}
+.form-heading{
+  @apply text-2xl font-semibold text-red-500 mb-6 text-center
+}
+.error-div{
+  @apply mb-4 p-4 bg-red-200 text-red-700 border border-red-400 rounded
+}
+label{
+  @apply block text-gray-700 text-sm font-bold mb-2
+}
+input{
+  @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight
+
+}
 
 
+/* __________________________________________________________________________________________________________ */
 table{
     @apply min-w-full bg-white;
 }
@@ -74,6 +95,9 @@ tr:hover {
 .rightdirection-icon{
     @apply text-red-600 hover:text-red-800; /* Color and hover effects */
     @apply h-6 w-6;
+}
+.xmark-icon{
+  @apply absolute h-6 w-5 top-4 right-4 text-gray-500 hover:text-red-500
 }
 
 .flex-center-gap {
@@ -128,10 +152,7 @@ tr:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-/* Specific styling for "Add New College" button */
-.btn-add-new-college {
-  /* Inherits styles from .btn-main */
-}
+
 
 .btn-add-new-college:hover {
   background-color: #f3f4f6; /* Light grey background on hover */

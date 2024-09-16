@@ -64,6 +64,7 @@ const useFestivalStore = create<FestivalStoreState>((set) => ({
     const res = await http.get(`/festivals/${id}`);
     set((state: FestivalStoreState) => ({ festival: res.data }));
   },
+
   getByCollege: async (id: number) => {
     try {
       const res = await http.get(`/festivals/getByCollege/${id}`);

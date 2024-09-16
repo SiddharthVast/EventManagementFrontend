@@ -64,8 +64,8 @@ const AddUserByAdmin = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-8">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
+    <div className="main_div">
+      <div className="input_form_div">
         <h1 className="text-2xl font-semibold text-red-500 mb-6">Add {role}</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">

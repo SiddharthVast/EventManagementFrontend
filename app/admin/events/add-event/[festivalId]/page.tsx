@@ -5,7 +5,6 @@ import * as yup from "yup";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useEventStore, { EventData } from "../../../../../store/eventStore";
-import useLoginStore from "@/store/loginStore";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 
 const eventTypes = [
@@ -60,9 +59,10 @@ interface Props {
   };
 }
 const AddEvent = ({ params: { festivalId } }: Props) => {
+  // const { user } = useUser();
   const router = useRouter();
   const addEvent = useEventStore((state) => state.addEvent);
-  const fetchUser = useLoginStore((state) => state.fetchUser);
+  // const fetchUser = useLoginStore((state) => state.fetchUser);
   const uploadImageToCloudinary = useEventStore(
     (state) => state.uploadImageToCloudinary
   );
@@ -77,10 +77,6 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
   useEffect(() => {
     reset();
   }, [change]);
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
 
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
@@ -98,7 +94,7 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
       setSuccess("Event added successfully!");
       setError("");
       reset();
-      router.push("/admin/festivals/view-festival");
+      router.push(`/admin/events/view-event/${festivalId}`);
     } catch (err) {
       setError("Failed to add event");
       setSuccess("");
@@ -106,146 +102,138 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <div className="flex justify-center items-start p-8 pt-20">
-        <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 relative">
-          <button
-            onClick={() => router.push("/admin/festivals/view-festival")}
-            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-          >
-            <XMarkIcon className="w-6 h-6" />
-          </button>
-          <div className="w-full">
-            <h2 className="text-2xl font-semibold text-red-500 mb-6">
-              Event Form
-            </h2>
-            <form onSubmit={handleSubmit(onSubmitHandler)}>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Event Type
-                </label>
-                <select
-                  {...register("eventType")}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                >
-                  <option value="">Select Event Type</option>
-                  {eventTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-                {errors.eventType && (
-                  <p className="text-red-500 mt-1">
-                    {errors.eventType.message}
-                  </p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Event Name
-                </label>
-                <input
-                  type="text"
-                  {...register("eventName")}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  placeholder="Enter Event Name"
-                />
-                {errors.eventName && (
-                  <p className="text-red-500 mt-1">
-                    {errors.eventName.message}
-                  </p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Members Type
-                </label>
-                <select
-                  {...register("members")}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                >
-                  <option value="">Select Members Type</option>
-                  {membersTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-                {errors.members && (
-                  <p className="text-red-500 mt-1">{errors.members.message}</p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Venue
-                </label>
-                <input
-                  type="text"
-                  {...register("venue")}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  placeholder="Enter Venue"
-                />
-                {errors.venue && (
-                  <p className="text-red-500 mt-1">{errors.venue.message}</p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Start Date
-                </label>
-                <input
-                  type="datetime-local"
-                  {...register("startDateTime")}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-                {errors.startDateTime && (
-                  <p className="text-red-500 mt-1">
-                    {errors.startDateTime.message}
-                  </p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  End Date
-                </label>
-                <input
-                  type="datetime-local"
-                  {...register("endDateTime")}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-                {errors.endDateTime && (
-                  <p className="text-red-500 mt-1">
-                    {errors.endDateTime.message}
-                  </p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
-                  Image
-                </label>
-                <input
-                  type="file"
-                  {...register("imageUrl")}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                />
-                {errors.imageUrl && (
-                  <p className="text-red-500 mt-1">{errors.imageUrl.message}</p>
-                )}
-              </div>
-           
-              <div className="flex justify-end space-x-4">
-                <button className="reset" type="button" onClick={() => reset()}>
-                  Reset
-                </button>
-                <button className="submit" type="submit">
-                  Submit
-                </button>
-              </div>
-            </form>
+    <div className="main-div">
+      {/* <div className="flex justify-center items-start p-8 pt-20"> */}
+      <div className="input-form-div">
+        <button
+          onClick={() => router.push("/admin/festivals/view-festival")}
+          className="xmark-icon"
+        >
+          <XMarkIcon className="w-6 h-6" />
+        </button>
+        {/* <div className="w-full"> */}
+        <h2 className="form-heading">Event Form</h2>
+        <form onSubmit={handleSubmit(onSubmitHandler)}>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Event Type
+            </label>
+            <select
+              {...register("eventType")}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+              <option value="">Select Event Type</option>
+              {eventTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+            {errors.eventType && (
+              <p className="text-red-500 mt-1">{errors.eventType.message}</p>
+            )}
           </div>
-        </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Event Name
+            </label>
+            <input
+              type="text"
+              {...register("eventName")}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Enter Event Name"
+            />
+            {errors.eventName && (
+              <p className="text-red-500 mt-1">{errors.eventName.message}</p>
+            )}
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Members Type
+            </label>
+            <select
+              {...register("members")}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+              <option value="">Select Members Type</option>
+              {membersTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+            {errors.members && (
+              <p className="text-red-500 mt-1">{errors.members.message}</p>
+            )}
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Venue
+            </label>
+            <input
+              type="text"
+              {...register("venue")}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Enter Venue"
+            />
+            {errors.venue && (
+              <p className="text-red-500 mt-1">{errors.venue.message}</p>
+            )}
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Start Date
+            </label>
+            <input
+              type="datetime-local"
+              {...register("startDateTime")}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+            {errors.startDateTime && (
+              <p className="text-red-500 mt-1">
+                {errors.startDateTime.message}
+              </p>
+            )}
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              End Date
+            </label>
+            <input
+              type="datetime-local"
+              {...register("endDateTime")}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+            {errors.endDateTime && (
+              <p className="text-red-500 mt-1">{errors.endDateTime.message}</p>
+            )}
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Image
+            </label>
+            <input
+              type="file"
+              {...register("imageUrl")}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+            {errors.imageUrl && (
+              <p className="text-red-500 mt-1">{errors.imageUrl.message}</p>
+            )}
+          </div>
+
+          <div className="flex justify-end space-x-4">
+            <button className="reset" type="button" onClick={() => reset()}>
+              Reset
+            </button>
+            <button className="submit" type="submit">
+              Submit
+            </button>
+          </div>
+        </form>
+        {/* </div> */}
       </div>
+      {/* </div>   */}
     </div>
   );
 };

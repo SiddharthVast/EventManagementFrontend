@@ -51,7 +51,7 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
   );
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen ">
       <div className="flex justify-center items-start p-4 pt-20">
         <div className="w-full max-w-fit bg-white shadow-lg rounded-lg p-8">
           <h1 className="text-2xl font-semibold text-red-500 mb-6 mt-5">
