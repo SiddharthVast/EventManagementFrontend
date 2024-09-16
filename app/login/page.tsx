@@ -12,7 +12,6 @@ import Link from "next/link";
 interface FormValues {
   email: string;
   password: string;
-
 }
 
 const schema = yup.object().shape({
@@ -53,9 +52,7 @@ const Login = () => {
     try {
       console.log(data);
       let res = await login(data);
-      console.log(res);
       const fetch = await fetchUser();
-      console.log("Fetch:", fetch);
       const user = useLoginStore.getState().user;
 
       if (user?.role === "admin") {
@@ -121,7 +118,9 @@ const Login = () => {
               className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.email && (
-              <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+              <p className="text-red-500 text-xs mt-1">
+                {errors.email.message}
+              </p>
             )}
           </div>
           <div className="mb-6">
@@ -132,7 +131,9 @@ const Login = () => {
               className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.password && (
-              <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+              <p className="text-red-500 text-xs mt-1">
+                {errors.password.message}
+              </p>
             )}
           </div>
           <div className="flex justify-end">
@@ -161,8 +162,10 @@ const Login = () => {
           </div>
         </form>
         <div className="flex flex-col items-center mt-6 space-y-2">
-
-          <Link href="student/registration" className="text-blue-500 hover:underline">
+          <Link
+            href="student/registration"
+            className="text-blue-500 hover:underline"
+          >
             Sign up?
           </Link>
           <Link
@@ -171,7 +174,6 @@ const Login = () => {
             className="text-blue-500 hover:underline"
           >
             Forgot Password?
-
           </Link>
         </div>
       </div>
@@ -187,7 +189,9 @@ const Login = () => {
               className="block w-full px-4 py-2 border rounded-md"
             />
             {resetErrors.email && (
-              <p className="text-red-500 text-xs mt-1">{resetErrors.email.message}</p>
+              <p className="text-red-500 text-xs mt-1">
+                {resetErrors.email.message}
+              </p>
             )}
             <button
               type="submit"

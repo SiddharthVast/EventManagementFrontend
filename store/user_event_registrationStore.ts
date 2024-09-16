@@ -20,6 +20,9 @@ export interface UserEventRegistrationStoreState {
   updateUserEvntReg: (payload: {
     regData: { id: number; totalScores: number }[];
   }) => Promise<void>;
+
+  checkRegistrationStatus: (userId: number, eventId: number) => Promise<boolean>;
+
 }
 
 export interface UserEventRegistration {
@@ -101,7 +104,7 @@ const useUserEventRegistartionStore = create<UserEventRegistrationStoreState>(
         console.log("User Event Registrations updated successfully:", res.data);
       } catch (error) {
         console.error("Error updating user event registrations:", error);
-        throw error; // Handle the error accordingly
+        throw error;
       }
     },
 
@@ -113,6 +116,7 @@ const useUserEventRegistartionStore = create<UserEventRegistrationStoreState>(
     },
     getRegistartionByUserId: async (id: number) => {
       const res = await http.get(`/user-event-registration/userId/${id}`);
+      console.log("Fetched registrations:", res.data);
       set((state: UserEventRegistrationStoreState) => ({
         registrations: res.data,
       }));
@@ -126,7 +130,7 @@ const useUserEventRegistartionStore = create<UserEventRegistrationStoreState>(
       }));
     },
 
-    addRegistration: async (data: { eventId: number; userId: number }) => {
+    addRegistration: async (data: { eventId: number; userId: number; topic?: string }) => {
       const res = await http.post("/user-event-registration", data, {
         headers: { authorization: sessionStorage.token },
       });
@@ -134,6 +138,19 @@ const useUserEventRegistartionStore = create<UserEventRegistrationStoreState>(
         registrations: [...state.registrations, res.data],
       }));
     },
+
+    checkRegistrationStatus: async (userId: number, eventId: number) => {
+      try {
+        const res = await http.get(`/user-event-registration/check-registration`, {
+          params: { userId, eventId },
+        });
+        return res.data.registered;
+      } catch (error) {
+        console.error("Failed to fetch registration status:", error);
+        return false;
+      }
+    },
+
   })
 );
 

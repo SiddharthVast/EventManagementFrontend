@@ -1,82 +1,7 @@
-// "use client";
-// import React, { useEffect, useState } from "react";
-// import useUserEventRegistrationStore from "../../../../store/user_event_registrationStore";
-
-// interface Props {
-//   params: {
-//     eventId: number;
-//   };
-// }
-// const RegistrationTable = ({ params: { eventId } }: Props) => {
-//   const { registrations, getRegByEidRole } = useUserEventRegistrationStore();
-//   const [sortedRegistrations, setSortedRegistrations] = useState(registrations);
-
-//   // Fetch the registrations when the component mounts
-//   useEffect(() => {
-//     getRegByEidRole(eventId, "student");
-//   }, []);
-//   useEffect(() => {
-//     const sortedData = [...registrations].sort(
-//       (a, b) => b.totalScores - a.totalScores
-//     );
-//     setSortedRegistrations(sortedData);
-
-//     // setSortedRegistrations(registrations);
-//   }, [registrations]);
-
-//   // const handleSort = () => {
-//   //   const sortedData = [...registrations].sort(
-//   //     (a, b) => b.totalScores - a.totalScores
-//   //   );
-//   //   setSortedRegistrations(sortedData);
-//   // };
-//   return (
-//     <div className="overflow-x-auto p-5">
-//       <table className="min-w-full bg-white shadow-md rounded-lg">
-//         <thead>
-//           <tr>
-//             <th className="py-2 px-4 border-b">Participant</th>
-//             <th className="py-2 px-4 border-b">Topic</th>
-//             <th className="py-2 px-4 border-b">Scores</th>
-//           </tr>
-//         </thead>
-//         <tbody>
-//           {sortedRegistrations.length > 0 ? (
-//             sortedRegistrations.map((registration, index) => (
-//               <tr
-//                 key={registration.id}
-//                 className={index < 3 ? "bg-yellow-100 font-bold" : ""}
-//               >
-//                 <td className="py-2 px-4 border-b">
-//                   {registration.groupName !== "NA"
-//                     ? registration.groupName + " " + "Group"
-//                     : `${registration.user.firstName} ${registration.user.lastName}`}
-//                 </td>
-
-//                 <td className="py-2 px-4 border-b">{registration.topic}</td>
-//                 <td className="py-2 px-4 border-b">
-//                   {registration.totalScores}
-//                 </td>
-//               </tr>
-//             ))
-//           ) : (
-//             <tr>
-//               <td colSpan={3} className="py-4 text-center">
-//                 No registrations found.
-//               </td>
-//             </tr>
-//           )}
-//         </tbody>
-//       </table>
-//     </div>
-//   );
-// };
-
-// export default RegistrationTable;
 "use client";
 import React, { useEffect, useState } from "react";
 import useUserEventRegistrationStore from "../../../../store/user_event_registrationStore";
-
+import useEventStore from "@/store/eventStore";
 interface UserEventRegistration {
   id: number;
   groupName: string;
@@ -96,6 +21,7 @@ interface Props {
 
 const RegistrationTable = ({ params: { eventId } }: Props) => {
   const { registrations, getRegByEidRole } = useUserEventRegistrationStore();
+  const { getEventById, event } = useEventStore();
   const [sortedRegistrations, setSortedRegistrations] = useState<
     UserEventRegistration[]
   >([]);
@@ -106,7 +32,7 @@ const RegistrationTable = ({ params: { eventId } }: Props) => {
     const fetchAndSortRegistrations = async () => {
       setLoading(true); // Set loading state to true
       setError(null); // Clear any previous errors
-
+      getEventById(eventId);
       try {
         await getRegByEidRole(eventId, "student");
         // Assuming registrations is updated in the store and will reflect the latest data
@@ -131,7 +57,7 @@ const RegistrationTable = ({ params: { eventId } }: Props) => {
   return (
     <div className="overflow-x-auto p-5">
       <h1 className="text-xl font-bold text-white bg-red-800 p-2 mx-10 rounded-md">
-        Result of Event: {registrations[0].event.eventName}
+        Result of Event: {event.eventName}
       </h1>{" "}
       <table className="m-10">
         <thead>
@@ -162,7 +88,7 @@ const RegistrationTable = ({ params: { eventId } }: Props) => {
             ))
           ) : (
             <tr>
-              <td colSpan={3}>No registrations found.</td>
+              <td colSpan={3}>No Data found.</td>
             </tr>
           )}
         </tbody>

@@ -10,6 +10,7 @@ export interface UserStoreState {
   deleteUser: (id: number) => void;
   updateUser: (data: UserData) => void;
   addUser: (data: UserData) => void;
+  getUserByCidRole: (id: number, role: string) => void;
 }
 
 export interface User {
@@ -75,6 +76,10 @@ const useUserStore = create<UserStoreState>((set) => ({
   getUserById: async (id: string) => {
     const res = await http.get(`/users/${id}`);
     set(() => ({ user: res.data }));
+  },
+  getUserByCidRole: async (id: number, role: string) => {
+    const res = await http.get(`/users/getUserByCidRole/${id}/${role}`);
+    set(() => ({ users: res.data }));
   },
 
   addUser: async (data: UserData) => {

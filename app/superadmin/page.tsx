@@ -3,6 +3,11 @@ import Link from "next/link";
 import React from "react";
 import AdminSummerImage from "../../public/JpgAdminSummerImage.jpg"; // Make sure to save your images in the public folder
 import MusicConnection from "../../public/AdminMusicNightImage.jpg";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import AdminSummerImage from "../../public/JpgAdminSummerImage.jpg"; // Make sure to save your images in the public folder
+import MusicConnection from "../../public/AdminMusicNightImage.jpg";
 
 const SuperAdmin = () => {
   return (
@@ -56,4 +61,5 @@ const SuperAdmin = () => {
   );
 };
 
+export default SuperAdmin;
 export default SuperAdmin;
