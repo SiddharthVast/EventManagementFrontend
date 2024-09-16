@@ -2,9 +2,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import useCollegeStore, { CollegeData } from "../../../store/collegeStore";
+import useCollegeStore, { CollegeData } from "../../../../store/collegeStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const schema = yup.object().shape({
@@ -19,14 +19,20 @@ const schema = yup.object().shape({
   emailId: yup.string().email("Invalid email").required("Email is required"),
   address: yup.string().required("Address is required"),
 });
-
-const AddCollege = () => {
+interface Props {
+  params: {
+    collegeId: string;
+  };
+}
+const AddCollege = ({ params: { collegeId } }: Props) => {
   const router = useRouter();
   const addCollege = useCollegeStore((state) => state.addCollege);
+  const { updateCollege, colleges } = useCollegeStore();
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
     reset,
   } = useForm<CollegeData>({
@@ -36,15 +42,36 @@ const AddCollege = () => {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    if (collegeId) {
+      const collegeToEdit = colleges.find(
+        (college) => college.id === parseInt(collegeId)
+      );
+      if (collegeToEdit) {
+        setValue("collegeName", collegeToEdit.collegeName);
+        setValue("number", collegeToEdit.number);
+        setValue("emailId", collegeToEdit.emailId);
+        setValue("address", collegeToEdit.address);
+      }
+    }
+  }, [collegeId, colleges, setValue]);
+
   const onSubmitHandler = async (data: CollegeData) => {
+    console.log(`${collegeId}`);
     try {
-      await addCollege(data);
-      setSuccess("College added successfully!");
-      setError("");
-      reset();
+      if (collegeId === "new") {
+        await addCollege(data);
+         console.log(`${collegeId}`);
+        setSuccess("College added successfully!");
+        setError("");
+        reset();
+      } else {
+        await updateCollege(+collegeId, data);
+      }
       router.push("/superadmin");
     } catch (err) {
-      setError("Failed to add college");
+      console.error(err);
+      setError("Error adding/updating college");
       setSuccess("");
     }
   };
@@ -53,6 +80,7 @@ const AddCollege = () => {
     <div className="bg-gray-100 min-h-screen">
       <div className="flex justify-center items-start p-8 pt-20">
         <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 relative">
+          {/* Heroicons cross icon */}
           <button
             onClick={() => router.push("/superadmin")}
             className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"

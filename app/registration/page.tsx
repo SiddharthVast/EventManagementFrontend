@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useRouter, useSearchParams } from "next/navigation";
 import useUserStore from "@/store/userStore";
-import { useUser } from "../context/UserContext"; // Adjust the path as needed
+import { useUser } from "../context/UserContext";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),

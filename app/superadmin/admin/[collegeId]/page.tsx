@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useRouter } from "next/navigation";
-import useUserStore, { UserData } from "../../../../store/userStore";
+import useUserStore from "../../../../store/userStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const schema = yup.object().shape({
@@ -14,7 +14,7 @@ const schema = yup.object().shape({
   password: yup.string().required("Password is required"),
   mobileNumber: yup.string().required("Mobile Number is required"),
   details: yup.string().required("Details are required"),
-  role: yup.string(),
+  // role: yup.string(),
 });
 
 interface FormData {
@@ -24,7 +24,7 @@ interface FormData {
   password: string;
   mobileNumber: string;
   details: string;
-  role?: string;
+  // role?: string;
 }
 
 interface Props {
@@ -54,9 +54,8 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
         collegeId: parseInt(collegeId),
         role: "admin",
       };
-
       await addUser(userData);
-      router.push("/superadmin/view-college");
+      router.push("/superadmin/college");
     } catch (error) {
       console.error("Failed to add admin:", error);
     }
@@ -67,7 +66,7 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
       <div className="relative max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
         <button
           className="absolute top-4 right-4 text-gray-500 hover:text-red-500"
-          onClick={() => router.back()} // You can change this action if needed
+          onClick={() => router.back()}
         >
           <XMarkIcon className="h-6 w-6" />
         </button>
