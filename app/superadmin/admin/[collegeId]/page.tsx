@@ -62,24 +62,18 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-8">
-      <div className="relative max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
-        <button
-          className="absolute top-4 right-4 text-gray-500 hover:text-red-500"
-          onClick={() => router.back()}
-        >
+    <div className="main-div">
+      <div className="input-form-data">
+        <button className="xmark-icon" onClick={() => router.back()}>
           <XMarkIcon className="h-6 w-6" />
         </button>
-        <h1 className="text-2xl font-semibold text-red-500 mb-6">Add Admin</h1>
+        <h1 className="form-heading">Add Admin</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              First Name
-            </label>
+            <label>First Name</label>
             <input
               type="text"
               {...register("firstName")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter First Name"
             />
             {errors.firstName && (
@@ -87,13 +81,10 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Last Name
-            </label>
+            <label>Last Name</label>
             <input
               type="text"
               {...register("lastName")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter Last Name"
             />
             {errors.lastName && (
@@ -101,13 +92,10 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Email
-            </label>
+            <label>Email</label>
             <input
               type="email"
               {...register("email")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter Email"
             />
             {errors.email && (
@@ -115,13 +103,10 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Password
-            </label>
+            <label>Password</label>
             <input
               type="password"
               {...register("password")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter Password"
             />
             {errors.password && (
@@ -129,13 +114,10 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Mobile Number
-            </label>
+            <label>Mobile Number</label>
             <input
               type="text"
               {...register("mobileNumber")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter Mobile Number"
             />
             {errors.mobileNumber && (
@@ -143,14 +125,8 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Details
-            </label>
-            <textarea
-              {...register("details")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Enter Details"
-            />
+            <label>Details</label>
+            <textarea {...register("details")} placeholder="Enter Details" />
             {errors.details && (
               <p className="text-red-500 mt-1">{errors.details.message}</p>
             )}

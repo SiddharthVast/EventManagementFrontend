@@ -9,7 +9,6 @@ import { TrashIcon } from "@heroicons/react/24/solid";
 import { XMarkIcon } from "@heroicons/react/16/solid";
 import useEventStore from "@/store/eventStore";
 
-// Define the schema with yup
 const schema = yup.object().shape({
   points: yup
     .array()
@@ -82,7 +81,7 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
     control,
   });
 
-  // Handle form submission
+  
   const onSubmit = async (data: FormData) => {
     setLoading(true);
     setError(null);
@@ -90,10 +89,9 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
       await addPoints(
         data.points.map((point) => ({
           ...point,
-          eventId: data.eventId, // Ensure eventId is included for each point
+          eventId: data.eventId, 
         }))
       );
-      // Clear the form after successful submission
       reset({
         points: [{ point: "" }],
         eventId: parseInt(eventId, 10),
@@ -108,16 +106,16 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-8">
-      <div className="relative max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
+    <div className="main-div">
+      <div className="input-form-div ">
         <button
           type="button"
           onClick={() =>
             router.push(`/admin/events/view-event/${event.festival.id}`)
           }
-          className="absolute top-4 right-4"
+          className="xmark-icon"
         >
-          <XMarkIcon className="h-6 w-6 absolute -right-2 text-gray-500 hover:text-gray-700" />
+          <XMarkIcon className="h-6 w-6" />
         </button>
         <div className="text-center mb-6">
           <h1 className="text-xl font-bold text-white bg-red-800 p-2 rounded-md">
@@ -128,13 +126,12 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           {fields.map((field, index) => (
             <div key={field.id} className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
+              <label>
                 Skill Set {index + 1}
               </label>
               <input
                 type="text"
-                {...register(`points.${index}.point` as const)}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                {...register(`points.${index}.point` as const)}            
                 placeholder="Enter Point to Judge"
               />
               {errors.points?.[index]?.point && (
@@ -157,7 +154,7 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
               type="button"
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               onClick={() => append({ point: "" })}
-              disabled={fields.length >= 5} // Disable if there are already 5 points
+              disabled={fields.length >= 5} 
             >
               Add Another Point
             </button>
@@ -203,13 +200,6 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
             </tbody>
           </table>
         </form>
-        {/* <button
-          onClick={() =>
-            router.push(`/admin/events/view-event/${event.festival.id}`)
-          }
-        >
-          Done
-        </button> */}
       </div>
     </div>
   );

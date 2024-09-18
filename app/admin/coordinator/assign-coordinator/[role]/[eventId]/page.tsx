@@ -67,16 +67,16 @@ const AssignCoordinatorForm = ({ params: { eventId, role } }: Props) => {
   };
 
   return (
-    <div className=".main-div">
+    <div className="main-div">
       <div className="input-form-div">
         <button
           type="button"
           onClick={() =>
             router.push(`/admin/events/view-event/${event.festival.id}`)
           }
-          className="absolute top-4 right-4"
+          className="xmark-icon"
         >
-          <XMarkIcon className="h-6 w-6 text-gray-500 hover:text-gray-700" />
+          <XMarkIcon className="w-6 h-6" />
         </button>
         <form onSubmit={handleSubmit(onSubmitHandler)}>
           <h2 className="text-2xl font-semibold mb-6">

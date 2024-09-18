@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 // Import your images
-import img11 from "../public/img11.jpg"
+import img11 from "../public/img11.jpg";
 import danceimg2 from "../public/danceimg2.jpg";
 import danceimg3 from "../public/danceimg3.jpg";
 import sportimg2 from "../public/sportsing1.jpg";
@@ -15,8 +15,7 @@ import chefimg1 from "../public/chefimg1.jpg";
 
 export default function Home() {
   return (
-    <main className="min-h-screen p-1">
-      {/* Horizontal Image Carousel */}
+    <main className="main-div-Carousel">
       <section>
         <Swiper
           modules={[Pagination, Scrollbar, A11y, Autoplay]}
@@ -93,51 +92,6 @@ export default function Home() {
               />
             </div>
           </SwiperSlide>
-          {/* <SwiperSlide>
-            <div className="relative w-full h-[500px]">
-              <Image
-                src={winnerimg}
-                alt="College Event 3"
-                fill
-                style={{ objectFit: "cover" }}
-                className="swiper-image"
-              />
-            </div>
-          </SwiperSlide> */}
-          {/* <SwiperSlide>
-            <div className="relative w-full h-[500px]">
-              <Image
-                src={danceimg3}
-                alt="College Event 3"
-                fill
-                style={{ objectFit: "cover" }}
-                className="swiper-image"
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="relative w-full h-[500px]">
-              <Image
-                src={danceimg3}
-                alt="College Event 3"
-                fill
-                style={{ objectFit: "cover" }}
-                className="swiper-image"
-              />
-            </div>
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <div className="relative w-full h-[500px]">
-              <Image
-                src={danceimg3}
-                alt="College Event 3"
-                fill
-                style={{ objectFit: "cover" }}
-                className="swiper-image"
-              />
-            </div>
-          </SwiperSlide> */}
         </Swiper>
       </section>
     </main>

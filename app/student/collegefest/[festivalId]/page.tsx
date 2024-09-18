@@ -22,9 +22,7 @@ const Collegefest = ({ params: { festivalId } }: Props) => {
 
   return (
     <div className="main-div">
-      <h1 className="text-2xl font-bold mb-4 text-black">
-        Details of {festival.festivalTitle}
-      </h1>
+      <h1 className=" form-heading">Details of {festival.festivalTitle}</h1>
       <div className="border-b-2 border-gray-300 mb-4 relative">
         <div className="absolute left-1/2 transform -translate-x-1/2 -top-2 bg-white px-2"></div>
       </div>

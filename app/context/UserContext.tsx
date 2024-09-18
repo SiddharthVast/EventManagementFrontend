@@ -1,10 +1,9 @@
 "use client";
 import React, { createContext, useContext, ReactNode, useEffect } from "react";
-import useLoginStore from "@/store/loginStore"; // Adjust the path as needed
-// import useUserEventRegistartionStore from "../../store/user_event_registrationStore";
+import useLoginStore from "@/store/loginStore"; 
 
 interface UserContextProps {
-  user: any; // Replace `any` with your actual user type
+  user: any; 
   fetchUser: () => Promise<void>;
   logout: () => void;
 }
@@ -22,7 +21,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     const loadUser = async () => {
       if (!user) {
         try {
-          await fetchUser(); // Fetch user data if not already loaded
+          await fetchUser();
         } catch (error) {
           console.error("Error fetching user:", error);
         }

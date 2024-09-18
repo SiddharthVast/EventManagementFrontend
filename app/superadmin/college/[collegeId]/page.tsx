@@ -77,29 +77,28 @@ const AddCollege = ({ params: { collegeId } }: Props) => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <div className="flex justify-center items-start p-8 pt-20">
+    <div className="main-div">
+      <div className="input-form-div">
         <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 relative">
           {/* Heroicons cross icon */}
           <button
             onClick={() => router.push("/superadmin")}
-            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+            className="xmark-icon"
           >
             <XMarkIcon className="w-6 h-6" />
           </button>
           <div className="w-full">
-            <h2 className="text-2xl font-semibold text-red-500 mb-6">
+            <h2 className="form-heading">
               ADD COLLEGE
             </h2>
             <form onSubmit={handleSubmit(onSubmitHandler)}>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
+                <label>
                   College Name
                 </label>
                 <input
                   type="text"
                   {...register("collegeName")}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Enter College Name"
                 />
                 {errors.collegeName && (
@@ -109,13 +108,12 @@ const AddCollege = ({ params: { collegeId } }: Props) => {
                 )}
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
+                <label>
                   Registration Number
                 </label>
                 <input
                   type="text"
                   {...register("number")}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Enter Registration Number"
                 />
                 {errors.number && (
@@ -123,13 +121,12 @@ const AddCollege = ({ params: { collegeId } }: Props) => {
                 )}
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
+                <label>
                   Email
                 </label>
                 <input
                   type="email"
                   {...register("emailId")}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Enter Email"
                 />
                 {errors.emailId && (
@@ -137,13 +134,12 @@ const AddCollege = ({ params: { collegeId } }: Props) => {
                 )}
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">
+                <label>
                   Address
                 </label>
                 <input
                   type="text"
                   {...register("address")}
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   placeholder="Enter Address"
                 />
                 {errors.address && (

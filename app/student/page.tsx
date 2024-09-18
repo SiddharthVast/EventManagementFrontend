@@ -5,11 +5,9 @@ import MusicConnection from "../../public/AdminMusicNightImage.jpg";
 
 const Student = () => {
   return (
-    <div className="flex pt-36">
-      <div className="w-3/4 bg-white p-4">
-        <h1 className="text-xl font-bold mb-6">
-          Welcome to Event Management System
-        </h1>
+    <div className="main-div flex pt-36">
+      <div className="input-form-div w-3/4 bg-white p-4">
+        <h1 className="form-heading">Welcome to Event Management System</h1>
         <ul>
           <li className="mb-2">
             <Link
