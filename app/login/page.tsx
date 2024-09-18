@@ -110,9 +110,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="main-div">
       {loading && <Loading />}
-      <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md -mt-10">
+      <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md -mt-10 mx-auto">
         <h2 className="text-2xl font-bold mb-6 text-left">
           Login to Your Account
         </h2>

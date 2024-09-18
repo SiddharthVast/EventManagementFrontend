@@ -37,9 +37,9 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
   );
 
   return (
-    <div className="container mx-auto p-4 pt-40">
-      <h1 className="text-2xl font-bold mb-4 text-black">Events</h1>
-      <div className="border-b-2 border-gray-300 mb-4 relative">
+    <div className="main-div">
+      <h1 className="form-heading">Events</h1>
+      <div className="show-form-div">
         <div className="absolute left-1/2 transform -translate-x-1/2 -top-2 bg-white px-2"></div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

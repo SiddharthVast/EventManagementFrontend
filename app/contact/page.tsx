@@ -55,18 +55,19 @@ const ContactUsPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-md shadow-md w-full max-w-4xl">
+    <div className="main-div">
+      <div className="input-form-div">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
-            <h2 className="text-2xl font-bold mb-6 text-left">Contact Us</h2>
+            <h2 className=" text-red-600 text-2xl font-bold mb-6 text-left">
+              Contact Us
+            </h2>
             <form onSubmit={handleSubmit(onSubmitHandler)}>
               <div className="mb-4">
                 <label className="block text-sm font-medium mb-2">Name</label>
                 <input
                   type="text"
                   {...register("name")}
-                  className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter Your Name"
                 />
                 {errors.name && (
@@ -78,7 +79,6 @@ const ContactUsPage = () => {
                 <input
                   type="email"
                   {...register("email")}
-                  className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter Your Email"
                 />
                 {errors.email && (
@@ -92,7 +92,6 @@ const ContactUsPage = () => {
                 <input
                   type="text"
                   {...register("mobileNumber")}
-                  className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   placeholder="Enter Your Phone Number"
                 />
                 {errors.mobileNumber && (
@@ -107,7 +106,6 @@ const ContactUsPage = () => {
                 </label>
                 <textarea
                   {...register("message")}
-                  className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                   rows={5}
                   placeholder="Your Message"
                 />
@@ -115,16 +113,13 @@ const ContactUsPage = () => {
                   <p className="text-red-500 mt-1">{errors.message.message}</p>
                 )}
               </div>
-
-              {/* Use the Loading component here */}
-              {/* {loader && <Loading />} */}
-
               <div className="flex space-x-4">
                 <button
                   type="submit"
                   disabled={loader}
-                  className={`w-1/2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors ${loader ? "cursor-not-allowed opacity-50" : ""
-                    }`}
+                  className={`w-1/2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors ${
+                    loader ? "cursor-not-allowed opacity-50" : ""
+                  }`}
                 >
                   Submit
                 </button>
@@ -132,7 +127,7 @@ const ContactUsPage = () => {
             </form>
           </div>
           <div>
-            <h2 className="text-2xl font-bold mb-6 text-left">
+            <h2 className=" text-red-600 text-2xl  font-bold mb-6 text-left">
               Where to Find Us
             </h2>
             <div className="mb-4">

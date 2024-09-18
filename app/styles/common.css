@@ -27,15 +27,20 @@
 
 .main-div {
   @apply bg-gray-100 min-h-screen p-8;
-  padding-top: calc(var(--navbar-height) + 30px); /* Use calc() to add padding dynamically */
+  padding-top: calc(var(--navbar-height) + 50px); /* Use calc() to add padding dynamically */
+}
+
+.main-div-Carousel {
+  @apply bg-gray-100 min-h-screen  ;
+  padding-top: calc(var(--navbar-height) + 1px); /* Use calc() to add padding dynamically */
 }
 
 
-
-/* __________________________________________________________________________________________________________ */
-
 .input-form-div {
-  @apply max-w-fit max-w-4xl bg-white shadow-lg rounded-lg p-8 relative mx-auto;
+  @apply  max-w-4xl bg-white shadow-lg rounded-lg p-8 relative mx-auto;
+}
+.show-form-div {
+  @apply bg-white shadow-lg rounded-lg p-8 relative mx-auto;
 }
 
 .input-form-div ul {
@@ -156,7 +161,7 @@ tr:hover {
 }
 
 .xmark-icon{
-  @apply absolute h-6 w-5 top-4 right-4 text-gray-500 hover:text-red-500
+@apply absolute h-6 w-5 top-4 right-4 text-gray-500 hover:text-red-700 transition-transform transform hover:scale-110;
 }
 
 .flex-center-gap {
@@ -176,7 +181,7 @@ tr:hover {
 }
 
 .submit {
-  @apply bg-red-500 text-white font-bold py-2 px-4 rounded mr-2 transition-all duration-300;
+  @apply bg-blue-500 text-white font-bold py-2 px-4 rounded mr-2 transition-all duration-300;
 }
 
 button:hover {
@@ -229,13 +234,3 @@ icon:hover {
   display: flex; /* Align buttons horizontally */
   flex-direction: column; /* Stack buttons vertically */
 }
-
-
-
-
-
-
-
-
-
-

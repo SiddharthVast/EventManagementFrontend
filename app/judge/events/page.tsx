@@ -24,13 +24,11 @@ const UserEvents = () => {
   }, [user, regData, getRegistartionByUserId]);
 
   useEffect(() => {
-    setRegData(registrations); // Set registration data after fetching
+    setRegData(registrations); 
   }, [registrations]);
-  console.log("redistration", registrations);
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <div className="flex justify-center items-start p-8 pt-20">
-        <div className="w-full max-w-6xl bg-white shadow-lg rounded-lg p-8">
+    <div className="main-div">
+      <div className="show-form-div">
           <h1 className="text-2xl font-semibold text-red-500 mb-6 mt-5">
             Events
           </h1>
@@ -65,7 +63,6 @@ const UserEvents = () => {
                             </button>
                           </Link>
                         </td>
-                    
                       </tr>
                     ))
                   ) : (
@@ -79,7 +76,6 @@ const UserEvents = () => {
           )}
         </div>
       </div>
-    </div>
   );
 };
 

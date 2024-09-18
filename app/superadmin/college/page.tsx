@@ -26,9 +26,9 @@ const ViewCollege = () => {
   }
 
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <div className="flex justify-center items-start p-8 pt-20">
-        <div className="w-full max-w-6xl bg-white shadow-lg rounded-lg p-8">
+    <div className="main-div">
+      <div className="input-form-div">
+        {/* <div className="w-full max-w-6xl bg-white shadow-lg rounded-lg p-8"> */}
           <h1 className="text-2xl font-semibold text-red-500 mb-6">
             Our Registered Colleges
           </h1>
@@ -125,7 +125,7 @@ const ViewCollege = () => {
           </table>
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 
