@@ -1,9 +1,11 @@
+"use client"
 import Link from "next/link";
 import AdminSummerImage from "../../public/JpgAdminSummerImage.jpg";
 import Image from "next/image";
 import MusicConnection from "../../public/AdminMusicNightImage.jpg";
 
 const Coordinator = () => {
+
     return (
         <div className="flex">
             <div className="w-3/4 bg-white p-4">

@@ -3,16 +3,12 @@ import Link from "next/link";
 import React from "react";
 import AdminSummerImage from "../../public/JpgAdminSummerImage.jpg"; // Make sure to save your images in the public folder
 import MusicConnection from "../../public/AdminMusicNightImage.jpg";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import AdminSummerImage from "../../public/JpgAdminSummerImage.jpg"; // Make sure to save your images in the public folder
-import MusicConnection from "../../public/AdminMusicNightImage.jpg";
+
 
 const SuperAdmin = () => {
   return (
     <div className="flex">
-      {/* Sidebar */}
+
       <div className="w-3/4 bg-white p-4">
         <h1 className="text-xl font-bold mb-6">
           WELCOME TO EVENT MANAGEMENT SYSTEM
@@ -37,7 +33,7 @@ const SuperAdmin = () => {
         </ul>
       </div>
 
-      {/* Features Section */}
+
       <div className="w-1/4 bg-white p-4">
         <h2 className="text-lg font-bold mb-4">FEATURES</h2>
         <div className="space-y-4">
@@ -61,5 +57,4 @@ const SuperAdmin = () => {
   );
 };
 
-export default SuperAdmin;
 export default SuperAdmin;
