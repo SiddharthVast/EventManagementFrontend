@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useLoginStore from "@/store/loginStore";
 import useUserEventRegistartionStore from "../../../store/user_event_registrationStore";
 import useEventStore from "@/store/eventStore";
@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PencilSquareIcon } from "@heroicons/react/16/solid";
 import { TrashIcon } from "@heroicons/react/24/solid";
+import Loading from "@/app/loading";
 
 const ViewMyTask = () => {
     const { user } = useLoginStore((state) => ({
@@ -26,12 +27,23 @@ const ViewMyTask = () => {
         deleteEvent: state.deleteEvent,
     }));
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        if (user) {
-            getRegistartionByUserId(user.id);
-        }
-        getAllEvents();
+        const fetchData = async () => {
+            if (user) {
+                await getRegistartionByUserId(user.id);
+            }
+            await getAllEvents();
+            setLoading(false);
+        };
+
+        fetchData();
     }, [user, getRegistartionByUserId, getAllEvents]);
+
+    if (loading) {
+        return <Loading />;
+    }
 
     const validRegistrations = registrations.filter(
         (registration) => registration.event && events.find((e) => e.id === registration.event.id)
@@ -69,11 +81,7 @@ const ViewMyTask = () => {
                                         <tr key={registration.id}>
                                             <td className="py-2 px-4 border-b border-gray-200 text-sm text-left">
                                                 <Image
-                                                    src={
-                                                        typeof event.imageUrl === "string"
-                                                            ? event.imageUrl
-                                                            : event.eventName
-                                                    }
+                                                    src={typeof event.imageUrl === "string" ? event.imageUrl : event.eventName}
                                                     alt={event.eventName}
                                                     width={50}
                                                     height={50}
@@ -99,11 +107,11 @@ const ViewMyTask = () => {
                                                 <div className="flex space-x-2 justify-center">
                                                     <Link href={`/admin/events/view-event/${event.festival.id}/${event.id}`}>
                                                         <button>
-                                                            <PencilSquareIcon className=" update-icon" />
+                                                            <PencilSquareIcon className="update-icon" />
                                                         </button>
                                                     </Link>
                                                     <button onClick={() => deleteEvent(event.id)}>
-                                                        <TrashIcon className=" delete-icon" />
+                                                        <TrashIcon className="delete-icon" />
                                                     </button>
                                                 </div>
                                             </td>
@@ -122,5 +130,3 @@ const ViewMyTask = () => {
 };
 
 export default ViewMyTask;
-
-

@@ -28,7 +28,7 @@ const NavBar = () => {
               About Project
             </Link>
             <Link href="/superadmin" className="nav-link">
-              Colleges
+              Super-Admin
             </Link>
             <a onClick={handleLogout} className="nav-link">
               Logout

@@ -1,9 +1,9 @@
 "use client";
-
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useLoginStore from "@/store/loginStore";
 import useUserEventRegistartionStore from "../../../store/user_event_registrationStore";
 import useEventStore from "@/store/eventStore";
+import Loading from "@/app/loading";
 
 const RegisteredEvents = () => {
     const { user } = useLoginStore((state) => ({
@@ -22,12 +22,23 @@ const RegisteredEvents = () => {
         getAllEvents: state.getAllEvents,
     }));
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
-        if (user) {
-            getRegistartionByUserId(user.id);
-        }
-        getAllEvents();
+        const fetchData = async () => {
+            if (user) {
+                await getRegistartionByUserId(user.id);
+            }
+            await getAllEvents();
+            setLoading(false);
+        };
+
+        fetchData();
     }, [user, getRegistartionByUserId, getAllEvents]);
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <div className="bg-gray-100 min-h-screen">

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useLoginStore from "@/store/loginStore";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,7 @@ import * as yup from "yup";
 import Modal from "../modal/modal";
 import axios from "axios";
 import Link from "next/link";
+import Loading from "../loading";
 
 interface FormValues {
   email: string;
@@ -24,6 +25,7 @@ const resetPasswordSchema = yup.object().shape({
 });
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const login = useLoginStore((state) => state.login);
   const fetchUser = useLoginStore((state) => state.fetchUser);
   const router = useRouter();
@@ -48,13 +50,14 @@ const Login = () => {
   const [error, setError] = useState("");
   const [showResetModal, setShowResetModal] = useState(false);
 
+  useEffect(() => {
+  }, [loading]);
   const onSubmitHandler = async (data: FormValues) => {
     try {
-      console.log(data);
-      let res = await login(data);
-      const fetch = await fetchUser();
+      setLoading(true);
+      await login(data);
+      await fetchUser();
       const user = useLoginStore.getState().user;
-
       if (user?.role === "admin") {
         router.push("/admin");
       } else if (user?.role === "superadmin") {
@@ -70,10 +73,14 @@ const Login = () => {
     } catch (err) {
       setError("Invalid username or password");
     }
+    finally {
+      setLoading(false);
+    }
   };
 
   const onSubmitResetEmail = async ({ email }: { email: string }) => {
     try {
+
       const response = await axios.post(
         "http://localhost:3000/users/request-password-reset",
         { email },
@@ -104,6 +111,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      {loading && <Loading />}
       <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md -mt-10">
         <h2 className="text-2xl font-bold mb-6 text-left">
           Login to Your Account
@@ -118,11 +126,10 @@ const Login = () => {
               className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.email && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.email.message}
-              </p>
+              <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
             )}
           </div>
+
           <div className="mb-6">
             <label className="block text-sm font-medium mb-2">Password</label>
             <input
@@ -131,24 +138,27 @@ const Login = () => {
               className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.password && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.password.message}
-              </p>
+              <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
             )}
+            <div className="flex justify-end">
+
+              <Link
+                href="#"
+                onClick={() => setShowResetModal(true)}
+                className="text-blue-500 hover:underline text-sm mt-2 block"
+              >
+                Forgot Password?
+              </Link>
+            </div>
           </div>
-          <div className="flex justify-end">
-            <Link
-              href="#"
-              onClick={() => setShowResetModal(true)}
-              className="text-blue-500 hover:underline "
-            >
-              Forgot Password?
-            </Link>
-          </div>
+
+
+
           <div className="flex space-x-4">
             <button
               type="submit"
               className="w-1/2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
+              disabled={loading}
             >
               Submit
             </button>
@@ -162,19 +172,11 @@ const Login = () => {
           </div>
         </form>
         <div className="flex flex-col items-center mt-6 space-y-2">
-          <Link
-            href="student/registration"
-            className="text-blue-500 hover:underline"
-          >
-            Sign up?
+
+          <Link href="student/registration" className="text-blue-500 hover:underline">
+            Don't have account? Register
           </Link>
-          <Link
-            href="#"
-            onClick={() => setShowResetModal(true)}
-            className="text-blue-500 hover:underline"
-          >
-            Forgot Password?
-          </Link>
+
         </div>
       </div>
 
@@ -189,9 +191,7 @@ const Login = () => {
               className="block w-full px-4 py-2 border rounded-md"
             />
             {resetErrors.email && (
-              <p className="text-red-500 text-xs mt-1">
-                {resetErrors.email.message}
-              </p>
+              <p className="text-red-500 text-xs mt-1">{resetErrors.email.message}</p>
             )}
             <button
               type="submit"
