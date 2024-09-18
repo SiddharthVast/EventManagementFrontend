@@ -27,7 +27,18 @@ const schema = yup.object().shape({
   members: yup.string().required("Members Type is required"),
   venue: yup.string().required("Venue is required"),
   startDateTime: yup.string().required("Start Date and Time are required"),
-  endDateTime: yup.string().required("End Date and Time are required"),
+  endDateTime: yup
+    .string()
+    .required("End Date and Time are required")
+    .test(
+      "endDateAfterStartDate",
+      "End date and time must be later than start date and time.",
+      function (value) {
+        const { startDateTime } = this.parent;
+        if (!startDateTime || !value) return true; // Skip validation if either date is missing
+        return new Date(startDateTime) < new Date(value);
+      }
+    ),
   imageUrl: yup
     .mixed<FileList | string>()
     .required()
@@ -83,6 +94,14 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
 
   const onSubmitHandler: SubmitHandler<EventData> = async (formData) => {
     try {
+      if (
+        formData.startDateTime &&
+        formData.endDateTime &&
+        new Date(formData.startDateTime) > new Date(formData.endDateTime)
+      ) {
+        setError("End date and time must be later than start date and time.");
+      }
+
       const imageFiles = formData.imageUrl as unknown as FileList;
       if (imageFiles && imageFiles[0] instanceof File) {
         const file = imageFiles[0];

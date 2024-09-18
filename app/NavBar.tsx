@@ -1,14 +1,14 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import useLoginStore from "@/store/loginStore";
+// import useLoginStore from "@/store/loginStore";
 import { useRouter } from "next/navigation";
 import "./styles/common.css";
 import { useUser } from "./context/UserContext";
 
 const NavBar = () => {
-  const { user } = useUser(); // Access user data from context
-  const logout = useLoginStore((state) => state.logout);
+  const { user, logout } = useUser(); // Access user data from context
+  // const logout = useLoginStore((state) => state.logout);
   const router = useRouter();
 
   const handleLogout = () => {
@@ -105,7 +105,7 @@ const NavBar = () => {
             <Link href="/about" className="nav-link">
               About Project
             </Link>
-            <Link href="/events" className="nav-link">
+            <Link href="/student/events" className="nav-link">
               Events
             </Link>
             <Link href="/student" className="nav-link">
@@ -135,7 +135,7 @@ const NavBar = () => {
             <Link href="/login" className="nav-link">
               Login
             </Link>
-            <Link href="/contact" className="nav-link" >
+            <Link href="/contact" className="nav-link">
               Contact Us
             </Link>
           </>
@@ -150,6 +150,7 @@ const NavBar = () => {
         <header className="header-title">
           College Event Management System
         </header>
+        <h6>{user?.college.collegeName}</h6>
       </div>
       <nav className="navbar-with-menu-list">{renderLinks()}</nav>
     </div>

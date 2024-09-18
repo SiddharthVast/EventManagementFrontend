@@ -5,8 +5,8 @@ import MusicConnection from "../../public/AdminMusicNightImage.jpg";
 
 const Admin = () => {
   return (
-    <div className="flex">
-      <div className="w-3/4 bg-white p-4">
+    <div className="main-div">
+      <div className="input-form-div">
         <h1 className="text-xl font-bold mb-6">
           Welcome to Event Management System
         </h1>
@@ -60,25 +60,6 @@ const Admin = () => {
             </Link>
           </li>
         </ul>
-      </div>
-      <div className="w-1/4 bg-white p-4">
-        <h2 className="text-lg font-bold mb-4">Features</h2>
-        <div className="space-y-4">
-          <div>
-            <Image
-              src={AdminSummerImage}
-              alt="Summer Party"
-              className="w-full h-80 object-cover"
-            />
-          </div>
-          <div>
-            <Image
-              src={MusicConnection}
-              alt="Music Connection"
-              className="w-full h-80 object-cover"
-            />
-          </div>
-        </div>
       </div>
     </div>
   );

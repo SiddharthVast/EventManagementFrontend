@@ -12,6 +12,7 @@ export interface FestivalStoreState {
   updateFestival: (data: FormData) => Promise<void>;
   updateFestStatus: (id: number) => void;
   addFestival: (data: FestivalData) => void;
+  getActiveFest: (id: number) => void;
 }
 export interface Festival {
   id: number;
@@ -64,7 +65,10 @@ const useFestivalStore = create<FestivalStoreState>((set) => ({
     const res = await http.get(`/festivals/${id}`);
     set((state: FestivalStoreState) => ({ festival: res.data }));
   },
-
+  getActiveFest: async (id: number) => {
+    const res = await http.get(`/festivals/getByCollege/active/${id}`);
+    set((state: FestivalStoreState) => ({ festival: res.data }));
+  },
   getByCollege: async (id: number) => {
     try {
       const res = await http.get(`/festivals/getByCollege/${id}`);

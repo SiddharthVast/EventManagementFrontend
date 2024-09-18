@@ -6,6 +6,7 @@ export interface EventStoreState {
   event: Event;
   getAllEvents: () => void;
   getEventById: (id: number) => void;
+  getEventByFestId: (id: number) => void;
   deleteEvent: (id: number) => void;
   addEvent: (data: EventData) => void;
   updateEvent: (data: EventData) => void;
@@ -74,6 +75,12 @@ const useEventStore = create<EventStoreState>((set) => ({
   getEventById: async (id: number) => {
     const res = await http.get(`/events/${id}`);
     set((state: EventStoreState) => ({ event: res.data }));
+  },
+  getEventByFestId: async (id: number) => {
+    const res = await http.get(`/events/festId/${id}`);
+    set((state: EventStoreState) => ({
+      events: [...res.data],
+    }));
   },
   addEvent: async (data: EventData) => {
     const res = await http.post("/events", data, {
