@@ -2,26 +2,38 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useFestivalStore, {
   FestivalData,
 } from "../../../../store/festivalStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import useLoginStore from "@/store/loginStore";
+// import useLoginStore from "@/store/loginStore";
+import { useUser } from "../../../context/UserContext";
 
 const schema = yup.object().shape({
   festivalTitle: yup.string().required("Festival Title is required"),
   startDate: yup.string().required("Start Date is required"),
-  endDate: yup.string().required("End Date is required"),
+  endDate: yup
+    .string()
+    .required("End Date is required")
+    .test(
+      "endDateAfterStartDate",
+      "End date and time must be later than start date and time.",
+      function (value) {
+        const { startDate } = this.parent;
+        if (!startDate || !value) return true; // Skip validation if either date is missing
+        return new Date(startDate) < new Date(value);
+      }
+    ),
   description: yup.string().required("Description is required"),
 });
 
 const AddFestival = () => {
   const router = useRouter();
   const addFestival = useFestivalStore((state) => state.addFestival);
-  const fetchUser = useLoginStore((state) => state.fetchUser);
-
+  // const fetchUser = useLoginStore((state) => state.fetchUser);
+  const { user } = useUser();
   const {
     register,
     handleSubmit,
@@ -36,8 +48,14 @@ const AddFestival = () => {
 
   const onSubmitHandler: SubmitHandler<FestivalData> = async (formData) => {
     try {
-      await fetchUser();
-      const user = useLoginStore.getState().user;
+      if (
+        formData.startDate &&
+        formData.endDate &&
+        new Date(formData.startDate) > new Date(formData.endDate)
+      ) {
+        setError("End date must be later than start date");
+      }
+
       if (!user || !user.college || user.college.id === 0) {
         throw new Error("User is not logged in or college data is invalid");
       }

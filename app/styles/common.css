@@ -3,18 +3,62 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
-
+/* __________________________________________________________________________________________________________ */
+:root {
+  --navbar-height: 120px; /* Set the height of the navbar */
+}
 
 .main-header {
-  @apply bg-custom-brown-head text-white w-full;
+  @apply bg-custom-brown-head text-white w-full fixed top-0 left-0 z-50;
+  height: var(--navbar-height); 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .header-content {
-  @apply flex items-center justify-between px-4; /* Flexbox for layout and padding */
-  position: relative; /* To allow centering the header while keeping the logo on the left */
+  @apply flex items-center justify-between px-4 h-full;
 }
+
+.navbar-with-menu-list {
+  @apply flex justify-center gap-8 py-2 bg-custom-brown;
+  position: relative;
+}
+
+.main-div {
+  @apply bg-gray-100 min-h-screen p-8;
+  padding-top: calc(var(--navbar-height) + 30px); /* Use calc() to add padding dynamically */
+}
+
+
+
+/* __________________________________________________________________________________________________________ */
+
+.input-form-div {
+  @apply max-w-fit max-w-4xl bg-white shadow-lg rounded-lg p-8 relative mx-auto;
+}
+
+.input-form-div ul {
+  @apply list-none p-0;
+}
+
+.input-form-div li {
+  @apply mb-4;
+}
+
+.input-form-div a {
+  @apply block bg-red-700 text-white text-lg py-4 px-6 rounded-lg text-center transition-transform transform hover:scale-105;
+}
+
+.input-form-div a:hover {
+  @apply bg-red-800;
+}
+
+h1 {
+  @apply text-3xl font-bold mb-8 text-center;
+}
+
+
 
 .logo {
   @apply h-20 w-auto ml-4; /* Adjust logo height and add margin-left */
@@ -27,9 +71,7 @@
   @apply text-3xl font-bold text-center; /* Text styles for the title */
 }
 
-.navbar-with-menu-list {
-  @apply flex justify-center gap-8 py-4 bg-custom-brown; /* Flexbox for navbar styling */
-}
+
 
 .nav-link {
   @apply text-white no-underline cursor-pointer
@@ -48,12 +90,8 @@
   @apply text-red-500;
 }
 /* __________________________________________________________________________________________________________ */
-.main-div{
- @apply bg-gray-100 min-h-screen p-8;
-}
-.input-form-div{
-  @apply w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 relative mx-auto 
-}
+
+
 .form-heading{
   @apply text-2xl font-semibold text-red-500 mb-6 text-center
 }
@@ -117,10 +155,6 @@ tr:hover {
    @apply h-5 w-5
 }
 
-.rightdirection-icon{
-    @apply text-red-600 hover:text-red-800; /* Color and hover effects */
-    @apply h-6 w-6;
-}
 .xmark-icon{
   @apply absolute h-6 w-5 top-4 right-4 text-gray-500 hover:text-red-500
 }
@@ -141,8 +175,15 @@ tr:hover {
   @apply bg-red-500 hover:bg-red-700 text-white  py-1 m-1 px-4 rounded  mr-2;
 }
 
-.submit{
-  @apply bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded  mr-2;
+.submit {
+  @apply bg-red-500 text-white font-bold py-2 px-4 rounded mr-2 transition-all duration-300;
+}
+
+button:hover {
+  @apply shadow-lg transform scale-105;
+}
+icon:hover {
+  @apply shadow-lg transform scale-110;
 }
 
 .reset{
@@ -179,20 +220,7 @@ tr:hover {
 
 
 
-.btn-add-new-college:hover {
-  background-color: #f3f4f6; /* Light grey background on hover */
-  border-color: #a1a1a1; /* Slightly darker grey border on hover */
-  transform: translateY(-2px); /* Slight lift effect */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
-}
 
-
-.btn-view-colleges:hover {
-  background-color: #f3f4f6; /* Light grey background on hover */
-  border-color: #a1a1a1; /* Slightly darker grey border on hover */
-  transform: translateY(-2px); /* Slight lift effect */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
-}
 
 /* Optional: Styling for button container */
 .button-container {
