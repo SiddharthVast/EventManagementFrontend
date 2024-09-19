@@ -1,7 +1,4 @@
 import Link from "next/link";
-import AdminSummerImage from "../../public/JpgAdminSummerImage.jpg";
-import Image from "next/image";
-import MusicConnection from "../../public/AdminMusicNightImage.jpg";
 
 const Admin = () => {
   return (

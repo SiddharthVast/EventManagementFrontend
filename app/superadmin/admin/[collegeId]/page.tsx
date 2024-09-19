@@ -14,7 +14,6 @@ const schema = yup.object().shape({
   password: yup.string().required("Password is required"),
   mobileNumber: yup.string().required("Mobile Number is required"),
   details: yup.string().required("Details are required"),
-  // role: yup.string(),
 });
 
 interface FormData {
@@ -24,7 +23,6 @@ interface FormData {
   password: string;
   mobileNumber: string;
   details: string;
-  // role?: string;
 }
 
 interface Props {
@@ -63,7 +61,7 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
 
   return (
     <div className="main-div">
-      <div className="input-form-data">
+      <div className="input-form-div">
         <button className="xmark-icon" onClick={() => router.back()}>
           <XMarkIcon className="h-6 w-6" />
         </button>

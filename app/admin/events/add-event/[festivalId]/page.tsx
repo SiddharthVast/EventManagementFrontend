@@ -122,7 +122,6 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
 
   return (
     <div className="main-div">
-      {/* <div className="flex justify-center items-start p-8 pt-20"> */}
       <div className="input-form-div">
         <button
           onClick={() => router.push("/admin/festivals/view-festival")}
@@ -130,16 +129,14 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
         >
           <XMarkIcon className="w-6 h-6" />
         </button>
-        {/* <div className="w-full"> */}
         <h2 className="form-heading">Event Form</h2>
         <form onSubmit={handleSubmit(onSubmitHandler)}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label>
               Event Type
             </label>
             <select
               {...register("eventType")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
               <option value="">Select Event Type</option>
               {eventTypes.map((type) => (
@@ -153,13 +150,12 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label>
               Event Name
             </label>
             <input
               type="text"
               {...register("eventName")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter Event Name"
             />
             {errors.eventName && (
@@ -167,12 +163,11 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label>
               Members Type
             </label>
             <select
               {...register("members")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
               <option value="">Select Members Type</option>
               {membersTypes.map((type) => (
@@ -186,13 +181,12 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label>
               Venue
             </label>
             <input
               type="text"
               {...register("venue")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter Venue"
             />
             {errors.venue && (
@@ -200,13 +194,12 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label>
               Start Date
             </label>
             <input
               type="datetime-local"
               {...register("startDateTime")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
             {errors.startDateTime && (
               <p className="text-red-500 mt-1">
@@ -215,26 +208,24 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label>
               End Date
             </label>
             <input
               type="datetime-local"
               {...register("endDateTime")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
             {errors.endDateTime && (
               <p className="text-red-500 mt-1">{errors.endDateTime.message}</p>
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
+            <label>
               Image
             </label>
             <input
               type="file"
               {...register("imageUrl")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
             {errors.imageUrl && (
               <p className="text-red-500 mt-1">{errors.imageUrl.message}</p>
@@ -250,9 +241,7 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
             </button>
           </div>
         </form>
-        {/* </div> */}
       </div>
-      {/* </div>   */}
     </div>
   );
 };

@@ -79,9 +79,7 @@ const AssignCoordinatorForm = ({ params: { eventId, role } }: Props) => {
           <XMarkIcon className="w-6 h-6" />
         </button>
         <form onSubmit={handleSubmit(onSubmitHandler)}>
-          <h2 className="text-2xl font-semibold mb-6">
-            Assign {role} for Event
-          </h2>
+          <h2 className="form-heading">Assign {role} for Event</h2>
           <div className="mb-4">
             <label htmlFor="userId" className="font-medium mb-2 block">
               Select {role}:
