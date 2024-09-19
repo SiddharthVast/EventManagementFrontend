@@ -7,9 +7,8 @@ import MusicConnection from "../../public/AdminMusicNightImage.jpg";
 
 const SuperAdmin = () => {
   return (
-    <div className="flex">
-
-      <div className="w-3/4 bg-white p-4">
+    <div className="main-div flex">
+      <div className="show-form-div w-3/4">
         <h1 className="form-heading">
           WELCOME TO EVENT MANAGEMENT SYSTEM
         </h1>

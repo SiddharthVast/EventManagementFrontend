@@ -79,8 +79,6 @@ const AddCollege = ({ params: { collegeId } }: Props) => {
   return (
     <div className="main-div">
       <div className="input-form-div">
-        <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 relative">
-          {/* Heroicons cross icon */}
           <button
             onClick={() => router.push("/superadmin")}
             className="xmark-icon"
@@ -160,7 +158,6 @@ const AddCollege = ({ params: { collegeId } }: Props) => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

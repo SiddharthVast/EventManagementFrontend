@@ -118,20 +118,16 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
           <XMarkIcon className="h-6 w-6" />
         </button>
         <div className="text-center mb-6">
-          <h1 className="text-xl font-bold text-white bg-red-800 p-2 rounded-md">
-            {eventName}
-          </h1>
+          <h1 className="form-heading">{eventName}</h1>
         </div>
         <h2 className="text-xl font-semibold text-red-500 mb-6">Add Points</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           {fields.map((field, index) => (
             <div key={field.id} className="mb-4">
-              <label>
-                Skill Set {index + 1}
-              </label>
+              <label>Skill Set {index + 1}</label>
               <input
                 type="text"
-                {...register(`points.${index}.point` as const)}            
+                {...register(`points.${index}.point` as const)}
                 placeholder="Enter Point to Judge"
               />
               {errors.points?.[index]?.point && (
@@ -154,7 +150,7 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
               type="button"
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               onClick={() => append({ point: "" })}
-              disabled={fields.length >= 5} 
+              disabled={fields.length >= 5}
             >
               Add Another Point
             </button>

@@ -10,9 +10,8 @@ interface UserEventRegistration {
   user?: {
     firstName: string;
     lastName: string;
-  } | null; // user can be null or undefined
+  } | null; 
 }
-
 interface Props {
   params: {
     eventId: number;
@@ -30,12 +29,11 @@ const RegistrationTable = ({ params: { eventId } }: Props) => {
 
   useEffect(() => {
     const fetchAndSortRegistrations = async () => {
-      setLoading(true); // Set loading state to true
-      setError(null); // Clear any previous errors
+      setLoading(true); 
+      setError(null); 
       getEventById(eventId);
       try {
         await getRegByEidRole(eventId, "student");
-        // Assuming registrations is updated in the store and will reflect the latest data
         const fetchedRegistrations = [...registrations];
         const sortedData = fetchedRegistrations.sort(
           (a, b) => b.totalScores - a.totalScores
@@ -44,15 +42,15 @@ const RegistrationTable = ({ params: { eventId } }: Props) => {
       } catch (error) {
         setError("Failed to load data");
       } finally {
-        setLoading(false); // Set loading state to false after fetching
+        setLoading(false); 
       }
     };
 
     fetchAndSortRegistrations();
-  }, [eventId, getRegByEidRole, registrations]); // Ensure dependencies are correct
+  }, [eventId, getRegByEidRole, registrations]); 
 
-  if (loading) return <div>Loading...</div>; // Show loading state
-  if (error) return <div>{error}</div>; // Show error state
+  if (loading) return <div>Loading...</div>; 
+  if (error) return <div>{error}</div>; 
 
   return (
     <div className="main-div overflow-x-auto p-5">

@@ -92,11 +92,10 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
       {loading && <Loading />}
       {!loading && (
         <>
-          <div className="flex justify-center items-start p-8 pt-20">
-            <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 relative ">
+          <div className="input-form-div">
               <button
                 onClick={() => router.push("/admin/festivals/view-festival")}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                className="xmark-icon"
               >
                 <XMarkIcon className="h-6 w-6" />
               </button>
@@ -114,7 +113,9 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
                   {errors.festivalTitle && (
-                    <p className="text-red-500 mt-1">{errors.festivalTitle.message}</p>
+                    <p className="text-red-500 mt-1">
+                      {errors.festivalTitle.message}
+                    </p>
                   )}
                 </div>
                 <div className="mb-4">
@@ -127,7 +128,9 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
                   {errors.startDate && (
-                    <p className="text-red-500 mt-1">{errors.startDate.message}</p>
+                    <p className="text-red-500 mt-1">
+                      {errors.startDate.message}
+                    </p>
                   )}
                 </div>
                 <div className="mb-4">
@@ -140,7 +143,9 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
                   {errors.endDate && (
-                    <p className="text-red-500 mt-1">{errors.endDate.message}</p>
+                    <p className="text-red-500 mt-1">
+                      {errors.endDate.message}
+                    </p>
                   )}
                 </div>
                 <div className="mb-4">
@@ -153,7 +158,9 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
                   {errors.imageUrl && (
-                    <p className="text-red-500 mt-1">{errors.imageUrl.message}</p>
+                    <p className="text-red-500 mt-1">
+                      {errors.imageUrl.message}
+                    </p>
                   )}
                 </div>
                 <div className="mb-4">
@@ -166,7 +173,9 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
                     rows={4}
                   ></textarea>
                   {errors.description && (
-                    <p className="text-red-500 mt-1">{errors.description.message}</p>
+                    <p className="text-red-500 mt-1">
+                      {errors.description.message}
+                    </p>
                   )}
                 </div>
 
@@ -177,7 +186,6 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
                 </div>
               </form>
             </div>
-          </div>
         </>
       )}
     </div>

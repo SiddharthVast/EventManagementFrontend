@@ -62,7 +62,7 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
         <Loading />
       ) : (
         <div className="show-form-div">
-          <h1 className="header-content">Events</h1>
+          <h1 className="form-heading">Events</h1>
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white">
               <thead>
