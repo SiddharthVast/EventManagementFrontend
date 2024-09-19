@@ -4,12 +4,16 @@ import useFestivalStore, { Festival } from "../../../../store/festivalStore";
 import Link from "next/link";
 import Image from "next/image";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/16/solid";
-import { useUser } from "../../../context/UserContext";
+// import { useUser } from "../../../context/UserContext";
+import useLoginStore from "@/store/loginStore";
 
 const ViewFestival = () => {
+  const { user } = useLoginStore((state) => ({
+    user: state.user,
+  }));
   const festivals = useFestivalStore((state) => state.festivals);
   const { getByCollege, deleteFestival, updateFestStatus } = useFestivalStore();
-  const { user } = useUser();
+  // const { user } = useUser();
   const cid = user?.college?.id;
 
   useEffect(() => {
@@ -150,7 +154,7 @@ const ViewFestival = () => {
                         Complete
                       </button>
                     ) : (
-                      <span className="text-gray-500">closed</span> // Placeholder for closed status
+                      <span className="text-gray-500">Closed</span> // Placeholder for closed status
                     )}
                   </td>
                 </tr>

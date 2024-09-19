@@ -4,11 +4,16 @@ import React from "react";
 // import useLoginStore from "@/store/loginStore";
 import { useRouter } from "next/navigation";
 import "./styles/common.css";
-import { useUser } from "./context/UserContext";
+// import { useUser } from "./context/UserContext";
+import useLoginStore from "@/store/loginStore";
 
 const NavBar = () => {
-  const { user, logout } = useUser(); // Access user data from context
-  // const logout = useLoginStore((state) => state.logout);
+  // const { user, logout } = useUser(); // Access user data from context
+  const logout = useLoginStore((state) => state.logout);
+
+  const { user } = useLoginStore((state) => ({
+    user: state.user,
+  }));
   const router = useRouter();
 
   const handleLogout = () => {

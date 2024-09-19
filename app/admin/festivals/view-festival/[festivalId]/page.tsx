@@ -7,9 +7,9 @@ import useFestivalStore, {
   FestivalData,
 } from "../../../../../store/festivalStore";
 import { useRouter } from "next/navigation";
-// import useLoginStore from "@/store/loginStore";
+import useLoginStore from "@/store/loginStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useUser } from "@/app/context/UserContext";
+// import { useUser } from "@/app/context/UserContext";
 
 const schema = yup.object().shape({
   festivalTitle: yup
@@ -32,12 +32,15 @@ interface Props {
 }
 
 const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
+  const { user } = useLoginStore((state) => ({
+    user: state.user,
+  }));
   const router = useRouter();
   const getFestival = useFestivalStore((state) => state.getFestivalById);
   const festival = useFestivalStore((state) => state.festival);
   const updateFestival = useFestivalStore((state) => state.updateFestival);
   // const fetchUser = useLoginStore((state) => state.fetchUser);
-  const { user } = useUser();
+  // const { user } = useUser();
   const {
     register,
     handleSubmit,

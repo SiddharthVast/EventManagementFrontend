@@ -3,12 +3,17 @@ import React, { useEffect, useState } from "react";
 import useUserEventRegistrationStore, {
   UserEventRegistration,
 } from "@/store/user_event_registrationStore";
-import { useUser } from "../../context/UserContext";
+import useLoginStore from "@/store/loginStore";
+
+// import { useUser } from "../../context/UserContext";
 import { ForwardIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
 const UserEvents = () => {
-  const { user, logout } = useUser();
+  const { user } = useLoginStore((state) => ({
+    user: state.user,
+  }));
+  // const { user, logout } = useUser();
   const [regData, setRegData] = useState<UserEventRegistration[] | null>(null); // Array or null
 
   const { registrations, getRegistartionByUserId } =
@@ -26,7 +31,6 @@ const UserEvents = () => {
   useEffect(() => {
     setRegData(registrations); // Set registration data after fetching
   }, [registrations]);
-  console.log("redistration", registrations);
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="flex justify-center items-start p-8 pt-20">
@@ -65,7 +69,6 @@ const UserEvents = () => {
                             </button>
                           </Link>
                         </td>
-                    
                       </tr>
                     ))
                   ) : (
