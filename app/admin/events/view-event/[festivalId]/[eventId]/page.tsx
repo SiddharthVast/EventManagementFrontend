@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useEventStore, { EventData } from "../../../../../../store/eventStore";
-import useLoginStore from "@/store/loginStore";
+// import useLoginStore from "@/store/loginStore";
 import useFestivalStore from "@/store/festivalStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
@@ -62,11 +62,14 @@ interface Props {
   };
 }
 const UpdateEvent = ({ params: { festivalId, eventId } }: Props) => {
+  // const { user } = useLoginStore((state) => ({
+  //   user: state.user,
+  // }));
   const router = useRouter();
   const getEventById = useEventStore((state) => state.getEventById);
   const updateEvent = useEventStore((state) => state.updateEvent);
   const event = useEventStore((state) => state.event);
-  const fetchUser = useLoginStore((state) => state.fetchUser);
+  // const fetchUser = useLoginStore((state) => state.fetchUser);
   const { getFestivalById } = useFestivalStore();
   const uploadImageToCloudinary = useEventStore(
     (state) => state.uploadImageToCloudinary
@@ -115,9 +118,9 @@ const UpdateEvent = ({ params: { festivalId, eventId } }: Props) => {
     }
   }, [eventId, getEventById, reset, setValue, event]);
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+  // useEffect(() => {
+  //   fetchUser();
+  // }, []);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 

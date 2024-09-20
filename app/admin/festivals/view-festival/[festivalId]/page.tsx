@@ -5,7 +5,9 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import useFestivalStore, { FestivalData } from "../../../../../store/festivalStore";
 import { useRouter } from "next/navigation";
+import useLoginStore from "@/store/loginStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import Loading from "@/app/loading";
 import { useUser } from "@/app/context/UserContext";
 import Loading from "@/app/loading";
 
@@ -23,6 +25,9 @@ interface Props {
 }
 
 const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
+  const { user } = useLoginStore((state) => ({
+    user: state.user,
+  }));
   const router = useRouter();
   const getFestival = useFestivalStore((state) => state.getFestivalById);
   const festival = useFestivalStore((state) => state.festival);

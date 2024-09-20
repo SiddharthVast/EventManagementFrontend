@@ -27,7 +27,12 @@
 
 .main-div {
   @apply bg-gray-100 min-h-screen p-8;
-  padding-top: calc(var(--navbar-height) + 50px); /* Use calc() to add padding dynamically */
+  padding-top: calc(var(--navbar-height) + 30px); /* Use calc() to add padding dynamically */
+}
+
+.main-div-panel{
+  @apply min-h-screen;
+  padding-top: calc(var(--navbar-height));
 }
 
 .main-div-Carousel {

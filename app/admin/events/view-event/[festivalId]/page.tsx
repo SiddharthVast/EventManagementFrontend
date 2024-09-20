@@ -8,6 +8,7 @@ import {
   PencilSquareIcon,
   UserPlusIcon,
   ClipboardDocumentListIcon,
+  UserGroupIcon,
 } from "@heroicons/react/16/solid";
 import useUserEventRegistrationStore from "@/store/user_event_registrationStore";
 import Image from "next/image";
@@ -23,22 +24,25 @@ interface Props {
 const ShowEvents = ({ params: { festivalId } }: Props) => {
   const [loading, setLoading] = useState(true); // Loading state
 
-  const { events, getAllEvents, deleteEvent } = useEventStore((state) => ({
-    events: state.events,
-    getAllEvents: state.getAllEvents,
-    deleteEvent: state.deleteEvent,
-  }));
+  const { events, getAllEvents, deleteEvent, updateEventStatus } =
+    useEventStore((state) => ({
+      events: state.events,
+      getAllEvents: state.getAllEvents,
+      deleteEvent: state.deleteEvent,
+      updateEventStatus: state.updateEventStatus,
+    }));
 
   const { users, getAllUsers } = useUserStore((state) => ({
     users: state.users,
     getAllUsers: state.getAllUsers,
   }));
 
-  const { registrations, getAllRegistarations } =
-    useUserEventRegistrationStore((state) => ({
+  const { registrations, getAllRegistarations } = useUserEventRegistrationStore(
+    (state) => ({
       registrations: state.registrations,
       getAllRegistarations: state.getAllRegistarations,
-    }));
+    })
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,7 +66,7 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
         <Loading />
       ) : (
         <div className="show-form-div">
-          <h1 className="form-heading">Events</h1>
+          <h1 className="header-content">Events</h1>
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white">
               <thead>
@@ -74,14 +78,15 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                   <th>Venue</th>
                   <th>Start Date</th>
                   <th>End Date</th>
-                  <th>Status</th>
+                  {/* <th>Status</th> */}
                   <th>Coordinator List</th>
-                  <th>Assign Coordinator</th>
-                  <th>Assign Judge</th>
+                  <th>Coordinator</th>
+                  <th>Judge</th>
                   <th>Skill Set</th>
                   <th>Actions</th>
                   <th>Result</th>
                   <th>Complete</th>
+                  <th>Participants</th>
                 </tr>
               </thead>
               <tbody>
@@ -124,9 +129,9 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                         timeStyle: "short",
                       })}
                     </td>
-                    <td className="py-2 px-2 border-b text-center border-gray-200 text-sm">
+                    {/* <td className="py-2 px-2 border-b text-center border-gray-200 text-sm">
                       {event.status ? "Open" : "Closed"}
-                    </td>
+                    </td> */}
                     <td className="py-2 px-2 border-b border-gray-200 text-sm text-center">
                       {registrations
                         .filter(
@@ -199,6 +204,29 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                       <Link href={`/judge/view-scores/${event.id}`}>
                         <button>
                           <ClipboardDocumentListIcon className="update-icon" />
+                        </button>
+                      </Link>
+                    </td>
+                    {/* <td className="py-2 px-2 border-b text-center border-gray-200 text-sm">
+                      {event.status ? "Open" : "Closed"}
+                    </td> */}
+
+                    <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
+                      {event.status ? (
+                        <button
+                          onClick={() => updateEventStatus(event.id)}
+                          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline"
+                        >
+                          Complete
+                        </button>
+                      ) : (
+                        <span className="text-gray-500">closed</span> // Placeholder for closed status
+                      )}
+                    </td>
+                    <td>
+                      <Link href={`/admin/events/participants/${event.id}`}>
+                        <button>
+                          <UserGroupIcon className="update-icon" />
                         </button>
                       </Link>
                     </td>

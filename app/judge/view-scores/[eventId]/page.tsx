@@ -70,7 +70,7 @@ const RegistrationTable = ({ params: { eventId } }: Props) => {
             sortedRegistrations.map((registration, index) => (
               <tr
                 key={registration.id}
-                className={index < 3 ? "bg-yellow-100 font-bold" : ""}
+                className={index < 3 ? "bg-green-100 font-bold" : ""}
               >
                 <td>
                   {registration.groupName !== "NA"

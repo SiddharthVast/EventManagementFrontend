@@ -10,6 +10,7 @@ export interface EventStoreState {
   deleteEvent: (id: number) => void;
   addEvent: (data: EventData) => void;
   updateEvent: (data: EventData) => void;
+  updateEventStatus: (id: number) => void;
   uploadImageToCloudinary: (file: File) => Promise<string>;
 }
 export interface Event {
@@ -99,6 +100,38 @@ const useEventStore = create<EventStoreState>((set) => ({
       set((state) => ({ events: [...state.events, res.data] }));
     } catch (error) {
       console.error("Error updating events:", error);
+    }
+  },
+  updateEventStatus: async (id: number) => {
+    try {
+      // Make the HTTP PATCH request to update the festival status
+      console.log(id);
+      const res = await http.patch(
+        `/events/eventcomplete/${id}`,
+        {},
+        {
+          headers: { authorization: sessionStorage.token },
+        }
+      );
+
+      // Check if the request was successful
+      if (res.status === 200) {
+        // Update the state with the new festival data
+        set((state) => ({
+          events: state.events.map((e) =>
+            e.id === id ? { ...e, ...res.data } : e
+          ),
+        }));
+      } else {
+        console.error(
+          "Failed to update event status:",
+          res.status,
+          res.statusText
+        );
+      }
+    } catch (error) {
+      // Handle errors if the request fails
+      console.error("Error updating festival status:", error);
     }
   },
 

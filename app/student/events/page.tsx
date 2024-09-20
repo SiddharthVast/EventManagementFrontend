@@ -4,10 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import useEventStore from "@/store/eventStore";
 import useFestivalStore from "@/store/festivalStore";
-import { useUser } from "../../context/UserContext";
+import useLoginStore from "@/store/loginStore";
 
 const ShowEvents = () => {
-  const { user } = useUser();
+  const { user } = useLoginStore((state) => ({ user: state.user }));
   const collegeId = user?.college?.id;
   const { events, getEventByFestId } = useEventStore((state) => ({
     events: state.events,
@@ -32,15 +32,12 @@ const ShowEvents = () => {
 
   const formatDateTime = (dateString: any) => {
     const date = new Date(dateString);
-
     const day = String(date.getUTCDate()).padStart(2, "0");
     const month = String(date.getUTCMonth() + 1).padStart(2, "0");
     const year = date.getUTCFullYear();
-
     let hours = date.getUTCHours();
     const minutes = String(date.getUTCMinutes()).padStart(2, "0");
     const ampm = hours >= 12 ? "PM" : "AM";
-
     hours = hours % 12;
     hours = hours ? hours : 12;
 
@@ -55,6 +52,13 @@ const ShowEvents = () => {
       <h1 className="form-heading">Upcoming Events</h1>
       <div className="border-b-2 border-gray-200 mb-6 relative">
         <div className="absolute left-1/2 transform -translate-x-1/2 -top-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 h-1 w-24 rounded-full"></div>
+      </div>
+      <div className="flex justify-end mb-4">
+        <Link href="/student/reg-events" legacyBehavior>
+          <a className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors duration-300">
+            View Registered Events
+          </a>
+        </Link>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {events.length > 0 ? (

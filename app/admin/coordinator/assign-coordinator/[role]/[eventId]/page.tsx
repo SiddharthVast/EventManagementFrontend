@@ -7,7 +7,9 @@ import { useRouter } from "next/navigation";
 import useUserStore from "@/store/userStore";
 import useEventStore from "@/store/eventStore";
 import useUserEventRegistartionStore from "@/store/user_event_registrationStore";
-import { useUser } from "../../../../../context/UserContext";
+// import { useUser } from "../../../../../context/UserContext";
+import useLoginStore from "@/store/loginStore";
+
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
 // Define the schema for form validation
@@ -24,8 +26,10 @@ interface Props {
 
 const AssignCoordinatorForm = ({ params: { eventId, role } }: Props) => {
   const router = useRouter();
-  const { user } = useUser();
-
+  // const { user } = useUser();
+  const { user } = useLoginStore((state) => ({
+    user: state.user,
+  }));
   const { getEventById, event } = useEventStore((state) => ({
     getEventById: state.getEventById,
     event: state.event,

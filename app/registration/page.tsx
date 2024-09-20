@@ -5,8 +5,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useRouter, useSearchParams } from "next/navigation";
 import useUserStore from "@/store/userStore";
-import { useUser } from "../context/UserContext";
-import { XMarkIcon } from "@heroicons/react/16/solid";
+// import { useUser } from "../context/UserContext";
+import useLoginStore from "@/store/loginStore";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
@@ -35,10 +36,13 @@ interface Props {
 }
 
 const AddUserByAdmin = () => {
+  const { user } = useLoginStore((state) => ({
+    user: state.user,
+  }));
+  // const { user, logout } = useUser();
   const router = useRouter();
   const searchParams = useSearchParams();
   const role = searchParams.get("role");
-  const { user, logout } = useUser();
   const { addUser } = useUserStore();
 
   const {

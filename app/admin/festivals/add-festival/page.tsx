@@ -2,14 +2,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useFestivalStore, {
   FestivalData,
 } from "../../../../store/festivalStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-// import useLoginStore from "@/store/loginStore";
-import { useUser } from "../../../context/UserContext";
+import useLoginStore from "@/store/loginStore";
+// import { useUser } from "../../../context/UserContext";
 
 const schema = yup.object().shape({
   festivalTitle: yup.string().required("Festival Title is required"),
@@ -30,10 +30,13 @@ const schema = yup.object().shape({
 });
 
 const AddFestival = () => {
+  const { user } = useLoginStore((state) => ({
+    user: state.user,
+  }));
   const router = useRouter();
   const addFestival = useFestivalStore((state) => state.addFestival);
   // const fetchUser = useLoginStore((state) => state.fetchUser);
-  const { user } = useUser();
+
   const {
     register,
     handleSubmit,
@@ -99,6 +102,8 @@ const AddFestival = () => {
       <div className="input-form-div">
         <button onClick={() => router.push("/admin")} className="xmark-icon">
           <XMarkIcon className="w-6 h-6" />
+        <button onClick={() => router.push("/admin")} className="xmark-icon">
+          <XMarkIcon className="w-6 h-6" />
         </button>
 
         <h2 className="form-heading">College Fest Registration</h2>
@@ -160,16 +165,10 @@ const AddFestival = () => {
             )}
           </div>
           <div className="flex justify-end space-x-4">
-            <button
-              className="reset"
-              type="reset"
-            >
+            <button className=" reset" type="reset">
               Reset
             </button>
-            <button
-              className="submit"
-              type="submit"
-            >
+            <button className=" submit" type="submit">
               Submit
             </button>
           </div>

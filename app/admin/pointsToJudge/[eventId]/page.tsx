@@ -82,6 +82,7 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
   });
 
   
+  
   const onSubmit = async (data: FormData) => {
     setLoading(true);
     setError(null);
@@ -89,6 +90,7 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
       await addPoints(
         data.points.map((point) => ({
           ...point,
+          eventId: data.eventId, 
           eventId: data.eventId, 
         }))
       );
@@ -108,13 +110,17 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
   return (
     <div className="main-div">
       <div className="input-form-div ">
+    <div className="main-div">
+      <div className="input-form-div ">
         <button
           type="button"
           onClick={() =>
             router.push(`/admin/events/view-event/${event.festival.id}`)
           }
           className="xmark-icon"
+          className="xmark-icon"
         >
+          <XMarkIcon className="h-6 w-6" />
           <XMarkIcon className="h-6 w-6" />
         </button>
         <div className="text-center mb-6">
@@ -124,10 +130,12 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           {fields.map((field, index) => (
             <div key={field.id} className="mb-4">
-              <label>Skill Set {index + 1}</label>
+              <label>
+                Skill Set {index + 1}
+              </label>
               <input
                 type="text"
-                {...register(`points.${index}.point` as const)}
+                {...register(`points.${index}.point` as const)}            
                 placeholder="Enter Point to Judge"
               />
               {errors.points?.[index]?.point && (
@@ -150,7 +158,7 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
               type="button"
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               onClick={() => append({ point: "" })}
-              disabled={fields.length >= 5}
+              disabled={fields.length >= 5} 
             >
               Add Another Point
             </button>

@@ -4,14 +4,11 @@ import React from "react";
 import AdminSummerImage from "../../public/JpgAdminSummerImage.jpg"; // Make sure to save your images in the public folder
 import MusicConnection from "../../public/AdminMusicNightImage.jpg";
 
-
 const SuperAdmin = () => {
   return (
-    <div className="main-div flex">
+    <div className="main-div-panel flex">
       <div className="show-form-div w-3/4">
-        <h1 className="form-heading">
-          WELCOME TO EVENT MANAGEMENT SYSTEM
-        </h1>
+        <h1 className="form-heading">WELCOME TO EVENT MANAGEMENT SYSTEM</h1>
         <ul>
           <li className="mb-2">
             <Link
@@ -31,7 +28,6 @@ const SuperAdmin = () => {
           </li>
         </ul>
       </div>
-
 
       <div className="w-1/4 bg-white p-4">
         <h2 className="text-lg font-bold mb-4">FEATURES</h2>
@@ -57,4 +53,3 @@ const SuperAdmin = () => {
 };
 
 export default SuperAdmin;
-

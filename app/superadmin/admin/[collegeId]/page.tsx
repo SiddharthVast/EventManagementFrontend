@@ -60,9 +60,12 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
   };
 
   return (
-    <div className="main-div">
-      <div className="input-form-div">
-        <button className="xmark-icon" onClick={() => router.back()}>
+    <div className="bg-gray-100 min-h-screen p-8">
+      <div className="relative max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
+        <button
+          className="absolute top-4 right-4 text-gray-500 hover:text-red-500"
+          onClick={() => router.back()}
+        >
           <XMarkIcon className="h-6 w-6" />
         </button>
         <h1 className="form-heading">Add Admin</h1>

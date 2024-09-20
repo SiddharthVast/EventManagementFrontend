@@ -106,7 +106,7 @@ const ViewCollege = () => {
           </tbody>
         </table>
       </div>
-    </div>
+    // </div>
   );
 };
 

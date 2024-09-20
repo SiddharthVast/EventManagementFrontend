@@ -50,6 +50,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [showResetModal, setShowResetModal] = useState(false);
 
+
   useEffect(() => {
   }, [loading]);
   const onSubmitHandler = async (data: FormValues) => {
@@ -67,12 +68,12 @@ const Login = () => {
       } else if (user?.role === "judge") {
         router.push("/judge/events");
       } else {
-        router.push("/student");
+        router.push("/student/events");
       }
       reset();
     } catch (err) {
       setError("Invalid username or password");
-    }
+    } 
     finally {
       setLoading(false);
     }
@@ -141,7 +142,10 @@ const Login = () => {
               <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
             )}
             <div className="flex justify-end">
+<<<<<<< HEAD
+=======
 
+>>>>>>> 7f3f6f2818b64d036cb98b31c705c9e95cc4ef96
               <Link
                 href="#"
                 onClick={() => setShowResetModal(true)}
@@ -152,8 +156,11 @@ const Login = () => {
             </div>
           </div>
 
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 7f3f6f2818b64d036cb98b31c705c9e95cc4ef96
           <div className="flex space-x-4">
             <button
               type="submit"
@@ -172,8 +179,15 @@ const Login = () => {
           </div>
         </form>
         <div className="flex flex-col items-center mt-6 space-y-2">
+<<<<<<< HEAD
+          <Link
+            href="student/registration"
+            className="text-blue-500 hover:underline"
+          >
+=======
 
           <Link href="student/registration" className="text-blue-500 hover:underline">
+>>>>>>> 7f3f6f2818b64d036cb98b31c705c9e95cc4ef96
             Don't have account? Register
           </Link>
 
