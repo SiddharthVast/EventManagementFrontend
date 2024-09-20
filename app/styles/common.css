@@ -30,12 +30,22 @@
   padding-top: calc(var(--navbar-height) + 30px); /* Use calc() to add padding dynamically */
 }
 
+.main-div-panel{
+  @apply min-h-screen;
+  padding-top: calc(var(--navbar-height));
+}
 
+.main-div-Carousel {
+  @apply bg-gray-100 min-h-screen  ;
+  padding-top: calc(var(--navbar-height) + 1px); /* Use calc() to add padding dynamically */
+}
 
-/* __________________________________________________________________________________________________________ */
 
 .input-form-div {
-  @apply max-w-fit max-w-4xl bg-white shadow-lg rounded-lg p-8 relative mx-auto;
+  @apply  max-w-4xl bg-white shadow-lg rounded-lg p-8 relative mx-auto;
+}
+.show-form-div {
+  @apply bg-white shadow-lg rounded-lg p-8 relative mx-auto;
 }
 
 .input-form-div ul {
@@ -156,7 +166,7 @@ tr:hover {
 }
 
 .xmark-icon{
-  @apply absolute h-6 w-5 top-4 right-4 text-gray-500 hover:text-red-500
+@apply absolute h-6 w-5 top-4 right-4 text-gray-500 hover:text-red-700 transition-transform transform hover:scale-110;
 }
 
 .flex-center-gap {
@@ -174,10 +184,10 @@ tr:hover {
 .btn_add{
   @apply bg-red-500 hover:bg-red-700 text-white  py-1 m-1 px-4 rounded  mr-2;
 }
-
+/* 
 .submit {
-  @apply bg-red-500 text-white font-bold py-2 px-4 rounded mr-2 transition-all duration-300;
-}
+  @apply bg-blue-500 text-white font-bold py-2 px-4 rounded mr-2 transition-all duration-300;
+} */
 
 button:hover {
   @apply shadow-lg transform scale-105;
@@ -186,10 +196,7 @@ icon:hover {
   @apply shadow-lg transform scale-110;
 }
 
-.reset{
-  @apply bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded;
-  /* @layer  */
-}
+
 
 .update{
   @apply bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2;
@@ -231,11 +238,27 @@ icon:hover {
 }
 
 
-
-
-
-
-
-
-
-
+/* .button{
+ 
+} */
+button:hover {
+  transform: translateY(-2px) scale(1.05); /* Lift and scale effect */
+}
+.submit{
+  background: linear-gradient(to right, #3b82f6, #2563eb); /* Gradient from blue-500 to blue-700 */
+  color: white; /* White text color */
+  font-weight: bold; /* Bold text */
+  padding: 0.5rem 1rem; /* Padding */
+  border-radius: 0.5rem; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+  transition: all 0.3s ease; /* Smooth transition */
+}
+.reset{
+  background: linear-gradient(to right, #6b7280, #4b5563); /* Gradient from gray-500 to gray-700 */
+  color: white; /* White text color */
+ font-weight: bold; /* Bold text */
+  padding: 0.5rem 1rem; /* Padding */
+  border-radius: 0.5rem; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+  transition: all 0.3s ease; /* Smooth transition */
+}

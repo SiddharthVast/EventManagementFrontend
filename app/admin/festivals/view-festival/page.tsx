@@ -22,6 +22,8 @@ const ViewFestival = () => {
       fetchData();
     } else {
       setLoading(false);
+     
+     
     }
   }, [cid, getByCollege]);
 
@@ -35,10 +37,10 @@ const ViewFestival = () => {
   // Check if festivals are defined and sort them
   const sortedFestivals = festivals
     ? [...festivals].sort((a, b) => {
-        const dateA = getDateOnly(a.startDate);
-        const dateB = getDateOnly(b.startDate);
-        return dateB.localeCompare(dateA); // Descending order
-      })
+      const dateA = getDateOnly(a.startDate);
+      const dateB = getDateOnly(b.startDate);
+      return dateB.localeCompare(dateA); // Descending order
+    })
     : [];
 
   return (

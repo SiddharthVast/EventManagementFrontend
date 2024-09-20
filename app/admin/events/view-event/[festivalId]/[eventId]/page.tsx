@@ -149,113 +149,105 @@ const UpdateEvent = ({ params: { festivalId, eventId } }: Props) => {
   return (
     <div className="main-div">
       <div className="input-form-div ">
-        {/* <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 relative"> */}
-          <button
-            onClick={() =>
-              router.push(`/admin/events/view-event/${event.festival.id}`)
-            }
-            className="xmark-icon"
-          >
-            <XMarkIcon className="w-6 h-6"/>
-          </button>
-          <div className="w-full">
-            <h2 className="text-2xl font-semibold text-red-500 mb-6">
-              Event Form
-            </h2>
-            <form onSubmit={handleSubmit(onSubmitHandler)}>
-              <div className="mb-4">
-                <label>Event Type</label>
-                <select {...register("eventType")}>
-                  <option value="">Select Event Type</option>
-                  {eventTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-                {errors.eventType && (
-                  <p className="text-red-500 mt-1">
-                    {errors.eventType.message}
-                  </p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label>Event Name</label>
-                <input
-                  type="text"
-                  {...register("eventName")}
-                  placeholder="Enter Event Name"
-                />
-                {errors.eventName && (
-                  <p className="text-red-500 mt-1">
-                    {errors.eventName.message}
-                  </p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label>Members Type</label>
-                <select {...register("members")}>
-                  <option value="">Select Members Type</option>
-                  {membersTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {type}
-                    </option>
-                  ))}
-                </select>
-                {errors.members && (
-                  <p className="text-red-500 mt-1">{errors.members.message}</p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label>Venue</label>
-                <input
-                  type="text"
-                  {...register("venue")}
-                  placeholder="Enter Venue"
-                />
-                {errors.venue && (
-                  <p className="text-red-500 mt-1">{errors.venue.message}</p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label>Start Date</label>
-                <input type="datetime-local" {...register("startDateTime")} />
-                {errors.startDateTime && (
-                  <p className="text-red-500 mt-1">
-                    {errors.startDateTime.message}
-                  </p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label>End Date</label>
-                <input type="datetime-local" {...register("endDateTime")} />
-                {errors.endDateTime && (
-                  <p className="text-red-500 mt-1">
-                    {errors.endDateTime.message}
-                  </p>
-                )}
-              </div>
-              <div className="mb-4">
-                <label>Image</label>
-                <input type="file" {...register("imageUrl")} />
-                {errors.imageUrl && (
-                  <p className="text-red-500 mt-1">{errors.imageUrl.message}</p>
-                )}
-              </div>
+        <button
+          onClick={() =>
+            router.push(`/admin/events/view-event/${event.festival.id}`)
+          }
+          className="xmark-icon"
+        >
+          <XMarkIcon className="w-6 h-6" />
+        </button>
+        <div className="w-full">
+          <h2 className="form-heading">Event Form</h2>
+          <form onSubmit={handleSubmit(onSubmitHandler)}>
+            <div className="mb-4">
+              <label>Event Type</label>
+              <select {...register("eventType")}>
+                <option value="">Select Event Type</option>
+                {eventTypes.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
+              {errors.eventType && (
+                <p className="text-red-500 mt-1">{errors.eventType.message}</p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label>Event Name</label>
+              <input
+                type="text"
+                {...register("eventName")}
+                placeholder="Enter Event Name"
+              />
+              {errors.eventName && (
+                <p className="text-red-500 mt-1">{errors.eventName.message}</p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label>Members Type</label>
+              <select {...register("members")}>
+                <option value="">Select Members Type</option>
+                {membersTypes.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
+              {errors.members && (
+                <p className="text-red-500 mt-1">{errors.members.message}</p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label>Venue</label>
+              <input
+                type="text"
+                {...register("venue")}
+                placeholder="Enter Venue"
+              />
+              {errors.venue && (
+                <p className="text-red-500 mt-1">{errors.venue.message}</p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label>Start Date</label>
+              <input type="datetime-local" {...register("startDateTime")} />
+              {errors.startDateTime && (
+                <p className="text-red-500 mt-1">
+                  {errors.startDateTime.message}
+                </p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label>End Date</label>
+              <input type="datetime-local" {...register("endDateTime")} />
+              {errors.endDateTime && (
+                <p className="text-red-500 mt-1">
+                  {errors.endDateTime.message}
+                </p>
+              )}
+            </div>
+            <div className="mb-4">
+              <label>Image</label>
+              <input type="file" {...register("imageUrl")} />
+              {errors.imageUrl && (
+                <p className="text-red-500 mt-1">{errors.imageUrl.message}</p>
+              )}
+            </div>
 
-              <div className="flex justify-end space-x-4">
-                <button className="reset" type="button" onClick={() => reset()}>
-                  Reset
-                </button>
-                <button className="submit" type="submit">
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
+            <div className="flex justify-end space-x-4">
+              <button className="reset" type="button" onClick={() => reset()}>
+                Reset
+              </button>
+              <button className="submit" type="submit">
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-    // </div>
+    </div>
   );
 };
 

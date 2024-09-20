@@ -50,7 +50,9 @@ const Login = () => {
   const [error, setError] = useState("");
   const [showResetModal, setShowResetModal] = useState(false);
 
-  useEffect(() => {}, [loading]);
+
+  useEffect(() => {
+  }, [loading]);
   const onSubmitHandler = async (data: FormValues) => {
     try {
       setLoading(true);
@@ -71,13 +73,15 @@ const Login = () => {
       reset();
     } catch (err) {
       setError("Invalid username or password");
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };
 
   const onSubmitResetEmail = async ({ email }: { email: string }) => {
     try {
+
       const response = await axios.post(
         "http://localhost:3000/users/request-password-reset",
         { email },
@@ -123,9 +127,7 @@ const Login = () => {
               className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.email && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.email.message}
-              </p>
+              <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
             )}
           </div>
 
@@ -137,11 +139,13 @@ const Login = () => {
               className="block w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {errors.password && (
-              <p className="text-red-500 text-xs mt-1">
-                {errors.password.message}
-              </p>
+              <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
             )}
             <div className="flex justify-end">
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7f3f6f2818b64d036cb98b31c705c9e95cc4ef96
               <Link
                 href="#"
                 onClick={() => setShowResetModal(true)}
@@ -152,6 +156,11 @@ const Login = () => {
             </div>
           </div>
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 7f3f6f2818b64d036cb98b31c705c9e95cc4ef96
           <div className="flex space-x-4">
             <button
               type="submit"
@@ -170,12 +179,18 @@ const Login = () => {
           </div>
         </form>
         <div className="flex flex-col items-center mt-6 space-y-2">
+<<<<<<< HEAD
           <Link
             href="student/registration"
             className="text-blue-500 hover:underline"
           >
+=======
+
+          <Link href="student/registration" className="text-blue-500 hover:underline">
+>>>>>>> 7f3f6f2818b64d036cb98b31c705c9e95cc4ef96
             Don't have account? Register
           </Link>
+
         </div>
       </div>
 
@@ -190,9 +205,7 @@ const Login = () => {
               className="block w-full px-4 py-2 border rounded-md"
             />
             {resetErrors.email && (
-              <p className="text-red-500 text-xs mt-1">
-                {resetErrors.email.message}
-              </p>
+              <p className="text-red-500 text-xs mt-1">{resetErrors.email.message}</p>
             )}
             <button
               type="submit"

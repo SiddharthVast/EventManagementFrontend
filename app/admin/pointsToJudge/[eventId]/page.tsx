@@ -82,6 +82,7 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
   });
 
   
+  
   const onSubmit = async (data: FormData) => {
     setLoading(true);
     setError(null);
@@ -89,6 +90,7 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
       await addPoints(
         data.points.map((point) => ({
           ...point,
+          eventId: data.eventId, 
           eventId: data.eventId, 
         }))
       );
@@ -108,19 +110,21 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
   return (
     <div className="main-div">
       <div className="input-form-div ">
+    <div className="main-div">
+      <div className="input-form-div ">
         <button
           type="button"
           onClick={() =>
             router.push(`/admin/events/view-event/${event.festival.id}`)
           }
           className="xmark-icon"
+          className="xmark-icon"
         >
+          <XMarkIcon className="h-6 w-6" />
           <XMarkIcon className="h-6 w-6" />
         </button>
         <div className="text-center mb-6">
-          <h1 className="text-xl font-bold text-white bg-red-800 p-2 rounded-md">
-            {eventName}
-          </h1>
+          <h1 className="form-heading">{eventName}</h1>
         </div>
         <h2 className="text-xl font-semibold text-red-500 mb-6">Add Points</h2>
         <form onSubmit={handleSubmit(onSubmit)}>

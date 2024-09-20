@@ -3,25 +3,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import useFestivalStore, {
-  FestivalData,
-} from "../../../../../store/festivalStore";
+import useFestivalStore, { FestivalData } from "../../../../../store/festivalStore";
 import { useRouter } from "next/navigation";
 import useLoginStore from "@/store/loginStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import Loading from "@/app/loading";
+import { useUser } from "@/app/context/UserContext";
+import Loading from "@/app/loading";
 
 const schema = yup.object().shape({
-  festivalTitle: yup
-    .string()
-    .min(3)
-    .max(50)
-    .required("Festival title is required"),
+  festivalTitle: yup.string().min(3).max(50).required("Festival title is required"),
   startDate: yup.string().required("Start date is required"),
   endDate: yup.string().required("End date is required"),
-  description: yup
-    .string()
-    .required("Description can't be longer than 500 characters"),
+  description: yup.string().required("Description can't be longer than 500 characters"),
 });
 
 interface Props {
@@ -38,15 +32,9 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
   const getFestival = useFestivalStore((state) => state.getFestivalById);
   const festival = useFestivalStore((state) => state.festival);
   const updateFestival = useFestivalStore((state) => state.updateFestival);
-  // const fetchUser = useLoginStore((state) => state.fetchUser);
-  // const { user } = useUser();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-    reset,
-  } = useForm<FestivalData>({
+  const { user } = useUser();
+
+  const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<FestivalData>({
     resolver: yupResolver(schema),
   });
 
@@ -109,11 +97,10 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
       {loading && <Loading />}
       {!loading && (
         <>
-          <div className="flex justify-center items-start p-8 pt-20">
-            <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 relative ">
+          <div className="input-form-div">
               <button
                 onClick={() => router.push("/admin/festivals/view-festival")}
-                className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                className="xmark-icon"
               >
                 <XMarkIcon className="h-6 w-6" />
               </button>
@@ -204,7 +191,6 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
                 </div>
               </form>
             </div>
-          </div>
         </>
       )}
     </div>

@@ -52,7 +52,7 @@ const ViewMyTask = () => {
   return (
     <div className="main-div">
       <div className="show-form-div">
-        <h2 className="text-2xl font-semibold text-red-500 mb-6 text-left">
+        <h2 className="form-heading">
           Assigned Events
         </h2>
         {validRegistrations.length > 0 ? (
@@ -77,9 +77,9 @@ const ViewMyTask = () => {
                   (e) => e.id === registration.event?.id
                 );
 
-                if (!event) {
-                  return null;
-                }
+                                    if (!event) {
+                                        return null;
+                                    }
 
                 return (
                   <tr key={registration.id}>

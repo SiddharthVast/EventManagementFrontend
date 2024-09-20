@@ -30,6 +30,7 @@ const UserEvents = () => {
 
   useEffect(() => {
     setRegData(registrations); 
+    setRegData(registrations); 
   }, [registrations]);
   return (
     <div className="main-div">

@@ -139,19 +139,12 @@ const AddUserByAdmin = () => {
             )}
           </div>
 
-          <div className="flex justify-end">
-            <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
-              type="submit"
-            >
-              Submit
-            </button>
-            <button
-              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="button"
-              onClick={() => reset()}
-            >
+          <div className="flex justify-end space-x-4">
+            <button className="reset" type="button" onClick={() => reset()}>
               Reset
+            </button>
+            <button className="submit" type="submit">
+              Submit
             </button>
           </div>
         </form>

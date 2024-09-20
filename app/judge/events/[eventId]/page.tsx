@@ -120,12 +120,8 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
   };
 
   return (
-
     <div className="main-div p-4">
-      <h1 className="text-red-600 text-2xl font-bold mb-4">
-        Event{students[0]?.event.eventName}
-      </h1>
-
+      <h1 className="form-heading">Event:{students[0]?.event.eventName}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <table className="min-w-full bg-white">
           <thead>
@@ -175,10 +171,12 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
             ))}
           </tbody>
         </table>
+      </form>
+      <div className="flex justify-end space-x-4 pt-4">
         <button type="submit" className="submit">
           Submit
         </button>
-      </form>
+      </div>
     </div>
   );
 };

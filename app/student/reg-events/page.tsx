@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import useLoginStore from "@/store/loginStore";
 import useUserEventRegistartionStore from "../../../store/user_event_registrationStore";
 import useEventStore from "@/store/eventStore";
+import Loading from "@/app/loading";
 import Link from "next/link";
 
 const RegisteredEvents = () => {

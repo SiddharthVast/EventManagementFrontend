@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import useCollegeStore from "../../../store/collegeStore";
 import useUserStore from "../../../store/userStore";
 import Link from "next/link";
-import { UserPlusIcon, PencilSquareIcon, TrashIcon, XMarkIcon } from "@heroicons/react/16/solid";
+import {
+  UserPlusIcon,
+  PencilSquareIcon,
+  TrashIcon,
+  XMarkIcon,
+} from "@heroicons/react/16/solid";
 import Loading from "@/app/loading";
 
 const ViewCollege = () => {
@@ -27,56 +32,33 @@ const ViewCollege = () => {
 
   return (
     <div className="main-div">
-      <div className="input-form-div">
-        {/* <div className="w-full max-w-6xl bg-white shadow-lg rounded-lg p-8"> */}
-          <h1 className="text-2xl font-semibold text-red-500 mb-6">
-            Our Registered Colleges
-          </h1>
-          <table className="min-w-full bg-white">
-            <thead>
-              <tr>
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase">
-                  College Name
-                </th>
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase">
-                  Reg. No.
-                </th>
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase">
-                  Email
-                </th>
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase">
-                  Address
-                </th>
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase">
-                  Admin List
-                </th>
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase">
-                  Admin
-                </th>
-                <th className="py-2 px-4 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-semibold text-gray-600 uppercase">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {colleges.map((college) => (
-                <tr key={college.id}>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                    {college.collegeName}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                    {college.number}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                    {college.emailId}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                    {college.address}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                    {users.filter((user) => user.college?.id === college.id)
-                      .length > 0
-                      ? users
+      <div className="show-form-div">
+        <h1 className="text-2xl font-semibold text-red-500 mb-6">
+          Our Registered Colleges
+        </h1>
+        <table className="min-w-full bg-white">
+          <thead>
+            <tr>
+              <th>College Name</th>
+              <th>Reg. No.</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th>Admin List</th>
+              <th>Admin</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {colleges.map((college) => (
+              <tr key={college.id}>
+                <td>{college.collegeName}</td>
+                <td>{college.number}</td>
+                <td>{college.emailId}</td>
+                <td>{college.address}</td>
+                <td>
+                  {users.filter((user) => user.college?.id === college.id)
+                    .length > 0
+                    ? users
                         .filter(
                           (user) =>
                             user.college?.id === college.id &&
@@ -98,32 +80,31 @@ const ViewCollege = () => {
                             </span>
                           </div>
                         ))
-                      : "NA"}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm">
-                    <Link href={`/superadmin/admin/${college.id}`}>
+                    : "NA"}
+                </td>
+                <td>
+                  <Link href={`/superadmin/admin/${college.id}`}>
+                    <button>
+                      <UserPlusIcon className="icon assign-icon" />
+                    </button>
+                  </Link>
+                </td>
+                <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
+                  <div className="flex space-x-2 justify-center">
+                    <Link href={`/superadmin/college/${college.id}`}>
                       <button>
-                        <UserPlusIcon className="icon assign-icon" />
+                        <PencilSquareIcon className=" update-icon" />
                       </button>
                     </Link>
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
-                    <div className="flex space-x-2 justify-center">
-                      <Link href={`/superadmin/college/${college.id}`}>
-                        <button>
-                          <PencilSquareIcon className=" update-icon" />
-                        </button>
-                      </Link>
-                      <button onClick={() => deleteCollege(college.id)}>
-                        <TrashIcon className=" delete-icon" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                    <button onClick={() => deleteCollege(college.id)}>
+                      <TrashIcon className=" delete-icon" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     // </div>
   );
