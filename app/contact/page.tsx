@@ -7,7 +7,6 @@ import useContactUsStore, { Contact } from "@/store/contactusStore";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-// import Loading from "../loading";
 
 const schema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -117,9 +116,8 @@ const ContactUsPage = () => {
                 <button
                   type="submit"
                   disabled={loader}
-                  className={`w-1/2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors ${
-                    loader ? "cursor-not-allowed opacity-50" : ""
-                  }`}
+                  className={`w-1/2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors ${loader ? "cursor-not-allowed opacity-50" : ""
+                    }`}
                 >
                   Submit
                 </button>

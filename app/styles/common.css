@@ -116,6 +116,10 @@ input{
 
 }
 
+textarea{
+  @apply  shadow appearance-none border rounded w-full p-2  border-gray-300  leading-tight
+}
+
 
 /* __________________________________________________________________________________________________________ */
 table{

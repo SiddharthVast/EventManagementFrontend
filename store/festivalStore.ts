@@ -29,7 +29,7 @@ export interface FestivalData {
   festivalTitle: string;
   startDate: string;
   endDate: string;
-  imageUrl?: string | FileList;
+  imageUrl: string | FileList;
   description: string;
   collegeId?: number;
   status?: boolean;

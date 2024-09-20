@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/16/solid";
 import Loading from "@/app/loading";
+import { toast } from "react-toastify";
+
 import useLoginStore from "@/store/loginStore";
 const ViewFestival = () => {
   const festivals = useFestivalStore((state) => state.festivals);
@@ -12,6 +14,8 @@ const ViewFestival = () => {
   const { user } = useLoginStore();
   const cid = user?.college?.id;
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFestival, setSelectedFestival] = useState<Festival | null>(null);
 
   useEffect(() => {
     if (cid) {
@@ -22,36 +26,42 @@ const ViewFestival = () => {
       fetchData();
     } else {
       setLoading(false);
-     
-     
+
+
     }
   }, [cid, getByCollege]);
 
-  // Function to get the date without time
+  const handleDeleteClick = (festival: Festival) => {
+    setSelectedFestival(festival);
+    setIsModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (selectedFestival) {
+      await deleteFestival(selectedFestival.id);
+      setIsModalOpen(false);
+      setSelectedFestival(null);
+      toast.success("Festival deleted successfully!");
+    }
+  };
+
   const getDateOnly = (dateString: string) => {
     const date = new Date(dateString);
-    // Return the date part only in YYYY-MM-DD format
     return date.toISOString().split("T")[0];
   };
 
-  // Check if festivals are defined and sort them
   const sortedFestivals = festivals
-    ? [...festivals].sort((a, b) => {
-      const dateA = getDateOnly(a.startDate);
-      const dateB = getDateOnly(b.startDate);
-      return dateB.localeCompare(dateA); // Descending order
-    })
+    ? [...festivals].sort((a, b) => getDateOnly(b.startDate).localeCompare(getDateOnly(a.startDate)))
     : [];
 
   return (
     <div className="main-div">
       {loading && <Loading />}
+      {loading && <Loading />}
       {!loading && (
         <>
           <div className="show-form-div">
-            <h3 className="text-2xl font-semibold text-red-500 mb-6 text-left">
-              College Fest
-            </h3>
+            <h3 className="text-2xl font-semibold text-red-500 mb-6 text-left">College Fest</h3>
             <table className="min-w-full bg-white">
               <thead>
                 <tr>
@@ -70,9 +80,7 @@ const ViewFestival = () => {
                   sortedFestivals.map((festival) => (
                     <tr
                       key={festival.id}
-                      className={`${
-                        festival.status && "bg-green-100 hover:bg-green-200 "
-                      }`}
+                      className={`${festival.status && "bg-green-100 hover:bg-green-200"}`}
                     >
                       <td className="py-2 px-4 border-b border-gray-200 text-sm text-left">
                         <Image
@@ -105,22 +113,15 @@ const ViewFestival = () => {
                       <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
                         {festival.description}
                       </td>
-                      {/* <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
-                    {festival.status ? "Open" : "Closed"}
-                  </td> */}
                       <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
                         <div className="flex space-x-2 justify-center">
-                          <Link
-                            href={`/admin/events/view-event/${festival.id}`}
-                          >
+                          <Link href={`/admin/events/view-event/${festival.id}`}>
                             <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline">
                               View
                             </button>
                           </Link>
                           {festival.status && (
-                            <Link
-                              href={`/admin/events/add-event/${festival.id}`}
-                            >
+                            <Link href={`/admin/events/add-event/${festival.id}`}>
                               <button
                                 className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline"
                                 disabled={!festival.status}
@@ -133,9 +134,7 @@ const ViewFestival = () => {
                       </td>
                       <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
                         <div className="flex space-x-2 justify-center">
-                          <Link
-                            href={`/admin/festivals/view-festival/${festival.id}`}
-                          >
+                          <Link href={`/admin/festivals/view-festival/${festival.id}`}>
                             <button
                               aria-label={`Edit ${festival.festivalTitle}`}
                               className="text-yellow-500 hover:text-yellow-600"
@@ -146,9 +145,8 @@ const ViewFestival = () => {
                           </Link>
                           <button
                             aria-label={`Delete ${festival.festivalTitle}`}
-                            onClick={() => deleteFestival(festival.id)}
+                            onClick={() => handleDeleteClick(festival)}
                             className="text-red-500 hover:text-red-600"
-                            disabled={!festival.status}
                           >
                             <TrashIcon className="delete-icon" />
                           </button>
@@ -163,25 +161,48 @@ const ViewFestival = () => {
                             Complete
                           </button>
                         ) : (
-                          <span className="text-gray-500">closed</span> // Placeholder for closed status
+                          <button
+                            className="bg-gray-400 text-white py-1 px-3 rounded"
+                            disabled
+                          >
+                            Closed
+                          </button>
                         )}
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td
-                      colSpan={9}
-                      className="py-4 px-4 text-center text-sm text-gray-500"
-                    >
+                    <td colSpan={9} className="py-4 px-4 text-center text-sm text-gray-500">
                       No festivals found
                     </td>
                   </tr>
                 )}
               </tbody>
             </table>
-            {/* </div> */}
           </div>
+          {isModalOpen && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                <h2 className="text-lg font-bold mb-4">Confirm Delete</h2>
+                <p>Are you sure you want to delete "{selectedFestival?.festivalTitle}"?</p>
+                <div className="flex justify-end mt-4">
+                  <button
+                    onClick={confirmDelete}
+                    className="bg-red-500 text-white py-2 px-4 rounded mr-2"
+                  >
+                    Confirm
+                  </button>
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="bg-gray-500 text-white py-2 px-4 rounded"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </>
       )}
     </div>

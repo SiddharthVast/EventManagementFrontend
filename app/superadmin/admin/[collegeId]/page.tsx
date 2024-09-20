@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { useRouter } from "next/navigation";
 import useUserStore from "../../../../store/userStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
@@ -53,8 +54,10 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
         role: "admin",
       };
       await addUser(userData);
+      toast.success("Admin added successfully!");
       router.push("/superadmin/college");
     } catch (error) {
+      toast.error("Error adding admin. Please try again.");
       console.error("Failed to add admin:", error);
     }
   };

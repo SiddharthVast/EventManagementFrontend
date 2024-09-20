@@ -5,9 +5,10 @@ import * as yup from "yup";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useEventStore, { EventData } from "../../../../../../store/eventStore";
-// import useLoginStore from "@/store/loginStore";
+import useLoginStore from "@/store/loginStore";
 import useFestivalStore from "@/store/festivalStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { toast } from "react-toastify";
 
 const eventTypes = [
   "Cultural",
@@ -75,6 +76,8 @@ const UpdateEvent = ({ params: { festivalId, eventId } }: Props) => {
     (state) => state.uploadImageToCloudinary
   );
   const [change, setChange] = useState("");
+  const user = useLoginStore((state) => state.user);
+
   const {
     register,
     handleSubmit,
@@ -136,13 +139,16 @@ const UpdateEvent = ({ params: { festivalId, eventId } }: Props) => {
         formData.festivalId = +festivalId;
       }
       updateEvent({ id: +eventId, ...formData });
-      setSuccess("Event added successfully!");
-      setError("");
+      toast.success("Event updated successfully!");
+      if (user?.role === "admin") {
+        router.push(`/admin/events/view-event/${festivalId}`);
+      }
+      else if (user?.role === "coordinator") {
+        router.push(`/coordinator/my-task`);
+      }
       reset();
-      router.push(`/admin/events/view-event/${festivalId}`);
     } catch (err) {
-      setError("Failed to add event");
-      setSuccess("");
+      toast.error("Error adding/updating college. Please try again.");
     }
   };
 
@@ -150,19 +156,28 @@ const UpdateEvent = ({ params: { festivalId, eventId } }: Props) => {
     <div className="main-div">
       <div className="input-form-div ">
         <button
-          onClick={() =>
-            router.push(`/admin/events/view-event/${event.festival.id}`)
-          }
+          onClick={() => {
+            if (user?.role === "admin") {
+              router.push(`/admin/events/view-event/${event.festival.id}`);
+            } else if (user?.role === "coordinator") {
+              router.push(`/coordinator/my-task`);
+            }
+          }}
           className="xmark-icon"
         >
           <XMarkIcon className="w-6 h-6" />
         </button>
         <div className="w-full">
-          <h2 className="form-heading">Event Form</h2>
+          <h2 className="text-2xl font-semibold text-red-500 mb-6">
+            Event Form
+          </h2>
           <form onSubmit={handleSubmit(onSubmitHandler)}>
             <div className="mb-4">
-              <label>Event Type</label>
-              <select {...register("eventType")}>
+              <label className="block text-gray-700">Event Type</label>
+              <select
+                className="form-input mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                {...register("eventType")}
+              >
                 <option value="">Select Event Type</option>
                 {eventTypes.map((type) => (
                   <option key={type} value={type}>
@@ -182,12 +197,17 @@ const UpdateEvent = ({ params: { festivalId, eventId } }: Props) => {
                 placeholder="Enter Event Name"
               />
               {errors.eventName && (
-                <p className="text-red-500 mt-1">{errors.eventName.message}</p>
+                <p className="text-red-500 mt-1">
+                  {errors.eventName.message}
+                </p>
               )}
             </div>
             <div className="mb-4">
-              <label>Members Type</label>
-              <select {...register("members")}>
+              <label className="block text-gray-700">Members Type</label>
+              <select
+                className="form-input mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                {...register("members")}
+              >
                 <option value="">Select Members Type</option>
                 {membersTypes.map((type) => (
                   <option key={type} value={type}>
@@ -248,6 +268,7 @@ const UpdateEvent = ({ params: { festivalId, eventId } }: Props) => {
         </div>
       </div>
     </div>
+    // </div>
   );
 };
 

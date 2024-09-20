@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useCollegeStore, { CollegeData } from "../../../../store/collegeStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   collegeName: yup.string().required("College Name is required"),
@@ -57,28 +58,26 @@ const AddCollege = ({ params: { collegeId } }: Props) => {
   }, [collegeId, colleges, setValue]);
 
   const onSubmitHandler = async (data: CollegeData) => {
-    console.log(`${collegeId}`);
     try {
       if (collegeId === "new") {
         await addCollege(data);
-         console.log(`${collegeId}`);
-        setSuccess("College added successfully!");
-        setError("");
+        toast.success("College added successfully!");
         reset();
       } else {
         await updateCollege(+collegeId, data);
+        toast.success("College updated successfully!");
       }
       router.push("/superadmin");
     } catch (err) {
-      console.error(err);
+      toast.error("Error adding/updating college. Please try again.");
       setError("Error adding/updating college");
-      setSuccess("");
     }
   };
 
   return (
     <div className="main-div">
       <div className="input-form-div">
+        <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 relative">
           <button
             onClick={() => router.push("/superadmin")}
             className="xmark-icon"
@@ -158,7 +157,7 @@ const AddCollege = ({ params: { collegeId } }: Props) => {
           </div>
         </div>
       </div>
-  );
+      );
 };
 
-export default AddCollege;
+      export default AddCollege;

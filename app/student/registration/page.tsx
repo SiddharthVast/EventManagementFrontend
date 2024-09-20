@@ -6,6 +6,7 @@ import * as yup from "yup";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/store/userStore";
 import useCollegeStore from "@/store/collegeStore";
+import { toast } from "react-toastify";
 // Define validation schema
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
@@ -59,9 +60,10 @@ const AddStudent = () => {
       };
 
       await addUser(userData);
-      alert("Registration successful.");
+      toast.success(`Registration successful!!`);
       router.push("/login");
     } catch (error) {
+      toast.error(`Error registering student. Please try again.`);
       console.error("Failed to add register:", error);
     }
   };

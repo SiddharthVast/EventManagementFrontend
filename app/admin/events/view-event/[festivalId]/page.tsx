@@ -1,5 +1,5 @@
 "use client";
-import useEventStore from "@/store/eventStore";
+import useEventStore, { Event } from "@/store/eventStore";
 import useUserStore from "@/store/userStore";
 import { useEffect, useState } from "react";
 import "../../../../styles/common.css";
@@ -12,8 +12,9 @@ import {
 } from "@heroicons/react/16/solid";
 import useUserEventRegistrationStore from "@/store/user_event_registrationStore";
 import Image from "next/image";
-import { TrashIcon } from "@heroicons/react/24/solid";
+import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
 import Loading from "@/app/loading";
+import { toast } from "react-toastify";
 
 interface Props {
   params: {
@@ -23,6 +24,8 @@ interface Props {
 
 const ShowEvents = ({ params: { festivalId } }: Props) => {
   const [loading, setLoading] = useState(true); // Loading state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   const { events, getAllEvents, deleteEvent, updateEventStatus } =
     useEventStore((state) => ({
@@ -59,6 +62,19 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
   const filteredEvents = events.filter(
     (event) => event.festival && event.festival.id === +festivalId
   );
+
+  const handleDeleteClick = (event: Event) => {
+    setSelectedEvent(event); // Set the selected event
+    setIsModalOpen(true); // Open the modal
+  };
+
+  const confirmDelete = async () => {
+    if (selectedEvent) {
+      await deleteEvent(selectedEvent.id);
+      setIsModalOpen(false);
+      toast.success("Event deleted successfully!"); // Show success toast
+    }
+  };
 
   return (
     <div className="main-div">
@@ -152,34 +168,38 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                         })
                         .join(", ") || "NA"}
                     </td>
-
-                    <td className="py-2 px-2 border-b border-gray-200 text-sm text-center">
-                      <Link
-                        href={`/admin/coordinator/assign-coordinator/coordinator/${event.id}`}
-                      >
-                        <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline">
-                          Assign
-                        </button>
-                      </Link>
-                    </td>
-                    <td className="py-2 px-2 border-b border-gray-200 text-sm text-center">
-                      <Link
-                        href={`/admin/coordinator/assign-coordinator/judge/${event.id}`}
-                      >
-                        <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline">
-                          Assign
-                        </button>
-                      </Link>
+                    <td>
+                      <div className="flex space-x-2 justify-center">
+                        <Link
+                          href={`/admin/coordinator/assign-coordinator/coordinator/${event.id}`}
+                          className="link-button"
+                        >
+                          <UserPlusIcon className="icon assign-icon" />
+                        </Link>
+                      </div>
                     </td>
                     <td>
                       <div className="flex space-x-2 justify-center">
                         <Link
-                          href={`/admin/pointsToJudge/${
-                            event.id
-                          }?name=${encodeURIComponent(event.eventName)}`}
+                          href={`/admin/coordinator/assign-coordinator/judge/${event.id}`}
                           className="link-button"
                         >
                           <UserPlusIcon className="icon assign-icon" />
+                        </Link>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="flex space-x-2 justify-center">
+                        <Link
+                          href={`/admin/pointsToJudge/${event.id
+                            }?name=${encodeURIComponent(event.eventName)}`}
+                          className="link-button"
+                        >
+                          <div className="h-8 w-8 text-yellow-500">
+                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-full h-full">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                          </div>
                         </Link>
                       </div>
                     </td>
@@ -195,8 +215,8 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                         <Link
                           href={`/admin/events/view-event/${festivalId}/${event.id}`}
                         ></Link>
-                        <button onClick={() => deleteEvent(event.id)}>
-                          <TrashIcon className=" delete-icon" />
+                        <button onClick={() => handleDeleteClick(event)}>
+                          <TrashIcon className="delete-icon" />
                         </button>
                       </div>
                     </td>
@@ -236,8 +256,37 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
             </table>
           </div>
         </div>
-      )}
-    </div>
+      )
+      }
+
+      {
+        isModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+              <h2 className="text-lg font-bold mb-4">Confirm Delete</h2>
+              <p>
+                Are you sure you want to delete the event "
+                {selectedEvent?.eventName}"?
+              </p>
+              <div className="flex justify-end mt-4">
+                <button
+                  onClick={confirmDelete}
+                  className="bg-red-500 text-white py-2 px-4 rounded mr-2"
+                >
+                  Confirm
+                </button>
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="bg-gray-500 text-white py-2 px-4 rounded"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      }
+    </div >
   );
 };
 
