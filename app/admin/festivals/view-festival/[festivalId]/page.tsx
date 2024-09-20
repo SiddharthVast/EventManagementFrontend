@@ -9,7 +9,7 @@ import useLoginStore from "@/store/loginStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import Loading from "@/app/loading";
 import { useUser } from "@/app/context/UserContext";
-import Loading from "@/app/loading";
+// import Loading from "@/app/loading";
 
 const schema = yup.object().shape({
   festivalTitle: yup.string().min(3).max(50).required("Festival title is required"),
@@ -32,7 +32,7 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
   const getFestival = useFestivalStore((state) => state.getFestivalById);
   const festival = useFestivalStore((state) => state.festival);
   const updateFestival = useFestivalStore((state) => state.updateFestival);
-  const { user } = useUser();
+  // const { user } = useUser();
 
   const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<FestivalData>({
     resolver: yupResolver(schema),
@@ -98,99 +98,99 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
       {!loading && (
         <>
           <div className="input-form-div">
-              <button
-                onClick={() => router.push("/admin/festivals/view-festival")}
-                className="xmark-icon"
-              >
-                <XMarkIcon className="h-6 w-6" />
-              </button>
-              <h2 className="text-2xl font-semibold text-red-500 mb-6 text-center ">
-                Update Festival Details
-              </h2>
-              <form onSubmit={handleSubmit(onSubmitHandler)}>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Festival Title
-                  </label>
-                  <input
-                    type="text"
-                    {...register("festivalTitle")}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                  {errors.festivalTitle && (
-                    <p className="text-red-500 mt-1">
-                      {errors.festivalTitle.message}
-                    </p>
-                  )}
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Start Date
-                  </label>
-                  <input
-                    type="datetime-local"
-                    {...register("startDate")}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                  {errors.startDate && (
-                    <p className="text-red-500 mt-1">
-                      {errors.startDate.message}
-                    </p>
-                  )}
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    End Date
-                  </label>
-                  <input
-                    type="datetime-local"
-                    {...register("endDate")}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                  {errors.endDate && (
-                    <p className="text-red-500 mt-1">
-                      {errors.endDate.message}
-                    </p>
-                  )}
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Image
-                  </label>
-                  <input
-                    type="file"
-                    {...register("imageUrl")}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
-                  {errors.imageUrl && (
-                    <p className="text-red-500 mt-1">
-                      {errors.imageUrl.message}
-                    </p>
-                  )}
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Description
-                  </label>
-                  <textarea
-                    {...register("description")}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    rows={4}
-                  ></textarea>
-                  {errors.description && (
-                    <p className="text-red-500 mt-1">
-                      {errors.description.message}
-                    </p>
-                  )}
-                </div>
+            <button
+              onClick={() => router.push("/admin/festivals/view-festival")}
+              className="xmark-icon"
+            >
+              <XMarkIcon className="h-6 w-6" />
+            </button>
+            <h2 className="text-2xl font-semibold text-red-500 mb-6 text-center ">
+              Update Festival Details
+            </h2>
+            <form onSubmit={handleSubmit(onSubmitHandler)}>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Festival Title
+                </label>
+                <input
+                  type="text"
+                  {...register("festivalTitle")}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+                {errors.festivalTitle && (
+                  <p className="text-red-500 mt-1">
+                    {errors.festivalTitle.message}
+                  </p>
+                )}
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Start Date
+                </label>
+                <input
+                  type="datetime-local"
+                  {...register("startDate")}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+                {errors.startDate && (
+                  <p className="text-red-500 mt-1">
+                    {errors.startDate.message}
+                  </p>
+                )}
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  End Date
+                </label>
+                <input
+                  type="datetime-local"
+                  {...register("endDate")}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+                {errors.endDate && (
+                  <p className="text-red-500 mt-1">
+                    {errors.endDate.message}
+                  </p>
+                )}
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Image
+                </label>
+                <input
+                  type="file"
+                  {...register("imageUrl")}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                />
+                {errors.imageUrl && (
+                  <p className="text-red-500 mt-1">
+                    {errors.imageUrl.message}
+                  </p>
+                )}
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Description
+                </label>
+                <textarea
+                  {...register("description")}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  rows={4}
+                ></textarea>
+                {errors.description && (
+                  <p className="text-red-500 mt-1">
+                    {errors.description.message}
+                  </p>
+                )}
+              </div>
 
-                <div className="flex justify-center">
-                  <button className="update" type="submit">
-                    Update
-                  </button>
-                </div>
-              </form>
-            </div>
+              <div className="flex justify-center">
+                <button className="update" type="submit">
+                  Update
+                </button>
+              </div>
+            </form>
+          </div>
         </>
       )}
     </div>

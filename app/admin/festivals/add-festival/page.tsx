@@ -102,8 +102,6 @@ const AddFestival = () => {
       <div className="input-form-div">
         <button onClick={() => router.push("/admin")} className="xmark-icon">
           <XMarkIcon className="w-6 h-6" />
-        <button onClick={() => router.push("/admin")} className="xmark-icon">
-          <XMarkIcon className="w-6 h-6" />
         </button>
 
         <h2 className="form-heading">College Fest Registration</h2>
