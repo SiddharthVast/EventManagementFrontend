@@ -8,6 +8,7 @@ export interface UserEventRegistrationStoreState {
   registration: UserEventRegistration;
   getAllRegistarations: () => void;
   getRegistartionById: (id: string) => void;
+  deleteUserEvntReg: (id: number) => void;
   getRegistartionByUserId: (id: number) => void;
   addRegistration: (data: {
     eventId: number;
@@ -115,6 +116,14 @@ const useUserEventRegistartionStore = create<UserEventRegistrationStoreState>(
       set((state: UserEventRegistrationStoreState) => ({
         registration: res.data,
       }));
+    },
+    deleteUserEvntReg: async (id: number) => {
+      const res = await http.delete(`/user-event-registration/${id}`);
+      if (res.status === 200) {
+        set((state) => ({
+          registrations: state.registrations.filter((r) => r.id !== id),
+        }));
+      }
     },
     getRegistartionByUserId: async (id: number) => {
       const res = await http.get(`/user-event-registration/userId/${id}`);

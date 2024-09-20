@@ -1,30 +1,36 @@
 "use client";
 import useEventStore from "@/store/eventStore";
 import useUserStore from "@/store/userStore";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../../../../styles/common.css";
 import Link from "next/link";
 import {
-  ArrowRightIcon,
   PencilSquareIcon,
   UserPlusIcon,
   ClipboardDocumentListIcon,
+  UserGroupIcon,
 } from "@heroicons/react/16/solid";
 import useUserEventRegistrationStore from "@/store/user_event_registrationStore";
 import Image from "next/image";
 import { TrashIcon } from "@heroicons/react/24/solid";
+import Loading from "@/app/loading";
 
 interface Props {
   params: {
     festivalId: string;
   };
 }
+
 const ShowEvents = ({ params: { festivalId } }: Props) => {
-  const { events, getAllEvents, deleteEvent } = useEventStore((state) => ({
-    events: state.events,
-    getAllEvents: state.getAllEvents,
-    deleteEvent: state.deleteEvent,
-  }));
+  const [loading, setLoading] = useState(true); // Loading state
+
+  const { events, getAllEvents, deleteEvent, updateEventStatus } =
+    useEventStore((state) => ({
+      events: state.events,
+      getAllEvents: state.getAllEvents,
+      deleteEvent: state.deleteEvent,
+      updateEventStatus: state.updateEventStatus,
+    }));
 
   const { users, getAllUsers } = useUserStore((state) => ({
     users: state.users,
@@ -39,11 +45,15 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
   );
 
   useEffect(() => {
-    getAllEvents();
-    if (users.length === 0) {
-      getAllUsers(); // Fetch coordinators
-    }
-    getAllRegistarations();
+    const fetchData = async () => {
+      await getAllEvents();
+      if (users.length === 0) {
+        await getAllUsers();
+      }
+      await getAllRegistarations();
+      setLoading(false);
+    };
+    fetchData();
   }, [getAllEvents, getAllUsers, users.length, getAllRegistarations]);
 
   const filteredEvents = events.filter(
@@ -51,12 +61,12 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
   );
 
   return (
-    <div className="bg-gray-100 min-h-screen ">
-      <div className="flex justify-center items-start p-4 pt-20">
-        <div className="w-full max-w-fit bg-white shadow-lg rounded-lg p-8">
-          <h1 className="text-2xl font-semibold text-red-500 mb-6 mt-5">
-            Events
-          </h1>
+    <div className="main-div">
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="show-form-div">
+          <h1 className="header-content">Events</h1>
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white">
               <thead>
@@ -68,14 +78,15 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                   <th>Venue</th>
                   <th>Start Date</th>
                   <th>End Date</th>
-                  <th>Status</th>
+                  {/* <th>Status</th> */}
                   <th>Coordinator List</th>
-                  <th>Assign Coordinator</th>
-                  <th>Assign Judge</th>
+                  <th>Coordinator</th>
+                  <th>Judge</th>
                   <th>Skill Set</th>
                   <th>Actions</th>
                   <th>Result</th>
                   <th>Complete</th>
+                  <th>Participants</th>
                 </tr>
               </thead>
               <tbody>
@@ -118,9 +129,9 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                         timeStyle: "short",
                       })}
                     </td>
-                    <td className="py-2 px-2 border-b text-center border-gray-200 text-sm">
+                    {/* <td className="py-2 px-2 border-b text-center border-gray-200 text-sm">
                       {event.status ? "Open" : "Closed"}
-                    </td>
+                    </td> */}
                     <td className="py-2 px-2 border-b border-gray-200 text-sm text-center">
                       {registrations
                         .filter(
@@ -144,9 +155,7 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
 
                     <td className="py-2 px-2 border-b border-gray-200 text-sm text-center">
                       <Link
-                        // href={`/admin/coordinator/assign-coordinator/${event.id}`}/
                         href={`/admin/coordinator/assign-coordinator/coordinator/${event.id}`}
-                        // href={`/admin/events/view-event/${festivalId}/${event.id}`}
                       >
                         <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline">
                           Assign
@@ -198,13 +207,36 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                         </button>
                       </Link>
                     </td>
+                    {/* <td className="py-2 px-2 border-b text-center border-gray-200 text-sm">
+                      {event.status ? "Open" : "Closed"}
+                    </td> */}
+
+                    <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
+                      {event.status ? (
+                        <button
+                          onClick={() => updateEventStatus(event.id)}
+                          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline"
+                        >
+                          Complete
+                        </button>
+                      ) : (
+                        <span className="text-gray-500">closed</span> // Placeholder for closed status
+                      )}
+                    </td>
+                    <td>
+                      <Link href={`/admin/events/participants/${event.id}`}>
+                        <button>
+                          <UserGroupIcon className="update-icon" />
+                        </button>
+                      </Link>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

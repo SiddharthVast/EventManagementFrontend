@@ -33,7 +33,7 @@ const NavBar = () => {
               About Project
             </Link>
             <Link href="/superadmin" className="nav-link">
-              Colleges
+              Super-Admin
             </Link>
             <a onClick={handleLogout} className="nav-link">
               Logout
@@ -111,11 +111,9 @@ const NavBar = () => {
               About Project
             </Link>
             <Link href="/student/events" className="nav-link">
-              Events
-            </Link>
-            <Link href="/student" className="nav-link">
               Student
             </Link>
+
             <a onClick={handleLogout} className="nav-link">
               Logout
             </a>

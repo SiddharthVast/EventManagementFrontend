@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import useUserStore from "@/store/userStore";
 // import { useUser } from "../context/UserContext";
 import useLoginStore from "@/store/loginStore";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
@@ -68,18 +69,18 @@ const AddUserByAdmin = () => {
   };
 
   return (
-    <div className="main_div">
-      <div className="input_form_div">
-        <h1 className="text-2xl font-semibold text-red-500 mb-6">Add {role}</h1>
+    <div className="main-div">
+      <div className="input-form-div">
+        <button onClick={() => router.push("/admin")} className="xmark-icon">
+          <XMarkIcon className="w-6 h-6" />
+        </button>
+        <h1 className="form-heading">Add {role}</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              First Name
-            </label>
+            <label>First Name</label>
             <input
               type="text"
               {...register("firstName")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter First Name"
             />
             {errors.firstName && (
@@ -87,13 +88,10 @@ const AddUserByAdmin = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Last Name
-            </label>
+            <label>Last Name</label>
             <input
               type="text"
               {...register("lastName")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter Last Name"
             />
             {errors.lastName && (
@@ -101,13 +99,10 @@ const AddUserByAdmin = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Email
-            </label>
+            <label>Email</label>
             <input
               type="email"
               {...register("email")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter Email"
             />
             {errors.email && (
@@ -115,13 +110,10 @@ const AddUserByAdmin = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Password
-            </label>
+            <label>Password</label>
             <input
               type="password"
               {...register("password")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter Password"
             />
             {errors.password && (
@@ -129,13 +121,10 @@ const AddUserByAdmin = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Mobile Number
-            </label>
+            <label>Mobile Number</label>
             <input
               type="text"
               {...register("mobileNumber")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter Mobile Number"
             />
             {errors.mobileNumber && (
@@ -143,14 +132,8 @@ const AddUserByAdmin = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2">
-              Details
-            </label>
-            <textarea
-              {...register("details")}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Enter Details"
-            />
+            <label>Details</label>
+            <textarea {...register("details")} placeholder="Enter Details" />
             {errors.details && (
               <p className="text-red-500 mt-1">{errors.details.message}</p>
             )}

@@ -55,7 +55,7 @@ const RegistrationTable = ({ params: { eventId } }: Props) => {
   if (error) return <div>{error}</div>; // Show error state
 
   return (
-    <div className="overflow-x-auto p-5">
+    <div className="main-div overflow-x-auto p-5">
       <h1 className="text-xl font-bold text-white bg-red-800 p-2 mx-10 rounded-md">
         Result of Event: {event.eventName}
       </h1>{" "}
@@ -72,7 +72,7 @@ const RegistrationTable = ({ params: { eventId } }: Props) => {
             sortedRegistrations.map((registration, index) => (
               <tr
                 key={registration.id}
-                className={index < 3 ? "bg-yellow-100 font-bold" : ""}
+                className={index < 3 ? "bg-green-100 font-bold" : ""}
               >
                 <td>
                   {registration.groupName !== "NA"

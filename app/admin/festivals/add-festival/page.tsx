@@ -100,12 +100,11 @@ const AddFestival = () => {
   return (
     <div className="main-div">
       <div className="input-form-div">
-        <button onClick={() => router.push("/admin")}>
-          <XMarkIcon className="xmark-icon" />
+        <button onClick={() => router.push("/admin")} className="xmark-icon">
+          <XMarkIcon className="w-6 h-6" />
         </button>
 
         <h2 className="form-heading">College Fest Registration</h2>
-        {/* Error and Success Messages */}
         {error && (
           <div className="mb-4 p-4 bg-red-200 text-red-700 border border-red-400 rounded">
             {error}
@@ -164,16 +163,10 @@ const AddFestival = () => {
             )}
           </div>
           <div className="flex justify-end space-x-4">
-            <button
-              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="reset"
-            >
+            <button className=" reset" type="reset">
               Reset
             </button>
-            <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
+            <button className=" submit" type="submit">
               Submit
             </button>
           </div>

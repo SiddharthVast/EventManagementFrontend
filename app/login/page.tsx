@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useLoginStore from "@/store/loginStore";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,7 @@ import * as yup from "yup";
 import Modal from "../modal/modal";
 import axios from "axios";
 import Link from "next/link";
+import Loading from "../loading";
 
 interface FormValues {
   email: string;
@@ -24,6 +25,7 @@ const resetPasswordSchema = yup.object().shape({
 });
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const login = useLoginStore((state) => state.login);
   const fetchUser = useLoginStore((state) => state.fetchUser);
   const router = useRouter();
@@ -48,13 +50,13 @@ const Login = () => {
   const [error, setError] = useState("");
   const [showResetModal, setShowResetModal] = useState(false);
 
+  useEffect(() => {}, [loading]);
   const onSubmitHandler = async (data: FormValues) => {
     try {
-      console.log(data);
-      let res = await login(data);
-      const fetch = await fetchUser();
+      setLoading(true);
+      await login(data);
+      await fetchUser();
       const user = useLoginStore.getState().user;
-
       if (user?.role === "admin") {
         router.push("/admin");
       } else if (user?.role === "superadmin") {
@@ -64,11 +66,13 @@ const Login = () => {
       } else if (user?.role === "judge") {
         router.push("/judge/events");
       } else {
-        router.push("/student");
+        router.push("/student/events");
       }
       reset();
     } catch (err) {
       setError("Invalid username or password");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -103,8 +107,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md -mt-10">
+    <div className="main-div">
+      {loading && <Loading />}
+      <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md -mt-10 mx-auto">
         <h2 className="text-2xl font-bold mb-6 text-left">
           Login to Your Account
         </h2>
@@ -123,6 +128,7 @@ const Login = () => {
               </p>
             )}
           </div>
+
           <div className="mb-6">
             <label className="block text-sm font-medium mb-2">Password</label>
             <input
@@ -135,20 +141,22 @@ const Login = () => {
                 {errors.password.message}
               </p>
             )}
+            <div className="flex justify-end">
+              <Link
+                href="#"
+                onClick={() => setShowResetModal(true)}
+                className="text-blue-500 hover:underline text-sm mt-2 block"
+              >
+                Forgot Password?
+              </Link>
+            </div>
           </div>
-          <div className="flex justify-end">
-            <Link
-              href="#"
-              onClick={() => setShowResetModal(true)}
-              className="text-blue-500 hover:underline "
-            >
-              Forgot Password?
-            </Link>
-          </div>
+
           <div className="flex space-x-4">
             <button
               type="submit"
               className="w-1/2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
+              disabled={loading}
             >
               Submit
             </button>
@@ -166,14 +174,7 @@ const Login = () => {
             href="student/registration"
             className="text-blue-500 hover:underline"
           >
-            Sign up?
-          </Link>
-          <Link
-            href="#"
-            onClick={() => setShowResetModal(true)}
-            className="text-blue-500 hover:underline"
-          >
-            Forgot Password?
+            Don't have account? Register
           </Link>
         </div>
       </div>

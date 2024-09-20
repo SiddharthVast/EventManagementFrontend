@@ -48,10 +48,8 @@ const ShowEvents = () => {
   };
 
   return (
-    <div className="container mx-auto p-6 bg-gray-50 pt-40">
-      <h1 className="text-3xl font-semibold mb-6 text-gray-800">
-        Upcoming Events
-      </h1>
+    <div className="main-div">
+      <h1 className="form-heading">Upcoming Events</h1>
       <div className="border-b-2 border-gray-200 mb-6 relative">
         <div className="absolute left-1/2 transform -translate-x-1/2 -top-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 h-1 w-24 rounded-full"></div>
       </div>
