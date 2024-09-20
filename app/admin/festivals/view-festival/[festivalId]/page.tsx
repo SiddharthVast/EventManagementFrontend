@@ -7,9 +7,8 @@ import useFestivalStore, { FestivalData } from "../../../../../store/festivalSto
 import { useRouter } from "next/navigation";
 import useLoginStore from "@/store/loginStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import Loading from "@/app/loading";
 import { useUser } from "@/app/context/UserContext";
-// import Loading from "@/app/loading";
+import Loading from "@/app/loading";
 
 const schema = yup.object().shape({
   festivalTitle: yup.string().min(3).max(50).required("Festival title is required"),
