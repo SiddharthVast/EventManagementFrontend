@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "./NavBar";
 // import { UserProvider } from "./context/UserContext";
+import { Bounce, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +22,20 @@ export default function RootLayout({
         {/* <UserProvider> */}
         <NavBar />
         <main>{children}</main>
+
         {/* </UserProvider> */}
+        <ToastContainer
+          position="top-right"
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </body>
     </html>
   );

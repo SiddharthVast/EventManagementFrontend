@@ -8,8 +8,11 @@ import useFestivalStore, {
   FestivalData,
 } from "../../../../store/festivalStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import useLoginStore from "@/store/loginStore";
-// import { useUser } from "../../../context/UserContext";
+import { useUser } from "../../../context/UserContext";
+import { toast } from "react-toastify";
+
+const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5MB
+const ACCEPTED_IMAGE_MIME_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 const schema = yup.object().shape({
   festivalTitle: yup.string().required("Festival Title is required"),
@@ -27,6 +30,30 @@ const schema = yup.object().shape({
       }
     ),
   description: yup.string().required("Description is required"),
+  imageUrl: yup
+    .mixed<FileList | string>()
+    .required()
+    .test("fileRequired", "Image file is required", (value) => {
+      if (!value || (value instanceof FileList && value.length === 0))
+        return false;
+      return true;
+    })
+    .test(
+      "fileType",
+      "Only .jpg, .jpeg, and .png formats are supported.",
+      (value) => {
+        if (!value || !(value instanceof FileList)) return false;
+        const files = Array.from(value);
+        return files.every((file) =>
+          ACCEPTED_IMAGE_MIME_TYPES.includes(file.type)
+        );
+      }
+    )
+    .test("fileSize", "Max image size is 5MB.", (value) => {
+      if (!value || !(value instanceof FileList)) return false;
+      const files = Array.from(value);
+      return files.every((file) => file.size <= MAX_FILE_SIZE);
+    }),
 });
 
 const AddFestival = () => {
@@ -35,8 +62,7 @@ const AddFestival = () => {
   }));
   const router = useRouter();
   const addFestival = useFestivalStore((state) => state.addFestival);
-  // const fetchUser = useLoginStore((state) => state.fetchUser);
-
+  const { user } = useUser();
   const {
     register,
     handleSubmit,
@@ -76,16 +102,17 @@ const AddFestival = () => {
 
       await addFestival(data as unknown as FestivalData);
 
-      setSuccess("Festival added successfully!");
+      toast.success("Festival added successfully!");
       setError("");
       reset();
       router.push("/admin");
     } catch (err: unknown) {
       // Type-check the error to ensure it has the properties we expect
       if (err instanceof Error) {
-        if (err.message === "Thhis college already has an active festival.") {
+        if (err.message === "This college already has an active festival.") {
           setError(
-            "Failed to add festival: Thhis college already has an active festival."
+            "Failed to add festival: This college already has an active festival."
+
           );
         } else {
           setError("Failed to add festival: " + err.message);
@@ -110,11 +137,7 @@ const AddFestival = () => {
             {error}
           </div>
         )}
-        {success && (
-          <div className="mb-4 p-4 bg-green-200 text-green-700 border border-green-400 rounded">
-            {success}
-          </div>
-        )}
+
         <form onSubmit={handleSubmit(onSubmitHandler)}>
           <div className="mb-4">
             <label>Title</label>
@@ -156,6 +179,7 @@ const AddFestival = () => {
             <textarea
               {...register("description")}
               placeholder="Enter Description"
+              className="w-full p-2 border shadow-lg  border-gray-300 rounded"
               rows={4}
             ></textarea>
             {errors.description && (

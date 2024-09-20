@@ -10,11 +10,38 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useUser } from "@/app/context/UserContext";
 import Loading from "@/app/loading";
 
+const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5MB
+const ACCEPTED_IMAGE_MIME_TYPES = ["image/jpeg", "image/jpg", "image/png"];
+
 const schema = yup.object().shape({
   festivalTitle: yup.string().min(3).max(50).required("Festival title is required"),
   startDate: yup.string().required("Start date is required"),
   endDate: yup.string().required("End date is required"),
   description: yup.string().required("Description can't be longer than 500 characters"),
+  imageUrl: yup
+    .mixed<FileList | string>()
+    .required()
+    .test("fileRequired", "Image file is required", (value) => {
+      if (!value || (value instanceof FileList && value.length === 0))
+        return false;
+      return true;
+    })
+    .test(
+      "fileType",
+      "Only .jpg, .jpeg, and .png formats are supported.",
+      (value) => {
+        if (!value || !(value instanceof FileList)) return false;
+        const files = Array.from(value);
+        return files.every((file) =>
+          ACCEPTED_IMAGE_MIME_TYPES.includes(file.type)
+        );
+      }
+    )
+    .test("fileSize", "Max image size is 5MB.", (value) => {
+      if (!value || !(value instanceof FileList)) return false;
+      const files = Array.from(value);
+      return files.every((file) => file.size <= MAX_FILE_SIZE);
+    }),
 });
 
 interface Props {

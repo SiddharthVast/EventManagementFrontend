@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import useEventStore, { EventData } from "../../../../../store/eventStore";
 import { XMarkIcon } from "@heroicons/react/16/solid";
+import { toast } from "react-toastify";
 
 const eventTypes = [
   "Cultural",
@@ -70,10 +71,8 @@ interface Props {
   };
 }
 const AddEvent = ({ params: { festivalId } }: Props) => {
-  // const { user } = useUser();
   const router = useRouter();
   const addEvent = useEventStore((state) => state.addEvent);
-  // const fetchUser = useLoginStore((state) => state.fetchUser);
   const uploadImageToCloudinary = useEventStore(
     (state) => state.uploadImageToCloudinary
   );
@@ -110,13 +109,11 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
       }
       formData.festivalId = +festivalId;
       addEvent({ ...formData });
-      setSuccess("Event added successfully!");
-      setError("");
+      toast.success("Event added successfully!");
       reset();
       router.push(`/admin/events/view-event/${festivalId}`);
     } catch (err) {
       setError("Failed to add event");
-      setSuccess("");
     }
   };
 
