@@ -157,7 +157,8 @@ const AddCollege = ({ params: { collegeId } }: Props) => {
           </div>
         </div>
       </div>
-      );
+    </div>
+  );
 };
 
-      export default AddCollege;
+export default AddCollege;

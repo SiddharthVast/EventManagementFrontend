@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import useUserStore from "@/store/userStore";
 import useCollegeStore from "@/store/collegeStore";
 import { toast } from "react-toastify";
-// Define validation schema
+
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
   lastName: yup.string().required("Last Name is required"),
@@ -18,7 +18,7 @@ const schema = yup.object().shape({
   collegeId: yup
     .number()
     .required("College is required")
-    .typeError("College must be a number"), // Update to number
+    .typeError("College must be a number"),
 });
 
 interface FormData {
@@ -28,7 +28,7 @@ interface FormData {
   password: string;
   mobileNumber: string;
   details?: string;
-  collegeId: number; // Update to number
+  collegeId: number;
 }
 
 const AddStudent = () => {
@@ -48,12 +48,10 @@ const AddStudent = () => {
   });
 
   useEffect(() => {
-    // Fetch colleges data
     getAllColleges();
   }, []);
   const onSubmit = async (data: FormData) => {
     try {
-      // Append the role as "student" and include collegeId in the user data
       const userData = {
         ...data,
         role: "student",

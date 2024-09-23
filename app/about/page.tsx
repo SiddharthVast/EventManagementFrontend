@@ -1,5 +1,5 @@
 import Image from "next/image";
-import SummerPartyImage from "../../public/SummerPartyImage.jpg"; // Make sure to save your images in the public folder
+import SummerPartyImage from "../../public/SummerPartyImage.jpg";
 import RevelationImage from "../../public/RevelationImage.jpg";
 
 const About = () => {

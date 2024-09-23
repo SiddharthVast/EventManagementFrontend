@@ -73,34 +73,22 @@ const useFestivalStore = create<FestivalStoreState>((set) => ({
     try {
       const res = await http.get(`/festivals/getByCollege/${id}`);
       set((state: FestivalStoreState) => ({
-        festivals: res.data, // Assuming res.data is an array of festivals
+        festivals: res.data,
       }));
-      console.log("result in store:", res);
     } catch (error) {
       console.error("Error fetching festivals:", error);
     }
   },
 
-  // addFestival: async (data: FestivalData) => {
-  //   const res = await http.post("/festivals", data, {
-  //     headers: { authorization: sessionStorage.token },
-  //   });
-  //   set((state: FestivalStoreState) => ({
-  //     festivals: [...state.festivals, res.data],
-  //   }));
-  //   return res.data;
-  // },
   addFestival: async (data: FestivalData) => {
     try {
       const res = await http.post("/festivals", data, {
         headers: { authorization: sessionStorage.token },
       });
-      return res.data; // Return the successful response
+      return res.data;
     } catch (error) {
-      // Handle HTTP errors
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 409) {
-          // Conflict error
           throw new Error("The college already has an active festival.");
         } else {
           throw new Error(
@@ -137,7 +125,6 @@ const useFestivalStore = create<FestivalStoreState>((set) => ({
 
   updateFestStatus: async (id: number) => {
     try {
-      // Make the HTTP PATCH request to update the festival status
       const res = await http.patch(
         `/festivals/festcomplete/${id}`,
         {},
@@ -145,10 +132,7 @@ const useFestivalStore = create<FestivalStoreState>((set) => ({
           headers: { authorization: sessionStorage.token },
         }
       );
-
-      // Check if the request was successful
       if (res.status === 200) {
-        // Update the state with the new festival data
         set((state) => ({
           festivals: state.festivals.map((f) =>
             f.id === id ? { ...f, ...res.data } : f
@@ -162,7 +146,6 @@ const useFestivalStore = create<FestivalStoreState>((set) => ({
         );
       }
     } catch (error) {
-      // Handle errors if the request fails
       console.error("Error updating festival status:", error);
     }
   },

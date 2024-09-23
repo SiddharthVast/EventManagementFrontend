@@ -5,9 +5,8 @@ import usePointToJudgeStore from "@/store/pointsToJudgeStore";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useRouter } from "next/navigation"; // Ensure you import from 'next/router', not 'next/navigation'
+import { useRouter } from "next/navigation";
 
-// Define the schema with yup
 const schema = yup.object().shape({
   totalScores: yup
     .array()
@@ -32,7 +31,6 @@ interface Props {
 
 const JudgePanel = ({ params: { eventId } }: Props) => {
   const router = useRouter();
-  // const { id, eventName } = router.query;
   const {
     handleSubmit,
     formState: { errors },
@@ -86,7 +84,6 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
     return scores[studentId]?.reduce((total, score) => total + score, 0) || 0;
   };
 
-  // Handle form submission
   const onSubmit = async () => {
     try {
       const totalScores: number[] = [];
@@ -98,13 +95,11 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
         studentIds.push(student.id);
       });
 
-      // Prepare the data in the expected format for the backend
       const regData = studentIds.map((id, index) => ({
         id,
         totalScores: totalScores[index],
       }));
 
-      // Send the data to updateUserEvntReg in the store
       await updateUserEvntReg({ regData });
 
       // Clear the form after successful submission

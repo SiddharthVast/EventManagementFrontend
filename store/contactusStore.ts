@@ -1,13 +1,10 @@
 import axios from "axios";
 import { create } from "zustand";
-
-export interface ContactUsStoreState{
+export interface ContactUsStoreState {
     contact: Contact;
-    handleContactSubmission: (data:Contact) => void;
+    handleContactSubmission: (data: Contact) => void;
 }
-
-export interface Contact{
-    // id: number;
+export interface Contact {
     name: string;
     email: string;
     mobileNumber: string;
@@ -17,7 +14,6 @@ export interface Contact{
 const http = axios.create({ baseURL: "http://localhost:3000" });
 const useContactUsStore = create<ContactUsStoreState>((set) => ({
     contact: {
-        // id?: 0,
         name: "",
         email: "",
         mobileNumber: "",
@@ -25,7 +21,7 @@ const useContactUsStore = create<ContactUsStoreState>((set) => ({
     },
     handleContactSubmission: async (data: Contact) => {
         const res = await http.post("/contactus", data, {
-            headers:{Authorization:sessionStorage.token},
+            headers: { Authorization: sessionStorage.token },
         })
     }
 }))

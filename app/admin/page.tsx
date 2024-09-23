@@ -42,7 +42,7 @@ const Admin = () => {
           </li>
           <li className="mb-2">
             <Link
-              href="/program-type-report"
+              href="/admin/event-report"
               className="block w-full bg-red-700 text-white text-lg py-5 px-4"
             >
               Event Report
@@ -50,7 +50,7 @@ const Admin = () => {
           </li>
           <li className="mb-2">
             <Link
-              href="/program-report"
+              href="/admin"
               className="block w-full bg-red-700 text-white text-lg py-5 px-4"
             >
               My Account

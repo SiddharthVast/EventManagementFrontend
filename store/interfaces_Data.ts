@@ -18,7 +18,6 @@ interface UserImpData {
   mobileNumber: string;
   courseName?: string;
   role: string;
-  // Add other user properties if needed
 }
 interface User {
   id: number;
@@ -49,8 +48,6 @@ export interface Festival {
   festivalTitle: string;
   startDate: string;
   endDate: string;
-  // photo:
-  // description: string;
 }
 
 export interface FestivalData {
@@ -58,7 +55,6 @@ export interface FestivalData {
   festivalTitle: string;
   startDate: string;
   endDate: string;
-  // description: string;
   collegeId?: number;
 }
 
@@ -91,8 +87,6 @@ export interface PointsToJudgeData {
   point: string;
   event: Event;
 }
-
-
 export interface Event {
   id: number;
   eventType: string;
@@ -103,8 +97,6 @@ export interface Event {
   endDateTime: string;
   festivalId: number;
   status: string;
-  // pointtojudge: PointsToJudge[];
-  // usereventregs: User_event_reg[];
 }
 export interface EventData {
   id?: number;
@@ -115,6 +107,4 @@ export interface EventData {
   startDateTime: string;
   endDateTime: string;
   festivalId: number;
-  // pointtojudge: PointsToJudge[];
-  // usereventregs: User_event_reg[];
 }

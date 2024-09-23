@@ -4,8 +4,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Scrollbar, A11y, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-
-// Import your images
 import img11 from "../public/img11.jpg";
 import danceimg2 from "../public/danceimg2.jpg";
 import danceimg3 from "../public/danceimg3.jpg";

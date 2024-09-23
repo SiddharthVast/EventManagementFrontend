@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import NavBar from "./NavBar";
-// import { UserProvider } from "./context/UserContext";
 import { Bounce, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -19,11 +18,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <UserProvider> */}
         <NavBar />
         <main>{children}</main>
-
-        {/* </UserProvider> */}
         <ToastContainer
           position="top-right"
           autoClose={4000}

@@ -4,10 +4,8 @@ import axios from "axios";
 export interface PointsToJudgeStoreState {
   pointsToJudge: PointToJudge[];
   pointToJudge: PointToJudge;
-  // getAllPoints: () => void;
   getPointsById: (id: string) => void;
   deletePoint: (id: number) => void;
-  // updatePoint: (data: PointToJudgeData) => void;
   addPoints: (points: PointToJudgeData[]) => Promise<void>;
 }
 export interface PointToJudge {
@@ -44,10 +42,7 @@ const usePointToJudgeStore = create<PointsToJudgeStoreState>((set) => ({
       );
     }
   },
-  // getAllPoints: async () => {
-  //   const res = await http.get("/pointstojudge");
-  //   set(() => ({ pointsToJudge: res.data }));
-  // },
+
   deletePoint: async (id: number) => {
     const res = await http.delete(`/pointstojudge/${id}`);
     if (res.status === 200) {

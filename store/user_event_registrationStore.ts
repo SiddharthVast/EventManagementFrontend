@@ -17,7 +17,6 @@ export interface UserEventRegistrationStoreState {
   }) => void;
   getRegByEidRole: (id: number, userRole: string) => void;
 
-  //update scores
   updateUserEvntReg: (payload: {
     regData: { id: number; totalScores: number }[];
   }) => Promise<void>;
@@ -96,7 +95,6 @@ const useUserEventRegistartionStore = create<UserEventRegistrationStoreState>(
       regData: { id: number; totalScores: number }[];
     }) => {
       try {
-        // Send the regData array to the backend
         const res = await http.patch(
           `/user-event-registration/update-multiple/`,
           {

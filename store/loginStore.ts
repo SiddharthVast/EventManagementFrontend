@@ -20,7 +20,6 @@ const useLoginStore = create<LoginState>((set, get) => ({
   token: "",
   user: null,
 
-  // Fetch user on store initialization
   fetchUser: async () => {
     const token = sessionStorage.getItem("token");
     if (!token) return set({ user: null });
@@ -48,11 +47,8 @@ const useLoginStore = create<LoginState>((set, get) => ({
       const accessToken = response.data["access_token"];
       sessionStorage.setItem("token", accessToken);
       set({ token: accessToken });
-
-      // Fetch user profile after login
       await get().fetchUser();
     } catch (error) {
-      console.error("Login failed:", error);
       throw new Error("Login failed");
     }
   },

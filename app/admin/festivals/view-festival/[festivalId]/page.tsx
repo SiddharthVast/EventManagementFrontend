@@ -7,7 +7,6 @@ import useFestivalStore, { FestivalData } from "../../../../../store/festivalSto
 import { useRouter } from "next/navigation";
 import useLoginStore from "@/store/loginStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useUser } from "@/app/context/UserContext";
 import Loading from "@/app/loading";
 
 const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5MB
@@ -58,7 +57,6 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
   const getFestival = useFestivalStore((state) => state.getFestivalById);
   const festival = useFestivalStore((state) => state.festival);
   const updateFestival = useFestivalStore((state) => state.updateFestival);
-  // const { user } = useUser();
 
   const { register, handleSubmit, formState: { errors }, setValue, reset } = useForm<FestivalData>({
     resolver: yupResolver(schema),

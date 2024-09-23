@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -7,12 +7,9 @@ import { useRouter } from "next/navigation";
 import useUserStore from "@/store/userStore";
 import useEventStore from "@/store/eventStore";
 import useUserEventRegistartionStore from "@/store/user_event_registrationStore";
-// import { useUser } from "../../../../../context/UserContext";
 import useLoginStore from "@/store/loginStore";
-
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
-// Define the schema for form validation
 const schema = yup.object().shape({
   userId: yup.number().required("Coordinator is required"),
 });
@@ -26,7 +23,6 @@ interface Props {
 
 const AssignCoordinatorForm = ({ params: { eventId, role } }: Props) => {
   const router = useRouter();
-  // const { user } = useUser();
   const { user } = useLoginStore((state) => ({
     user: state.user,
   }));
