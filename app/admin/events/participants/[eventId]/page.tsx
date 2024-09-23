@@ -21,7 +21,7 @@ const Participants = ({ params: { eventId } }: Props) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      setError(null); // Reset error state before fetching
+      setError(null);
       try {
         await getRegByEidRole(+eventId, "student");
       } catch (err) {
@@ -39,7 +39,7 @@ const Participants = ({ params: { eventId } }: Props) => {
   }
 
   if (error) {
-    return <div>{error}</div>; // Display error message
+    return <div>{error}</div>;
   }
 
   return (

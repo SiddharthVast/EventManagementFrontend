@@ -5,7 +5,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useRouter, useSearchParams } from "next/navigation";
 import useUserStore, { UserData } from "@/store/userStore";
-// import { useUser } from "../context/UserContext";
 import useLoginStore from "@/store/loginStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-toastify";
@@ -30,11 +29,9 @@ const AddUserByAdmin = () => {
   const { user } = useLoginStore((state) => ({
     user: state.user,
   }));
-  // const { user, logout } = useUser();
   const router = useRouter();
   const searchParams = useSearchParams();
   const role = searchParams.get("role");
-  const { user } = useUser();
   const { addUser } = useUserStore();
 
   const {

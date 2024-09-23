@@ -50,7 +50,6 @@ const Login = () => {
   const [error, setError] = useState("");
   const [showResetModal, setShowResetModal] = useState(false);
 
-
   useEffect(() => {
   }, [loading]);
   const onSubmitHandler = async (data: FormValues) => {
@@ -73,7 +72,7 @@ const Login = () => {
       reset();
     } catch (err) {
       setError("Invalid username or password");
-    } 
+    }
     finally {
       setLoading(false);
     }
@@ -111,9 +110,9 @@ const Login = () => {
   };
 
   return (
-    <div className="main-div">
+    <div className="main-div h-screen flex items-center justify-center">
       {loading && <Loading />}
-      <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md -mt-10 mx-auto">
+      <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md -mt-10">
         <h2 className="text-2xl font-bold mb-6 text-left">
           Login to Your Account
         </h2>
@@ -142,10 +141,7 @@ const Login = () => {
               <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
             )}
             <div className="flex justify-end">
-<<<<<<< HEAD
-=======
 
->>>>>>> 7f3f6f2818b64d036cb98b31c705c9e95cc4ef96
               <Link
                 href="#"
                 onClick={() => setShowResetModal(true)}
@@ -155,12 +151,6 @@ const Login = () => {
               </Link>
             </div>
           </div>
-
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 7f3f6f2818b64d036cb98b31c705c9e95cc4ef96
           <div className="flex space-x-4">
             <button
               type="submit"
@@ -179,15 +169,8 @@ const Login = () => {
           </div>
         </form>
         <div className="flex flex-col items-center mt-6 space-y-2">
-<<<<<<< HEAD
-          <Link
-            href="student/registration"
-            className="text-blue-500 hover:underline"
-          >
-=======
 
           <Link href="student/registration" className="text-blue-500 hover:underline">
->>>>>>> 7f3f6f2818b64d036cb98b31c705c9e95cc4ef96
             Don't have account? Register
           </Link>
 

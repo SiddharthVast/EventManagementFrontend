@@ -23,7 +23,7 @@ interface Props {
 }
 
 const ShowEvents = ({ params: { festivalId } }: Props) => {
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
@@ -64,15 +64,15 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
   );
 
   const handleDeleteClick = (event: Event) => {
-    setSelectedEvent(event); // Set the selected event
-    setIsModalOpen(true); // Open the modal
+    setSelectedEvent(event);
+    setIsModalOpen(true);
   };
 
   const confirmDelete = async () => {
     if (selectedEvent) {
       await deleteEvent(selectedEvent.id);
       setIsModalOpen(false);
-      toast.success("Event deleted successfully!"); // Show success toast
+      toast.success("Event deleted successfully!");
     }
   };
 
@@ -94,7 +94,6 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                   <th>Venue</th>
                   <th>Start Date</th>
                   <th>End Date</th>
-                  {/* <th>Status</th> */}
                   <th>Coordinator List</th>
                   <th>Coordinator</th>
                   <th>Judge</th>

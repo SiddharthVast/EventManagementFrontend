@@ -72,20 +72,7 @@ const useCollegeStore = create<CollegeStoreState>((set) => ({
     } catch (error) {
       console.error("Error updating college:", error);
     }
-    // const response = await fetch(`http://localhost:3000/colleges/${id}`, {
-    //   method: "PATCH",
-    //   headers: {
-    //     " Content-Type": "application/json",
-    //     Authorization: sessionStorage.token || "",
-    //   },
-    //   body: JSON.stringify(data),
-    // });
-    // if (response.ok) {
-    //   const updatedCollege = await response.json();
-    //   set((state) => ({
-    //     colleges: state.colleges.map((m) => (m.id === id ? updatedCollege : m))
-    //   }));
-    // }
+
   },
 }));
 

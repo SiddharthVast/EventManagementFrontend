@@ -10,6 +10,7 @@ import useFestivalStore, {
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { useUser } from "../../../context/UserContext";
 import { toast } from "react-toastify";
+import useLoginStore from "@/store/loginStore";
 
 const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5MB
 const ACCEPTED_IMAGE_MIME_TYPES = ["image/jpeg", "image/jpg", "image/png"];
@@ -62,7 +63,7 @@ const AddFestival = () => {
   }));
   const router = useRouter();
   const addFestival = useFestivalStore((state) => state.addFestival);
-  const { user } = useUser();
+  // const { user } = useUser();
   const {
     register,
     handleSubmit,

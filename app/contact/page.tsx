@@ -36,7 +36,7 @@ const ContactUsPage = () => {
   const [loader, setLoader] = useState(false);
 
   const onSubmitHandler = async (data: Contact) => {
-    setLoader(true); // Start loader
+    setLoader(true);
     try {
       await contactUs(data);
       setSuccess("Contact Us Form Submitted Successfully!");
@@ -49,7 +49,7 @@ const ContactUsPage = () => {
       setSuccess("");
       alert("Form Submission Failed!");
     } finally {
-      setLoader(false); // Stop loader
+      setLoader(false);
     }
   };
 

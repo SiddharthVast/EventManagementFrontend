@@ -14,7 +14,7 @@ const AddEvent = () => {
   }, []);
   useEffect(() => {
     if (user) {
-      const collegeId = user?.college?.id ?? 0; // or any default number that makes sense
+      const collegeId = user?.college?.id ?? 0;
       getByCollege(collegeId);
 
       console.log("User is not null:", collegeId);

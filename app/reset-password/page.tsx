@@ -1,5 +1,4 @@
 "use client";
-
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -27,7 +26,7 @@ const schema = yup.object().shape({
 const ResetPasswordPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const token = searchParams.get("token"); // Get the token from the query params
+  const token = searchParams.get("token");
 
   const {
     register,

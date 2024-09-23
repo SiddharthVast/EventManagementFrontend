@@ -63,14 +63,11 @@ interface Props {
   };
 }
 const UpdateEvent = ({ params: { festivalId, eventId } }: Props) => {
-  // const { user } = useLoginStore((state) => ({
-  //   user: state.user,
-  // }));
+
   const router = useRouter();
   const getEventById = useEventStore((state) => state.getEventById);
   const updateEvent = useEventStore((state) => state.updateEvent);
   const event = useEventStore((state) => state.event);
-  // const fetchUser = useLoginStore((state) => state.fetchUser);
   const { getFestivalById } = useFestivalStore();
   const uploadImageToCloudinary = useEventStore(
     (state) => state.uploadImageToCloudinary
@@ -120,12 +117,6 @@ const UpdateEvent = ({ params: { festivalId, eventId } }: Props) => {
       }
     }
   }, [eventId, getEventById, reset, setValue, event]);
-
-  // useEffect(() => {
-  //   fetchUser();
-  // }, []);
-  const [success, setSuccess] = useState("");
-  const [error, setError] = useState("");
 
   const onSubmitHandler: SubmitHandler<EventData> = async (formData) => {
     try {
@@ -268,7 +259,7 @@ const UpdateEvent = ({ params: { festivalId, eventId } }: Props) => {
         </div>
       </div>
     </div>
-    // </div>
+
   );
 };
 

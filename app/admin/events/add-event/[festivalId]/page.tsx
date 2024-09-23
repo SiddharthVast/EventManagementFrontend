@@ -36,7 +36,7 @@ const schema = yup.object().shape({
       "End date and time must be later than start date and time.",
       function (value) {
         const { startDateTime } = this.parent;
-        if (!startDateTime || !value) return true; // Skip validation if either date is missing
+        if (!startDateTime || !value) return true;
         return new Date(startDateTime) < new Date(value);
       }
     ),
@@ -88,7 +88,6 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
     reset();
   }, [change]);
 
-  const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
   const onSubmitHandler: SubmitHandler<EventData> = async (formData) => {
