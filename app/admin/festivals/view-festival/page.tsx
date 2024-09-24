@@ -57,7 +57,6 @@ const ViewFestival = () => {
   return (
     <div className="main-div">
       {loading && <Loading />}
-      {loading && <Loading />}
       {!loading && (
         <>
           <div className="show-form-div">
