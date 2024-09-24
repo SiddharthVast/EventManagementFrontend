@@ -8,7 +8,6 @@ import useFestivalStore, {
   FestivalData,
 } from "../../../../store/festivalStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useUser } from "../../../context/UserContext";
 import { toast } from "react-toastify";
 import useLoginStore from "@/store/loginStore";
 
@@ -26,7 +25,7 @@ const schema = yup.object().shape({
       "End date and time must be later than start date and time.",
       function (value) {
         const { startDate } = this.parent;
-        if (!startDate || !value) return true; // Skip validation if either date is missing
+        if (!startDate || !value) return true; 
         return new Date(startDate) < new Date(value);
       }
     ),
@@ -63,7 +62,6 @@ const AddFestival = () => {
   }));
   const router = useRouter();
   const addFestival = useFestivalStore((state) => state.addFestival);
-  // const { user } = useUser();
   const {
     register,
     handleSubmit,

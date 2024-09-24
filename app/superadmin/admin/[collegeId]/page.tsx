@@ -63,8 +63,8 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-8">
-      <div className="relative max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
+    <div className="main-div">
+      <div className="input-form-div">
         <button
           className="absolute top-4 right-4 text-gray-500 hover:text-red-500"
           onClick={() => router.back()}

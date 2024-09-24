@@ -61,13 +61,16 @@ const AddCollege = ({ params: { collegeId } }: Props) => {
     try {
       if (collegeId === "new") {
         await addCollege(data);
+         router.push("/superadmin");
         toast.success("College added successfully!");
         reset();
       } else {
         await updateCollege(+collegeId, data);
+         router.push("/superadmin/college");
         toast.success("College updated successfully!");
+       
       }
-      router.push("/superadmin");
+      
     } catch (err) {
       toast.error("Error adding/updating college. Please try again.");
       setError("Error adding/updating college");
@@ -76,10 +79,9 @@ const AddCollege = ({ params: { collegeId } }: Props) => {
 
   return (
     <div className="main-div">
-      <div className="input-form-div">
-        <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-8 relative">
+      <div className="input-form-div">     
           <button
-            onClick={() => router.push("/superadmin")}
+            onClick={() => router.push("/superadmin/college")}
             className="xmark-icon"
           >
             <XMarkIcon className="w-6 h-6" />
@@ -157,7 +159,6 @@ const AddCollege = ({ params: { collegeId } }: Props) => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

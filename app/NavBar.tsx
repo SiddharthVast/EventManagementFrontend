@@ -46,9 +46,9 @@ const NavBar = () => {
             <Link href="/about" className="nav-link">
               About Project
             </Link>
-            <Link href="/admin/events/view-event" className="nav-link">
+            {/* <Link href="/admin/events/view-event" className="nav-link">
               Events
-            </Link>
+            </Link> */}
             <Link href="/admin" className="nav-link">
               Administration
             </Link>
@@ -125,9 +125,9 @@ const NavBar = () => {
             <Link href="/about" className="nav-link">
               About Project
             </Link>
-            <Link href="/events" className="nav-link">
+            {/* <Link href="/events" className="nav-link">
               Events
-            </Link>
+            </Link> */}
             <Link href="/student/registration" className="nav-link">
               Student Registration
             </Link>

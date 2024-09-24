@@ -12,9 +12,11 @@ import {
 } from "@heroicons/react/16/solid";
 import useUserEventRegistrationStore from "@/store/user_event_registrationStore";
 import Image from "next/image";
-import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { TrashIcon, BackwardIcon } from "@heroicons/react/24/solid";
 import Loading from "@/app/loading";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+
 
 interface Props {
   params: {
@@ -40,6 +42,7 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
     getAllUsers: state.getAllUsers,
   }));
 
+  const router = useRouter();
   const { registrations, getAllRegistarations } = useUserEventRegistrationStore(
     (state) => ({
       registrations: state.registrations,
@@ -77,12 +80,18 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
   };
 
   return (
-    <div className="main-div">
+    <div className="main-div relative">
       {loading ? (
         <Loading />
       ) : (
         <div className="show-form-div">
-          <h1 className="header-content">Events</h1>
+          <button
+            onClick={() => router.push("/admin/festivals/view-festival")}
+            className="absolute top-4 left-4"
+          >
+            <BackwardIcon className="w-6 h-6" />
+          </button>
+          <h1 className="form-heading">Events</h1>
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white">
               <thead>
@@ -143,10 +152,7 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                         dateStyle: "medium",
                         timeStyle: "short",
                       })}
-                    </td>
-                    {/* <td className="py-2 px-2 border-b text-center border-gray-200 text-sm">
-                      {event.status ? "Open" : "Closed"}
-                    </td> */}
+                    </td>              
                     <td className="py-2 px-2 border-b border-gray-200 text-sm text-center">
                       {registrations
                         .filter(
@@ -190,13 +196,24 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                     <td>
                       <div className="flex space-x-2 justify-center">
                         <Link
-                          href={`/admin/pointsToJudge/${event.id
-                            }?name=${encodeURIComponent(event.eventName)}`}
+                          href={`/admin/pointsToJudge/${
+                            event.id
+                          }?name=${encodeURIComponent(event.eventName)}`}
                           className="link-button"
                         >
                           <div className="h-8 w-8 text-yellow-500">
-                            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-full h-full">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <svg
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              className="w-full h-full"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
                             </svg>
                           </div>
                         </Link>
@@ -226,10 +243,6 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                         </button>
                       </Link>
                     </td>
-                    {/* <td className="py-2 px-2 border-b text-center border-gray-200 text-sm">
-                      {event.status ? "Open" : "Closed"}
-                    </td> */}
-
                     <td className="py-2 px-4 border-b border-gray-200 text-sm text-center">
                       {event.status ? (
                         <button
@@ -239,7 +252,7 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                           Complete
                         </button>
                       ) : (
-                        <span className="text-gray-500">closed</span> // Placeholder for closed status
+                        <span className="text-gray-500">closed</span> 
                       )}
                     </td>
                     <td>
@@ -255,37 +268,34 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
             </table>
           </div>
         </div>
-      )
-      }
+      )}
 
-      {
-        isModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-              <h2 className="text-lg font-bold mb-4">Confirm Delete</h2>
-              <p>
-                Are you sure you want to delete the event "
-                {selectedEvent?.eventName}"?
-              </p>
-              <div className="flex justify-end mt-4">
-                <button
-                  onClick={confirmDelete}
-                  className="bg-red-500 text-white py-2 px-4 rounded mr-2"
-                >
-                  Confirm
-                </button>
-                <button
-                  onClick={() => setIsModalOpen(false)}
-                  className="bg-gray-500 text-white py-2 px-4 rounded"
-                >
-                  Cancel
-                </button>
-              </div>
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+            <h2 className="text-lg font-bold mb-4">Confirm Delete</h2>
+            <p>
+              Are you sure you want to delete the event "
+              {selectedEvent?.eventName}"?
+            </p>
+            <div className="flex justify-end mt-4">
+              <button
+                onClick={confirmDelete}
+                className="bg-red-500 text-white py-2 px-4 rounded mr-2"
+              >
+                Confirm
+              </button>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="bg-gray-500 text-white py-2 px-4 rounded"
+              >
+                Cancel
+              </button>
             </div>
           </div>
-        )
-      }
-    </div >
+        </div>
+      )}
+    </div>
   );
 };
 

@@ -61,7 +61,7 @@ const ViewFestival = () => {
       {!loading && (
         <>
           <div className="show-form-div">
-            <h3 className="text-2xl font-semibold text-red-500 mb-6 text-left">College Fest</h3>
+            <h3 className="form-heading">College Fest</h3>
             <table className="min-w-full bg-white">
               <thead>
                 <tr>

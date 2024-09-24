@@ -6,9 +6,9 @@ import MusicConnection from "../../public/AdminMusicNightImage.jpg";
 
 const Coordinator = () => {
   return (
-    <div className="main-div flex">
+    <div className="flex pt-32">
       <div className="w-3/4 bg-white p-4">
-        <h1 className="text-xl font-bold mb-6">
+        <h1 className="text-xl font-bold mb-6 text-left">
           Welcome to Event Management System
         </h1>
         <ul>
