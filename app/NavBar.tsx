@@ -89,7 +89,7 @@ const NavBar = () => {
               About Project
             </Link>
             <Link href="/judge/events" className="nav-link">
-              Events
+              Judge
             </Link>
             <a onClick={handleLogout} className="nav-link">
               Logout

@@ -21,6 +21,7 @@ const useLoginStore = create<LoginState>((set, get) => ({
   user: null,
 
   fetchUser: async () => {
+    if (typeof window === "undefined") return;
     const token = sessionStorage.getItem("token");
     if (!token) return set({ user: null });
 

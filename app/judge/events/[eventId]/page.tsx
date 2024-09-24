@@ -31,11 +31,7 @@ interface Props {
 
 const JudgePanel = ({ params: { eventId } }: Props) => {
   const router = useRouter();
-  const {
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<FormData>({
+  const { handleSubmit, reset } = useForm<FormData>({
     resolver: yupResolver(schema),
     defaultValues: {
       totalScores: [],
@@ -84,6 +80,7 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
     return scores[studentId]?.reduce((total, score) => total + score, 0) || 0;
   };
 
+
   const onSubmit = async () => {
     try {
       const totalScores: number[] = [];
@@ -98,11 +95,11 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
       const regData = studentIds.map((id, index) => ({
         id,
         totalScores: totalScores[index],
+        eventId: +eventId,
       }));
 
       await updateUserEvntReg({ regData });
 
-      // Clear the form after successful submission
       reset({
         totalScores: [],
         studentIds: [],
@@ -116,13 +113,12 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
 
   return (
     <div className="main-div p-4">
-      <h1 className="form-heading">Event:{students[0]?.event.eventName}</h1>
+      <h1 className="form-heading">Event: {students[0]?.event.eventName}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <table className="min-w-full bg-white">
           <thead>
             <tr>
               <th className="px-4 py-2 border">Participants</th>
-              <th className="px-4 py-2 border">Topic Name</th>
               {points.map((point, index) => (
                 <th key={index} className="px-4 py-2 border">
                   {point.point}
@@ -135,14 +131,9 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
             {students.map((student, index) => (
               <tr key={index}>
                 <td className="py-2 px-4 border-b bg-red-100">
-                  {student.groupName !== "NA"
-                    ? student.groupName + " " + "Group"
-                    : `${student.user.firstName} ${student.user.lastName}`}
+                  {`${student.user.firstName} ${student.user.lastName}`}
                 </td>
 
-                <td className="px-4 py-2 border text-center bg-red-50">
-                  {student.topic}
-                </td>
                 {points.map((_, pointIndex) => (
                   <td key={pointIndex} className="px-4 py-2 border text-center">
                     <input
@@ -166,13 +157,16 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
             ))}
           </tbody>
         </table>
+
+        <div className="flex justify-end space-x-4 pt-4">
+          <button type="submit" className="submit">
+            Submit
+          </button>
+
+        </div>
       </form>
-      <div className="flex justify-end space-x-4 pt-4">
-        <button type="submit" className="submit">
-          Submit
-        </button>
-      </div>
     </div>
+
   );
 };
 

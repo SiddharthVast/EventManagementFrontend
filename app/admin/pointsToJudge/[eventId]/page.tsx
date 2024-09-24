@@ -42,7 +42,7 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
 
   const { addPoints } = usePointToJudgeStore();
   const pointsToJudge = usePointToJudgeStore((state) => state.pointsToJudge);
-  const pointToJudge = usePointToJudgeStore((state) => state.pointToJudge);
+  // const pointToJudge = usePointToJudgeStore((state) => state.pointToJudge);
   const getPointsById = usePointToJudgeStore((state) => state.getPointsById);
   const deletePointToJudge = usePointToJudgeStore((state) => state.deletePoint);
   const { event, getEventById } = useEventStore((state) => ({
@@ -106,105 +106,102 @@ const AddPointsForm = ({ params: { eventId } }: Props) => {
   };
 
   return (
+
     <div className="main-div">
       <div className="input-form-div ">
-        <div className="main-div">
-          <div className="input-form-div ">
+        <button
+          type="button"
+          onClick={() =>
+            router.push(`/admin/events/view-event/${event.festival.id}`)
+          }
+          className="xmark-icon"
+        >
+          <XMarkIcon className="h-6 w-6" />
+        </button>
+        <div className="text-center mb-6">
+          <h1 className="form-heading">{eventName}</h1>
+        </div>
+        <h2 className="text-xl font-semibold text-red-500 mb-6">Add Points</h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {fields.map((field, index) => (
+            <div key={field.id} className="mb-4">
+              <label>
+                Skill Set {index + 1}
+              </label>
+              <input
+                type="text"
+                {...register(`points.${index}.point` as const)}
+                placeholder="Enter Point to Judge"
+              />
+              {errors.points?.[index]?.point && (
+                <p className="text-red-500 mt-1">
+                  {errors.points[index].point?.message}
+                </p>
+              )}
+              <button
+                type="button"
+                className="text-red-500 mt-2"
+                onClick={() => remove(index)}
+              >
+                Remove Point
+              </button>
+            </div>
+          ))}
+
+          <div className="flex justify-between mb-4">
             <button
               type="button"
-              onClick={() =>
-                router.push(`/admin/events/view-event/${event.festival.id}`)
-              }
-              className="xmark-icon"
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              onClick={() => append({ point: "" })}
+              disabled={fields.length >= 5}
             >
-              <XMarkIcon className="h-6 w-6" />
-              <XMarkIcon className="h-6 w-6" />
+              Add Another Point
             </button>
-            <div className="text-center mb-6">
-              <h1 className="form-heading">{eventName}</h1>
-            </div>
-            <h2 className="text-xl font-semibold text-red-500 mb-6">Add Points</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              {fields.map((field, index) => (
-                <div key={field.id} className="mb-4">
-                  <label>
-                    Skill Set {index + 1}
-                  </label>
-                  <input
-                    type="text"
-                    {...register(`points.${index}.point` as const)}
-                    placeholder="Enter Point to Judge"
-                  />
-                  {errors.points?.[index]?.point && (
-                    <p className="text-red-500 mt-1">
-                      {errors.points[index].point?.message}
-                    </p>
-                  )}
-                  <button
-                    type="button"
-                    className="text-red-500 mt-2"
-                    onClick={() => remove(index)}
-                  >
-                    Remove Point
-                  </button>
-                </div>
-              ))}
-
-              <div className="flex justify-between mb-4">
-                <button
-                  type="button"
-                  className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  onClick={() => append({ point: "" })}
-                  disabled={fields.length >= 5}
-                >
-                  Add Another Point
-                </button>
-              </div>
-
-              {error && <p className="text-red-500 mb-4">{error}</p>}
-
-              <div className="flex justify-end space-x-4">
-                <button
-                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  onClick={() =>
-                    reset({
-                      points: [{ point: "" }],
-                      eventId: parseInt(eventId, 10),
-                    })
-                  }
-                >
-                  Reset
-                </button>
-                <button className="submit" type="submit">
-                  Submit
-                </button>
-              </div>
-
-              <table>
-                <thead>
-                  <tr>
-                    <th>Point</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {pointsToJudge.map((ptj) => (
-                    <tr>
-                      <td>{ptj.point}</td>
-                      <td>
-                        <button onClick={() => deletePointToJudge(ptj.id)}>
-                          <TrashIcon className="icon delete-icon" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </form>
           </div>
-        </div>
+
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+
+          <div className="flex justify-end space-x-4 p-4">
+            <button
+              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              onClick={() =>
+                reset({
+                  points: [{ point: "" }],
+                  eventId: parseInt(eventId, 10),
+                })
+              }
+            >
+              Reset
+            </button>
+            <button className="submit" type="submit">
+              Submit
+            </button>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Point</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pointsToJudge.map((ptj) => (
+                <tr>
+                  <td>{ptj.point}</td>
+                  <td>
+                    <button onClick={() => deletePointToJudge(ptj.id)}>
+                      <TrashIcon className="icon delete-icon" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </form>
       </div>
     </div>
+
   );
 };
 
