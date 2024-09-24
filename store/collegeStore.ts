@@ -36,9 +36,12 @@ const useCollegeStore = create<CollegeStoreState>((set) => ({
   },
 
   getAllColleges: async () => {
-    const res = await http.get("/colleges");
+    const res = await http.get("/colleges", {
+      headers: { authorization: sessionStorage.token },
+    });
     set(() => ({ colleges: res.data }));
   },
+
   getCollegeById: async (id: string) => {
     const res = await http.get(`/colleges/${id}`);
     set((state: CollegeStoreState) => ({ college: res.data }));

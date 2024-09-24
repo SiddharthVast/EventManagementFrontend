@@ -4,10 +4,10 @@ import RevelationImage from "../../public/RevelationImage.jpg";
 
 const About = () => {
   return (
-    <div className="container mx-auto p-4">
+    <div className="bg-white-100 min-h-screen container mx-auto pt-28">
       <div className="flex flex-col lg:flex-row">
         <div className="lg:w-3/4 p-4">
-          <h1 className="text-2xl font-bold mb-4">
+          <h1 className="text-2xl font-bold mb-4 text-left">
             College Event Management System
           </h1>
           <div className="border-b-2 border-gray-300 mb-4 relative">
