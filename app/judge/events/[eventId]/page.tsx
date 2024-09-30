@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const schema = yup.object().shape({
   totalScores: yup
@@ -42,9 +43,7 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
   const getRegByEidRole = useUserEventRegistartionStore(
     (state) => state.getRegByEidRole
   );
-  const students = useUserEventRegistartionStore(
-    (state) => state.registrations
-  );
+  const students = useUserEventRegistartionStore((state) => state.registrations);
 
   const getPointsToJudge = usePointToJudgeStore((state) => state.getPointsById);
   const points = usePointToJudgeStore((state) => state.pointsToJudge);
@@ -80,7 +79,6 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
     return scores[studentId]?.reduce((total, score) => total + score, 0) || 0;
   };
 
-
   const onSubmit = async () => {
     try {
       const totalScores: number[] = [];
@@ -104,16 +102,24 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
         totalScores: [],
         studentIds: [],
       });
-      alert("Your feedback has been submitted successfully!");
+      toast.success("Your feedback has been submitted successfully!");
       router.push("/judge/events");
     } catch (error) {
-      console.error("Failed to update user event registration:", error);
+      toast.error("Failed to update user event registration.");
     }
   };
 
+  if (!students || !students[0]?.event) {
+    return (
+      <div className="main-div p-4">
+        <h1 className="form-heading">Loading event details...</h1>
+      </div>
+    );
+  }
+
   return (
     <div className="main-div p-4">
-      <h1 className="form-heading">Event: {students[0]?.event.eventName}</h1>
+      <h1 className="form-heading">Event: {students[0].event.eventName}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <table className="min-w-full bg-white">
           <thead>
@@ -162,11 +168,9 @@ const JudgePanel = ({ params: { eventId } }: Props) => {
           <button type="submit" className="submit">
             Submit
           </button>
-
         </div>
       </form>
     </div>
-
   );
 };
 

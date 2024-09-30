@@ -1,14 +1,17 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useRouter } from "next/navigation";
-import useUserStore from "@/store/userStore";
+import useUserStore, { UserData } from "@/store/userStore";
 import useCollegeStore from "@/store/collegeStore";
 import { toast } from "react-toastify";
+import useEventStore from "@/store/eventStore";
 
-// Updated Yup validation schema
+const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5MB
+const ACCEPTED_IMAGE_MIME_TYPES = ["image/jpeg", "image/jpg", "image/png"];
+
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
   lastName: yup.string().required("Last Name is required"),
@@ -20,24 +23,30 @@ const schema = yup.object().shape({
     .required("Confirm Password is required"),
   mobileNumber: yup.string().required("Mobile Number is required"),
   courseName: yup.string().required("Course Name is required"),
+  imageUrl: yup
+    .mixed<FileList | string>()
+    .required()
+    .test("fileRequired", "Image file is required", (value) => {
+      if (!value || (value instanceof FileList && value.length === 0)) return false;
+      return true;
+    })
+    .test("fileType", "Only .jpg, .jpeg, and .png formats are supported.", (value) => {
+      if (!value || !(value instanceof FileList)) return false;
+      const files = Array.from(value);
+      return files.every((file) => ACCEPTED_IMAGE_MIME_TYPES.includes(file.type));
+    })
+    .test("fileSize", "Max image size is 5MB.", (value) => {
+      if (!value || !(value instanceof FileList)) return false;
+      const files = Array.from(value);
+      return files.every((file) => file.size <= MAX_FILE_SIZE);
+    }),
   details: yup.string(),
   collegeId: yup
     .number()
     .required("College is required")
     .typeError("College must be a number"),
-});
 
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  mobileNumber: string;
-  courseName: string;
-  details?: string;
-  collegeId: number;
-}
+});
 
 const AddStudent = () => {
   const router = useRouter();
@@ -46,12 +55,16 @@ const AddStudent = () => {
     colleges: state.colleges,
     getAllColleges: state.getAllColleges,
   }));
+  const uploadImageToCloudinary = useEventStore(
+    (state) => state.uploadImageToCloudinary
+  );
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FormData>({
+  } = useForm({
     resolver: yupResolver(schema),
   });
 
@@ -59,10 +72,18 @@ const AddStudent = () => {
     getAllColleges();
   }, []);
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmitHandler: SubmitHandler<UserData> = async (formData) => {
     try {
+
+      const imageFiles = formData.imageUrl as unknown as FileList;
+      if (imageFiles && imageFiles[0] instanceof File) {
+        const file = imageFiles[0];
+        const imageUrl = await uploadImageToCloudinary(file);
+        formData.imageUrl = imageUrl;
+      }
+
       const userData = {
-        ...data,
+        ...formData,
         role: "student",
       };
 
@@ -71,7 +92,6 @@ const AddStudent = () => {
       router.push("/login");
     } catch (error) {
       toast.error(`Error registering student. Please try again.`);
-      console.error("Failed to add register:", error);
     }
   };
 
@@ -79,8 +99,7 @@ const AddStudent = () => {
     <div className="main-div">
       <div className="input-form-div">
         <h1 className="form-heading">Register</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {/* First Name */}
+        <form onSubmit={handleSubmit(onSubmitHandler)}>
           <div className="mb-4">
             <label>
               First Name
@@ -94,8 +113,6 @@ const AddStudent = () => {
               <p className="text-red-500 mt-1">{errors.firstName.message}</p>
             )}
           </div>
-
-          {/* Last Name */}
           <div className="mb-4">
             <label>
               Last Name
@@ -109,8 +126,6 @@ const AddStudent = () => {
               <p className="text-red-500 mt-1">{errors.lastName.message}</p>
             )}
           </div>
-
-          {/* Email */}
           <div className="mb-4">
             <label>
               Email
@@ -124,8 +139,6 @@ const AddStudent = () => {
               <p className="text-red-500 mt-1">{errors.email.message}</p>
             )}
           </div>
-
-          {/* Password */}
           <div className="mb-4">
             <label>
               Password
@@ -139,8 +152,6 @@ const AddStudent = () => {
               <p className="text-red-500 mt-1">{errors.password.message}</p>
             )}
           </div>
-
-          {/* Confirm Password */}
           <div className="mb-4">
             <label>
               Confirm Password
@@ -156,8 +167,6 @@ const AddStudent = () => {
               </p>
             )}
           </div>
-
-          {/* Mobile Number */}
           <div className="mb-4">
             <label>
               Mobile Number
@@ -171,8 +180,6 @@ const AddStudent = () => {
               <p className="text-red-500 mt-1">{errors.mobileNumber.message}</p>
             )}
           </div>
-
-          {/* Course Name */}
           <div className="mb-4">
             <label>
               Course Name
@@ -186,8 +193,18 @@ const AddStudent = () => {
               <p className="text-red-500 mt-1">{errors.courseName.message}</p>
             )}
           </div>
-
-          {/* Details */}
+          <div className="mb-4">
+            <label>
+              Profile Photo
+            </label>
+            <input
+              type="file"
+              {...register("imageUrl")}
+            />
+            {errors.imageUrl && (
+              <p className="text-red-500 mt-1">{errors.imageUrl.message}</p>
+            )}
+          </div>
           <div className="mb-4">
             <label>
               Details
@@ -197,8 +214,6 @@ const AddStudent = () => {
               placeholder="Enter Details"
             />
           </div>
-
-          {/* College */}
           <div className="mb-4">
             <label>
               College
@@ -217,8 +232,6 @@ const AddStudent = () => {
               <p className="text-red-500 mt-1">{errors.collegeId.message}</p>
             )}
           </div>
-
-          {/* Buttons */}
           <div className="flex justify-end space-x-4">
             <button className="reset" type="button" onClick={() => reset()}>
               Reset

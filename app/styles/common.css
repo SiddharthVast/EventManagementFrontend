@@ -14,20 +14,37 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+
 }
 
 .header-content {
   @apply flex items-center justify-between px-4 h-full;
 }
 
+.navbar-container {
+  @apply flex items-center justify-between w-full ;
+}
+
 .navbar-with-menu-list {
   @apply flex justify-center gap-8 py-2 bg-custom-brown;
-  position: relative;
+  flex: 1;
+}
+
+.user-info {
+  @apply flex  justify-end absolute right-3;   ;
+}
+
+.user-avatar {
+  @apply w-6 h-6 rounded-full ; 
+}
+
+.welcome-message {
+  @apply text-white pr-2;  
 }
 
 .main-div {
   @apply bg-gray-100 min-h-screen p-8;
-  padding-top: calc(var(--navbar-height) + 30px); /* Use calc() to add padding dynamically */
+  padding-top: calc(var(--navbar-height) + 30px); 
 }
 
 .main-div-panel{
@@ -68,33 +85,21 @@ h1 {
   @apply text-3xl font-bold mb-8 text-center;
 }
 
-
-
 .logo {
-  @apply h-20 w-auto ml-4; /* Adjust logo height and add margin-left */
+  @apply h-20 w-auto ml-4; 
 }
 
 .header-title {
-  position: absolute; /* Center the title absolutely */
+  position: absolute; 
   left: 50%;
   transform: translateX(-50%);
-  @apply text-3xl font-bold text-center; /* Text styles for the title */
+  @apply text-3xl font-bold text-center; 
 }
-
-
 
 .nav-link {
   @apply text-white no-underline cursor-pointer
 
 }
-
-.welcome-message {
-  @apply text-white ml-4; /* Styling for welcome message */
-}
-
-
-
-
 
 .theme-color {
   @apply text-red-500;
@@ -121,7 +126,7 @@ textarea{
 }
 
 
-/* __________________________________________________________________________________________________________ */
+/* ________________________________________________________________________________________________________ */
 table{
     @apply min-w-full bg-white;
 }
@@ -155,8 +160,8 @@ tr:hover {
 }
 
 .delete-icon {
-  @apply text-red-600 hover:text-red-800; /* Color and hover effects */
-  @apply h-5 w-5; /* Size adjustments */
+  @apply text-red-600 hover:text-red-800; 
+  @apply h-5 w-5; 
 }
 
 .update-icon{
@@ -188,10 +193,6 @@ tr:hover {
 .btn_add{
   @apply bg-red-500 hover:bg-red-700 text-white  py-1 m-1 px-4 rounded  mr-2;
 }
-/* 
-.submit {
-  @apply bg-blue-500 text-white font-bold py-2 px-4 rounded mr-2 transition-all duration-300;
-} */
 
 button:hover {
   @apply shadow-lg transform scale-105;
@@ -199,8 +200,6 @@ button:hover {
 icon:hover {
   @apply shadow-lg transform scale-110;
 }
-
-
 
 .update{
   @apply bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mr-2;
@@ -229,24 +228,16 @@ icon:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-
-
-
-
 /* Optional: Styling for button container */
 .button-container {
-  margin-top: 1rem; /* Space above the buttons */
-  gap: 1rem; /* Space between buttons */
+  margin-top: 1rem; 
+  gap: 1rem; 
   display: flex; /* Align buttons horizontally */
   flex-direction: column; /* Stack buttons vertically */
 }
 
-
-/* .button{
- 
-} */
 button:hover {
-  transform: translateY(-2px) scale(1.05); /* Lift and scale effect */
+  transform: translateY(-2px) scale(1.05); 
 }
 .submit{
   background: linear-gradient(to right, #3b82f6, #2563eb); /* Gradient from blue-500 to blue-700 */

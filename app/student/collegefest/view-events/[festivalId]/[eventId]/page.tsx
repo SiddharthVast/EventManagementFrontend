@@ -1,10 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
+import React from 'react';
 import Image from "next/image";
 import useEventStore from "../../../../../../store/eventStore";
 import useUserEventRegistartionStore from "../../../../../../store/user_event_registrationStore";
 import useLoginStore from "@/store/loginStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { toast } from "react-toastify";
 
 interface GroupMember {
   firstName: string;
@@ -80,7 +82,6 @@ const EventInfo = ({ params: { festivalId, eventId } }: Props) => {
         userId: user.id,
         topic,
         groupName,
-        // groupMembers: event.eventType !== "single" ? groupMembers : [],
       };
       await addRegistration(registrationData);
       setIsModalOpen(false);
@@ -89,8 +90,10 @@ const EventInfo = ({ params: { festivalId, eventId } }: Props) => {
         { firstName: "", lastName: "", email_id: "", mobileNumber: "" },
       ]); // Reset
       setIsRegistered(true);
+      toast.success(`Registration successful!!`);
+
     } else {
-      alert("Please login to register for the event.");
+      toast.error(`Registration failed. Please try again.`);
     }
   };
 

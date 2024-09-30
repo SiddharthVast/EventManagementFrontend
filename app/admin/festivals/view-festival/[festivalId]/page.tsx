@@ -1,5 +1,6 @@
 "use client";
 import { yupResolver } from "@hookform/resolvers/yup";
+import React from 'react';
 import * as yup from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
@@ -8,6 +9,7 @@ import { useRouter } from "next/navigation";
 import useLoginStore from "@/store/loginStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import Loading from "@/app/loading";
+import { toast } from "react-toastify";
 
 const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5MB
 const ACCEPTED_IMAGE_MIME_TYPES = ["image/jpeg", "image/jpg", "image/png"];
@@ -109,10 +111,11 @@ const UpdateFestivalForm = ({ params: { festivalId } }: Props) => {
       data.append("id", festivalId);
 
       await updateFestival(data);
+      toast.success("Festival updated successfully!");
       reset();
       router.push("/admin/festivals/view-festival");
     } catch (err) {
-      console.error("Error updating festival:", err);
+      toast.error("Error updating festival");
     }
   };
 
