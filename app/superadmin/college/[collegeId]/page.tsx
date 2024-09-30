@@ -81,7 +81,7 @@ const AddCollege = ({ params: { collegeId } }: Props) => {
     <div className="main-div">
       <div className="input-form-div">     
           <button
-            onClick={() => router.push("/superadmin/college")}
+            onClick={() => router.push("/superadmin")}
             className="xmark-icon"
           >
             <XMarkIcon className="w-6 h-6" />

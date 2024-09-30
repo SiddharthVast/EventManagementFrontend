@@ -70,13 +70,18 @@ const useEventStore = create<EventStoreState>((set) => ({
   },
 
   getAllEvents: async () => {
-    const res = await http.get("/events");
+    const res = await http.get("/events", {
+      headers: { authorization: sessionStorage.token },
+    });
     set(() => ({ events: res.data }));
   },
   getEventById: async (id: number) => {
-    const res = await http.get(`/events/${id}`);
+    const res = await http.get(`/events/${id}`, {
+      headers: { authorization: sessionStorage.token },
+    });
     set((state: EventStoreState) => ({ event: res.data }));
   },
+
   getEventByFestId: async (id: number) => {
     const res = await http.get(`/events/festId/${id}`);
     set((state: EventStoreState) => ({

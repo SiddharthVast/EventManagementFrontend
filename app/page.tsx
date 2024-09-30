@@ -21,11 +21,11 @@ export default function Home() {
           slidesPerView={1}
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
-          autoplay={{ delay: 2000, disableOnInteraction: false }} // Autoplay every 3 seconds
+          autoplay={{ delay: 2000, disableOnInteraction: false }} 
           className="swiper-container"
         >
           <SwiperSlide>
-            <div className="relative w-full h-[500px]">
+            <div className="relative w-full h-[700px]">
               <Image
                 src={img11}
                 alt="College Event 1"
