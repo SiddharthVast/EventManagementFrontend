@@ -25,13 +25,22 @@ const usePointToJudgeStore = create<PointsToJudgeStoreState>((set) => ({
   pointToJudge: { id: 0, point: "", eventId: 0 },
 
   getPointsById: async (id: string) => {
-    const res = await http.get(`/pointstojudge/${id}`);
+    const res = await http.get(`/pointstojudge/${id}`, {
+      headers: { authorization: sessionStorage.token },
+    });
     set((state: PointsToJudgeStoreState) => ({ pointsToJudge: res.data }));
   },
 
+
   addPoints: async (points: PointToJudgeData[]) => {
     try {
-      const response = await http.post("/pointstojudge", { points });
+      const response = await http.post(
+        "/pointstojudge",
+        { points },
+        {
+          headers: { authorization: sessionStorage.token },
+        }
+      );
       set((state: PointsToJudgeStoreState) => ({
         pointsToJudge: [...state.pointsToJudge, response.data],
       }));
@@ -43,14 +52,18 @@ const usePointToJudgeStore = create<PointsToJudgeStoreState>((set) => ({
     }
   },
 
+
   deletePoint: async (id: number) => {
-    const res = await http.delete(`/pointstojudge/${id}`);
+    const res = await http.delete(`/pointstojudge/${id}`, {
+      headers: { authorization: sessionStorage.token },
+    });
     if (res.status === 200) {
       set((state) => ({
         pointsToJudge: state.pointsToJudge.filter((p) => p.id !== id),
       }));
     }
   },
+
 }));
 
 export default usePointToJudgeStore;

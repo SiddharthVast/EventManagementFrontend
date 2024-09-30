@@ -139,19 +139,26 @@ const useUserEventRegistartionStore = create<UserEventRegistrationStoreState>(
       }
     },
     getRegistartionByUserId: async (id: number) => {
-      const res = await http.get(`/user-event-registration/userId/${id}`);
+      const res = await http.get(`/user-event-registration/userId/${id}`,
+        { headers: { authorization: sessionStorage.token }, })
       set((state: UserEventRegistrationStoreState) => ({
         registrations: res.data,
       }));
     },
+
+    
     getRegByEidRole: async (id: number, userRole: string) => {
       const res = await http.get(
-        `/user-event-registration/getRegByEidRole/${id}/${userRole}`
+        `/user-event-registration/getRegByEidRole/${id}/${userRole}`,
+        {
+          headers: { authorization: sessionStorage.token },
+        }
       );
       set((state: UserEventRegistrationStoreState) => ({
         registrations: res.data,
       }));
     },
+
 
     addRegistration: async (data: {
       eventId: number;

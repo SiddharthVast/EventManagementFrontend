@@ -57,9 +57,22 @@ const useFestivalStore = create<FestivalStoreState>((set) => ({
   },
 
   getAllFestivals: async () => {
-    const res = await http.get("/festivals");
-    set(() => ({ festivals: res.data }));
+    try {
+      const res = await http.get("/festivals", {
+        headers: { authorization: sessionStorage.token },
+      });
+      set(() => ({ festivals: res.data }));
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw new Error(
+          error.response?.data.message || "An error occurred while fetching festivals."
+        );
+      } else {
+        throw new Error("An unknown error occurred.");
+      }
+    }
   },
+
 
   getFestivalById: async (id: number) => {
     const res = await http.get(`/festivals/${id}`);

@@ -81,7 +81,9 @@ const useUserStore = create<UserStoreState>((set) => ({
     set(() => ({ user: res.data }));
   },
   getUserByCidRole: async (id: number, role: string) => {
-    const res = await http.get(`/users/getUserByCidRole/${id}/${role}`);
+    const res = await http.get(`/users/getUserByCidRole/${id}/${role}`, {
+      headers: { authorization: sessionStorage.token },
+    });
     set(() => ({ users: res.data }));
   },
 

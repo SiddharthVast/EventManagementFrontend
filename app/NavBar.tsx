@@ -1,7 +1,8 @@
+
 "use client";
 import Link from "next/link";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import "./styles/common.css";
 import useLoginStore from "@/store/loginStore";
 
@@ -11,6 +12,7 @@ const NavBar = () => {
     user: state.user,
   }));
   const router = useRouter();
+  const pathname = usePathname(); // it is used to get the current path
 
   const handleLogout = () => {
     logout();
@@ -67,15 +69,39 @@ const NavBar = () => {
       default:
         return (
           <>
-            <Link href="/" className="nav-link">Home</Link>
-            <Link href="/about" className="nav-link">About Project</Link>
-            <Link href="/student/registration" className="nav-link">Student Registration</Link>
-            <Link href="/login" className="nav-link">Login</Link>
-            <Link href="/contact" className="nav-link">Contact Us</Link>
+            <Link href="/" className="nav-link">
+              Home
+            </Link>
+            <Link href="/about" className="nav-link">
+              About Project
+            </Link>
+           
+            <Link href="/student/registration" className="nav-link">
+              Student Registration
+            </Link>
+            <Link href="/login" className="nav-link">
+              Login
+            </Link>
+            <Link href="/contact" className="nav-link">
+              Contact Us
+            </Link>
           </>
         );
     }
   };
+
+  
+  if (pathname === "/login") {
+    return ( <div className="main-header">
+      <div className="header-content">
+        <img src="/logo_size.jpg" alt="logo" className="logo" />
+        <header className="header-title">
+          College Event Management System
+        </header>
+      </div>
+    </div>
+  ); 
+  }
 
   return (
     <div className="main-header">
