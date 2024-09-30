@@ -24,6 +24,8 @@ export interface User {
   courseName?: string;
   role?: string;
   college?: College;
+  imageUrl?: string | FileList;
+
 }
 
 export interface UserData {
@@ -32,11 +34,13 @@ export interface UserData {
   lastName: string;
   email: string;
   password: string;
+  confirmPassword?: string;
   mobileNumber: string;
   details?: string;
   courseName?: string;
   role?: string;
   collegeId?: number;
+  imageUrl?: string | FileList;
 }
 
 const http = axios.create({ baseURL: "http://localhost:3000" });
@@ -49,7 +53,7 @@ const useUserStore = create<UserStoreState>((set) => ({
     lastName: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    imageUrl: "",
     mobileNumber: "",
     details: "",
     courseName: "",

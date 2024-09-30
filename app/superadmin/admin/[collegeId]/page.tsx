@@ -1,30 +1,53 @@
 "use client";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useRouter } from "next/navigation";
-import useUserStore from "../../../../store/userStore";
+import useUserStore, { UserData } from "../../../../store/userStore";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-toastify";
+import useEventStore from "@/store/eventStore";
+
+const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5MB
+const ACCEPTED_IMAGE_MIME_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
   lastName: yup.string().required("Last Name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().required("Password is required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password")], "Passwords must match")
+    .required("Confirm Password is required"),
   mobileNumber: yup.string().required("Mobile Number is required"),
   details: yup.string().required("Details are required"),
+  imageUrl: yup
+    .mixed<FileList | string>()
+    .required()
+    .test("fileRequired", "Image file is required", (value) => {
+      if (!value || (value instanceof FileList && value.length === 0))
+        return false;
+      return true;
+    })
+    .test(
+      "fileType",
+      "Only .jpg, .jpeg, and .png formats are supported.",
+      (value) => {
+        if (!value || !(value instanceof FileList)) return false;
+        const files = Array.from(value);
+        return files.every((file) =>
+          ACCEPTED_IMAGE_MIME_TYPES.includes(file.type)
+        );
+      }
+    )
+    .test("fileSize", "Max image size is 5MB.", (value) => {
+      if (!value || !(value instanceof FileList)) return false;
+      const files = Array.from(value);
+      return files.every((file) => file.size <= MAX_FILE_SIZE);
+    }),
 });
-
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  mobileNumber: string;
-  details: string;
-}
 
 interface Props {
   params: {
@@ -35,25 +58,34 @@ interface Props {
 const AddAdminForm = ({ params: { collegeId } }: Props) => {
   const router = useRouter();
   const { addUser } = useUserStore();
-
+  const uploadImageToCloudinary = useEventStore(
+    (state) => state.uploadImageToCloudinary
+  );
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<FormData>({
+  } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmitHandler: SubmitHandler<UserData> = async (formData) => {
     try {
+      const imageFiles = formData.imageUrl as unknown as FileList;
+      if (imageFiles && imageFiles[0] instanceof File) {
+        const file = imageFiles[0];
+        const imageUrl = await uploadImageToCloudinary(file);
+        formData.imageUrl = imageUrl;
+      }
       const userData = {
-        ...data,
+        ...formData,
         courseName: "",
         collegeId: parseInt(collegeId),
         role: "admin",
       };
       await addUser(userData);
+
       toast.success("Admin added successfully!");
       router.push("/superadmin/college");
     } catch (error) {
@@ -72,7 +104,7 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
           <XMarkIcon className="h-6 w-6" />
         </button>
         <h1 className="form-heading">Add Admin</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmitHandler)}>
           <div className="mb-4">
             <label>First Name</label>
             <input
@@ -118,6 +150,21 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
             )}
           </div>
           <div className="mb-4">
+            <label>
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              {...register("confirmPassword")}
+              placeholder="Enter Confirm Password"
+            />
+            {errors.confirmPassword && (
+              <p className="text-red-500 mt-1">
+                {errors.confirmPassword.message}
+              </p>
+            )}
+          </div>
+          <div className="mb-4">
             <label>Mobile Number</label>
             <input
               type="text"
@@ -126,6 +173,18 @@ const AddAdminForm = ({ params: { collegeId } }: Props) => {
             />
             {errors.mobileNumber && (
               <p className="text-red-500 mt-1">{errors.mobileNumber.message}</p>
+            )}
+          </div>
+          <div className="mb-4">
+            <label>
+              Profile Photo
+            </label>
+            <input
+              type="file"
+              {...register("imageUrl")}
+            />
+            {errors.imageUrl && (
+              <p className="text-red-500 mt-1">{errors.imageUrl.message}</p>
             )}
           </div>
           <div className="mb-4">

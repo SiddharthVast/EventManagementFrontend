@@ -58,7 +58,6 @@ const AssignCoordinatorForm = ({ params: { eventId, role } }: Props) => {
 
   const onSubmitHandler = (data: { userId: number }) => {
     if (!user) {
-      console.error("User is not available");
       return;
     }
     addRegistration({ ...data, eventId: parseInt(eventId) });

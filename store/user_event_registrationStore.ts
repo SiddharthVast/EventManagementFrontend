@@ -1,7 +1,7 @@
 import axios from "axios";
 import { User } from "./userStore";
 import { create } from "zustand";
-import { Event } from "./interfaces_Data";
+import { Event } from "./eventStore";
 
 export interface UserEventRegistrationStoreState {
   registrations: UserEventRegistration[];
@@ -79,8 +79,23 @@ const useUserEventRegistartionStore = create<UserEventRegistrationStoreState>(
         venue: "",
         startDateTime: "",
         endDateTime: "",
-        festivalId: 0,
-        status: "",
+        status: true,
+        imageUrl: "",
+        festival: {
+          id: 0,
+          festivalTitle: "",
+          startDate: "",
+          endDate: "",
+          imageUrl: "",
+          description: "",
+          college: {
+            id: 0,
+            collegeName: "",
+            number: "",
+            emailId: "",
+            address: "",
+          },
+        }
       },
     },
 

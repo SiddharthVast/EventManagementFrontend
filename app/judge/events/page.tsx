@@ -11,7 +11,7 @@ const UserEvents = () => {
   const { user } = useLoginStore((state) => ({
     user: state.user,
   }));
-  const [regData, setRegData] = useState<UserEventRegistration[] | null>(null); // Array or null
+  const [regData, setRegData] = useState<UserEventRegistration[] | null>(null);
 
   const { registrations, getRegistartionByUserId } =
     useUserEventRegistrationStore((state) => ({
@@ -23,12 +23,12 @@ const UserEvents = () => {
     if (user && user.id) {
       getRegistartionByUserId(user.id);
     }
-  }, [user, regData, getRegistartionByUserId]);
+  }, [user, getRegistartionByUserId]);
 
   useEffect(() => {
     setRegData(registrations);
-    setRegData(registrations);
   }, [registrations]);
+
   return (
     <div className="main-div">
       <div className="show-form-div">
@@ -49,27 +49,31 @@ const UserEvents = () => {
               </thead>
               <tbody>
                 {regData && regData.length > 0 ? (
-                  regData.map((data, index) => (
-                    <tr>
-                      <td>{data.event?.eventName}</td>
-                      <td>{data.event?.venue}</td>
-                      <td>{data.event?.startDateTime}</td>
-                      <td>{data.event?.status ? "Open" : "Close"}</td>
-                      <td>
-                        <Link
-                          href={{
-                            pathname: `/judge/events/${data?.event?.id}`,
-                          }}
-                        >
-                          <button>
-                            <ForwardIcon className="h-8 w-8 text-red-500 mt-4 animate-bounce" />
-                          </button>
-                        </Link>
-                      </td>
-                    </tr>
-                  ))
+                  regData
+                    .filter(data => data.event?.status)
+                    .map((data) => (
+                      <tr key={data.id}>
+                        <td>{data.event?.eventName}</td>
+                        <td>{data.event?.venue}</td>
+                        <td>{data.event?.startDateTime}</td>
+                        <td>{data.event?.status ? "Open" : "Close"}</td>
+                        <td>
+                          <Link
+                            href={{
+                              pathname: `/judge/events/${data.event?.id}`,
+                            }}
+                          >
+                            <button>
+                              <ForwardIcon className="h-8 w-8 text-red-500 mt-4 animate-bounce" />
+                            </button>
+                          </Link>
+                        </td>
+                      </tr>
+                    ))
                 ) : (
-                  <p>No registrations available</p>
+                  <tr>
+                    <td colSpan={5}>No registrations available</td>
+                  </tr>
                 )}
               </tbody>
             </table>

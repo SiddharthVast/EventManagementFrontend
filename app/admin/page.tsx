@@ -45,7 +45,7 @@ const Admin = () => {
           </li>
           <li className="mb-2">
             <Link
-              href="/program-report"
+              href={`/admin/my-account`}
               className="block w-full bg-red-700 text-white text-lg py-5 px-4"
             >
               My Account
