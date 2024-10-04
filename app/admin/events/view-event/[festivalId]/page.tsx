@@ -52,15 +52,19 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await getAllEvents();
-      if (users.length === 0) {
-        await getAllUsers();
+      setLoading(true);
+      try {
+        await getAllEvents();
+        if (users.length === 0) {
+          await getAllUsers();
+        }
+        await getAllRegistarations();
+      } finally {
+        setLoading(false);
       }
-      await getAllRegistarations();
-      setLoading(false);
     };
     fetchData();
-  }, [getAllEvents, getAllUsers, users.length, getAllRegistarations]);
+  }, []);
 
   const filteredEvents = events.filter(
     (event) => event.festival && event.festival.id === +festivalId
@@ -104,9 +108,10 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Coordinator List</th>
-                  <th>Coordinator</th>
-                  <th>Judge</th>
-                  <th>Skill Set</th>
+                  <th>Assign Coordinator</th>
+                  <th>Judge List</th>
+                  <th>Assign Judge</th>
+                  <th>Evaluation Points</th>
                   <th>Actions</th>
                   <th>Result</th>
                   <th>Complete</th>
@@ -152,7 +157,7 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                         dateStyle: "medium",
                         timeStyle: "short",
                       })}
-                    </td>              
+                    </td>
                     <td className="py-2 px-2 border-b border-gray-200 text-sm text-center">
                       {registrations
                         .filter(
@@ -183,6 +188,26 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                         </Link>
                       </div>
                     </td>
+                    <td className="py-2 px-2 border-b border-gray-200 text-sm text-center">
+                      {registrations
+                        .filter(
+                          (registration) =>
+                            registration.event &&
+                            registration.event.id === event.id &&
+                            users.find(
+                              (user) => user.id === registration.user.id
+                            )?.role === "judge"
+                        )
+                        .map((registration) => {
+                          const user = users.find(
+                            (user) => user.id === registration.user.id
+                          );
+                          return user
+                            ? `${user.firstName} ${user.lastName}`
+                            : "";
+                        })
+                        .join(", ") || "NA"}
+                    </td>
                     <td>
                       <div className="flex space-x-2 justify-center">
                         <Link
@@ -196,9 +221,8 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                     <td>
                       <div className="flex space-x-2 justify-center">
                         <Link
-                          href={`/admin/pointsToJudge/${
-                            event.id
-                          }?name=${encodeURIComponent(event.eventName)}`}
+                          href={`/admin/pointsToJudge/${event.id
+                            }?name=${encodeURIComponent(event.eventName)}`}
                           className="link-button"
                         >
                           <div className="h-8 w-8 text-yellow-500">
@@ -251,8 +275,12 @@ const ShowEvents = ({ params: { festivalId } }: Props) => {
                         >
                           Complete
                         </button>
-                      ) : (
-                        <span className="text-gray-500">closed</span> 
+                      ) : (<button
+                        className="bg-gray-400 text-white py-1 px-3 rounded"
+                        disabled
+                      >
+                        Closed
+                      </button>
                       )}
                     </td>
                     <td>

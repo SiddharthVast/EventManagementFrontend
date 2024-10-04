@@ -128,10 +128,9 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
         <h2 className="form-heading">Event Form</h2>
         <form onSubmit={handleSubmit(onSubmitHandler)}>
           <div className="mb-4">
-            <label>
-              Event Type
-            </label>
+            <label className="block text-gray-700">Event Type</label>
             <select
+              className="form-input mt-1 block w-full p-2 border border-gray-300 rounded-md shadow"
               {...register("eventType")}
             >
               <option value="">Select Event Type</option>
@@ -159,10 +158,9 @@ const AddEvent = ({ params: { festivalId } }: Props) => {
             )}
           </div>
           <div className="mb-4">
-            <label>
-              Members Type
-            </label>
+            <label className="block text-gray-700">Members Type</label>
             <select
+              className="form-input mt-1 block w-full p-2 border border-gray-300 rounded-md shadow "
               {...register("members")}
             >
               <option value="">Select Members Type</option>

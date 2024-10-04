@@ -75,7 +75,7 @@ const NavBar = () => {
             <Link href="/about" className="nav-link">
               About Project
             </Link>
-           
+
             <Link href="/student/registration" className="nav-link">
               Student Registration
             </Link>
@@ -90,25 +90,24 @@ const NavBar = () => {
     }
   };
 
-  
+
   if (pathname === "/login") {
-    return ( <div className="main-header">
+    return (<div className="main-header">
       <div className="header-content">
-        <img src="/logo_size.jpg" alt="logo" className="logo" />
+        <img src="/EventLogo.png" alt="logo" className="logo" />
         <header className="header-title">
           College Event Management System
         </header>
       </div>
     </div>
-  ); 
+    );
   }
 
   return (
     <div className="main-header">
       <div className="header-content">
-        <img src="/logo_size.jpg" alt="logo" className="logo" />
+        <img src="/EventLogo.png" alt="logo" className="logo" />
         <header className="header-title">College Event Management System</header>
-        {/* <h6>{user?.college.collegeName}</h6> */}
         {user?.college?.collegeName && <h6>{user.college.collegeName}</h6>}
 
       </div>
