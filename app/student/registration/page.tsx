@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -8,6 +8,7 @@ import useUserStore, { UserData } from "@/store/userStore";
 import useCollegeStore from "@/store/collegeStore";
 import { toast } from "react-toastify";
 import useEventStore from "@/store/eventStore";
+import Loading from "@/app/loading";
 
 const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5MB
 const ACCEPTED_IMAGE_MIME_TYPES = ["image/jpeg", "image/jpg", "image/png"];
@@ -68,11 +69,14 @@ const AddStudent = () => {
     resolver: yupResolver(schema),
   });
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     getAllColleges();
   }, []);
 
   const onSubmitHandler: SubmitHandler<UserData> = async (formData) => {
+    setLoading(true);
     try {
 
       const imageFiles = formData.imageUrl as unknown as FileList;
@@ -92,6 +96,8 @@ const AddStudent = () => {
       router.push("/login");
     } catch (error) {
       toast.error(`Error registering student. Please try again.`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -236,11 +242,14 @@ const AddStudent = () => {
             <button className="reset" type="button" onClick={() => reset()}>
               Reset
             </button>
-            <button className="submit" type="submit">
-              Submit
+            <button className="submit" type="submit"
+              disabled={loading}
+            >
+              {loading ? "Submitting..." : "Submit"}
             </button>
           </div>
         </form>
+        {loading && <Loading />}
       </div>
     </div>
   );

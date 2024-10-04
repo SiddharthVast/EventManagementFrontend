@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 
 const eventTypes = [
   "Cultural",
+  "Technical",
   "Sports",
   "Talent Show",
   "Art",
@@ -159,14 +160,14 @@ const UpdateEvent = ({ params: { festivalId, eventId } }: Props) => {
           <XMarkIcon className="w-6 h-6" />
         </button>
         <div className="w-full">
-          <h2 className="text-2xl font-semibold text-red-500 mb-6">
+          <h2 className="text-2xl font-semibold text-red-500 mb-6 text-center">
             Event Form
           </h2>
           <form onSubmit={handleSubmit(onSubmitHandler)}>
             <div className="mb-4">
               <label className="block text-gray-700">Event Type</label>
               <select
-                className="form-input mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                className="form-input mt-1 block w-full p-2 border border-gray-300 rounded-md shadow leading-tight"
                 {...register("eventType")}
               >
                 <option value="">Select Event Type</option>
@@ -196,7 +197,7 @@ const UpdateEvent = ({ params: { festivalId, eventId } }: Props) => {
             <div className="mb-4">
               <label className="block text-gray-700">Members Type</label>
               <select
-                className="form-input mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                className="form-input mt-1 block w-full p-2 border border-gray-300 rounded-md shadow leading-tight"
                 {...register("members")}
               >
                 <option value="">Select Members Type</option>

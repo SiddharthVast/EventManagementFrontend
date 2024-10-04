@@ -54,7 +54,7 @@ const Admin = () => {
         </ul>
       </div>
       <div className="w-1/4 bg-white p-4">
-        <h2 className="text-lg font-bold mb-4">FEATURES</h2>
+        <h2 className="text-lg font-bold mb-4">Features</h2>
         <div className="space-y-4">
           <div>
             <Image
